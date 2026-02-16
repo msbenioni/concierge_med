@@ -1,0 +1,72 @@
+css
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --atlas-navy: #0E7C8C;
+  --atlas-teal: #1BA8B8;
+  --atlas-gold: #B8D963;
+  --atlas-ivory: #F9F9F9;
+  --atlas-dark: #1E1E1E;
+  --atlas-muted: #7A9BA8;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--atlas-dark);
+  background-color: #F9F9F9;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--atlas-ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--atlas-muted);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--atlas-teal);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+    --primary: 188 77% 30%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 189 78% 39%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 195 20% 57%;
+    --muted-foreground: 195 20% 57%;
+    --accent: 73 55% 60%;
+    --accent-foreground: 0 0% 12%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 188 77% 30%;
+    --radius: 0.75rem;
+  }
+}
