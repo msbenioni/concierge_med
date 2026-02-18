@@ -1,6 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Users, Heart, BadgeDollarSign, Shield } from "lucide-react";
+import { 
+  BACKGROUND_PRIMARY, 
+  BACKGROUND_SECONDARY,
+  TEXT_PRIMARY, 
+  ACCENT_PRIMARY, 
+  TEXT_PRIMARY_ALPHA_50, 
+  ACCENT_PRIMARY_ALPHA_20, 
+  GRADIENTS, 
+  GLASS, 
+  SHADOWS,
+  COMPONENTS
+} from "../../constants/colors";
 
 const REASONS = [
   {
@@ -35,10 +47,10 @@ export default function WhyGroupTravel() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-xs uppercase tracking-[0.2em] text-[#FF8C42] font-semibold">Strength in Numbers</span>
+          <span className="text-xs uppercase tracking-[0.2em] font-semibold" style={{ color: COMPONENTS.STATUS_WARNING }}>Strength in Numbers</span>
           <h2
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F1C2E] mt-3"
-            style={{ fontFamily: 'Playfair Display, serif' }}
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-3"
+            style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}
           >
             Why Group Travel?
           </h2>
@@ -54,13 +66,13 @@ export default function WhyGroupTravel() {
               transition={{ delay: i * 0.1 }}
               className="text-center group"
             >
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-[#0F1C2E] flex items-center justify-center mb-5 group-hover:bg-[#1F4E5F] transition-colors duration-300 shadow-lg shadow-[#0F1C2E]/10">
-                <r.icon className="w-6 h-6 text-[#FF8C42]" />
+              <div className="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-5 transition-colors duration-300 shadow-lg" style={{ backgroundColor: BACKGROUND_SECONDARY, boxShadow: SHADOWS.BACKGROUND_SUBTLE }} onMouseEnter={(e) => e.target.style.backgroundColor = ACCENT_PRIMARY_ALPHA_20} onMouseLeave={(e) => e.target.style.backgroundColor = BACKGROUND_SECONDARY}>
+                <r.icon className="w-6 h-6" style={{ color: COMPONENTS.STATUS_WARNING }} />
               </div>
-              <h3 className="text-lg font-bold text-[#0F1C2E] mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+              <h3 className="text-lg font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
                 {r.title}
               </h3>
-              <p className="text-sm text-[#7C848E] leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <p className="text-sm leading-relaxed" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_50 }}>
                 {r.desc}
               </p>
             </motion.div>

@@ -1,82 +1,168 @@
-import React from "react";
-import { motion } from "framer-motion";
-import FAQAccordion from "../components/compass-connect/FAQAccordion";
-import CTASection from "../components/compass-connect/CTASection";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, HelpCircle } from "lucide-react";
+import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
+import { Link } from "react-router-dom";
+import { createPageUrl } from "../utils";
 
-const FAQ_ITEMS = [
+const FAQS = [
   {
-    question: "Do you provide medical advice?",
-    answer: "No. Compass Connect is a non-medical concierge service. We do not provide medical advice, assessment, or clinical decisions of any kind. All medical matters are handled exclusively by our partner hospitals and their licensed medical professionals. We coordinate travel and provide emotional and logistical support only.",
+    category: "About Us",
+    questions: [
+      {
+        q: "What exactly does Compass Connect do?",
+        a: "Compass Connect is a non-medical travel concierge service. We coordinate group travel logistics for patients traveling overseas for surgery. This includes flights coordination, accommodation, airport transfers, on-the-ground concierge support, and emotional companionship throughout your journey. We do not provide any medical care, advice, or treatment — that is handled entirely by the partner hospital or clinic."
+      },
+      {
+        q: "What is a non-medical concierge?",
+        a: "A non-medical concierge focuses exclusively on travel and lifestyle logistics. We arrange your transport, accommodation, transfers, and provide emotional support. We never give medical advice, make medical decisions, or assist with procedures. All medical matters are between you and the partner hospital/clinic."
+      },
+      {
+        q: "Do you provide medical advice or recommendations?",
+        a: "No, absolutely not. We do not provide medical advice, diagnosis, treatment recommendations, or guarantee any medical outcomes. All medical consultations, decisions, and care are managed exclusively by partner hospitals and clinics."
+      },
+    ],
   },
   {
-    question: "Who do I pay for surgery?",
-    answer: "All surgical and medical fees are paid directly to the partner hospital. Compass Connect does not collect, process, or handle any medical payments. The 4,000 you pay to Compass Connect covers only your group airfare and concierge support services.",
+    category: "Group Travel",
+    questions: [
+      {
+        q: "What is the minimum group size?",
+        a: "All travel cohorts require a minimum of 4 travelers to proceed. This allows us to provide dedicated concierge support while keeping costs accessible. If the minimum isn't met, we'll work with you on alternative dates or offer a full refund of concierge fees."
+      },
+      {
+        q: "Can I travel alone?",
+        a: "Our service is designed for group travel cohorts. You'll book with a group of at least 4 travelers heading to the same destination. This isn't just for cost — the companionship and shared experience is a core part of what we offer."
+      },
+      {
+        q: "Who are my travel companions?",
+        a: "Your travel cohort consists of other individuals traveling to the same destination for their own procedures at partner hospitals. All travelers receive the same level of concierge support."
+      },
+    ],
   },
   {
-    question: "What does the 4,000 include?",
-    answer: "Your 4,000 fee includes return flights from your departure city, airport transfers, on-the-ground concierge support, travel logistics coordination, and group travel companionship. It does not include hospital or surgical fees, which are paid directly to the hospital.",
+    category: "Payments",
+    questions: [
+      {
+        q: "What does the Compass Connect fee cover?",
+        a: "Our concierge/travel fee covers: flights coordination, accommodation logistics, airport transfers, on-the-ground concierge support, emotional companionship, and dietary/mobility coordination. It does NOT cover any medical costs, procedures, or hospital fees."
+      },
+      {
+        q: "How do I pay the hospital?",
+        a: "Medical costs are paid directly to the partner hospital or clinic. We have no involvement in medical billing. The hospital will provide you with their own payment process and information."
+      },
+      {
+        q: "How do I pay Compass Connect?",
+        a: "After your booking is confirmed and the travel cohort is viable (minimum 4), we'll send you a secure Stripe payment link for the concierge and travel services fee. Payment is secure and processed through Stripe."
+      },
+      {
+        q: "What is your refund policy?",
+        a: "If a travel cohort doesn't reach the minimum 4 travelers and must be cancelled, you'll receive a full refund of your concierge fee. For individual cancellations, please contact us as terms vary based on timing."
+      },
+    ],
   },
   {
-    question: "What if fewer than 4 travelers join a trip?",
-    answer: "Each group trip requires a minimum of 4 confirmed travelers to proceed. If the minimum is not met, the trip will not go ahead and you will receive a full refund of your 4,000 payment. We will notify you as early as possible if this occurs.",
-  },
-  {
-    question: "Can I travel alone instead of with a group?",
-    answer: "Compass Connect specialises in group travel coordination. Our service is built around the benefits of shared journeys — including emotional support, lower costs, and structured logistics. If you prefer to travel independently, you are welcome to arrange your own travel and work directly with the hospital.",
-  },
-  {
-    question: "Do you support both bariatric and cosmetic surgery?",
-    answer: "Yes. Our concierge services support patients travelling for both bariatric and cosmetic surgery at our partner hospitals. The type of procedure does not affect your travel fee or the support we provide. All clinical decisions about your suitability for surgery are made by the hospital.",
-  },
-  {
-    question: "What happens if my surgery is cancelled by the hospital?",
-    answer: "If the hospital determines that surgery cannot proceed for any reason, Compass Connect will assist with your travel arrangements home. Refund policies for medical fees are governed by the hospital's own terms. Compass Connect will refund the travel component where applicable, minus any non-recoverable flight costs.",
-  },
-  {
-    question: "How does the health questionnaire work?",
-    answer: "The health questionnaire is completed on our partner hospital's website. It is a confidential medical form reviewed by the hospital's medical team. Compass Connect does not have access to your medical information. Once assessed, the hospital will contact you directly with a surgery quote.",
-  },
-  {
-    question: "Is Compass Connect affiliated with the hospitals?",
-    answer: "Compass Connect is an independent concierge service. While we work closely with our partner hospitals to coordinate travel for patients, we are not a medical provider, subsidiary, or official representative of any hospital. We operate independently to provide non-medical travel and support services.",
+    category: "Medical & Safety",
+    questions: [
+      {
+        q: "What is the partner clinic form?",
+        a: "The partner clinic form (questionnaire) is the hospital's own medical intake form. We simply provide you with the link to complete it directly with the hospital. We do not process, review, or store any medical information from this form."
+      },
+      {
+        q: "Is it safe to travel for surgery?",
+        a: "We cannot provide medical guidance on the safety of any procedure. That decision is between you and your medical professionals. What we can say is that we take great care in coordinating comfortable, well-organized travel logistics and providing supportive companionship."
+      },
+      {
+        q: "What happens in a medical emergency?",
+        a: "In case of a medical emergency, standard emergency services (ambulance, hospital) should be contacted immediately. Our on-the-ground concierge can assist with communication and logistics, but we are not medical providers and cannot provide medical assistance."
+      },
+    ],
   },
 ];
 
-export default function FAQ() {
+function FAQItem({ question, answer }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <div>
-      {/* Header */}
-      <section className="pt-16 pb-8 lg:pt-24 lg:pb-12">
-        <div className="max-w-3xl mx-auto px-5 sm:px-8">
+    <div className="border-b border-gray-200 last:border-0">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between py-5 text-left group"
+      >
+        <span className="font-sans font-medium text-sm text-gray-900 pr-8 group-hover:text-[#FF8C42] transition-colors">
+          {question}
+        </span>
+        <ChevronDown
+          className={`w-4 h-4 text-gray-500 flex-shrink-0 transition-transform duration-300 ${
+            open ? "rotate-180 text-[#FF8C42]" : ""
+          }`}
+        />
+      </button>
+      <AnimatePresence>
+        {open && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
           >
-            <span className="text-xs uppercase tracking-[0.2em] text-[#FF8C42] font-semibold">
-              Questions & Answers
-            </span>
-            <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0F1C2E] mt-3"
-              style={{ fontFamily: 'Playfair Display, serif' }}
-            >
-              Frequently Asked Questions
-            </h1>
-            <p className="mt-5 text-lg text-[#7C848E] leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
-              Transparency matters. Here are honest answers to the questions we're asked most often.
+            <p className="pb-5 text-sm text-gray-600 leading-relaxed">
+              {answer}
             </p>
           </motion.div>
-        </div>
-      </section>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
-      {/* FAQ List */}
-      <section className="py-8 lg:py-12">
-        <div className="max-w-3xl mx-auto px-5 sm:px-8">
-          <FAQAccordion items={FAQ_ITEMS} />
-        </div>
-      </section>
+export default function FAQ() {
+  return (
+    <div className="pt-28 pb-20">
+      <div className="max-w-3xl mx-auto px-6 lg:px-12">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="mb-16"
+        >
+          <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] text-[#FF8C42] mb-4 block">
+            Questions & Clarity
+          </span>
+          <h1 className="font-serif text-4xl md:text-5xl text-gray-900 mb-4">
+            Frequently Asked Questions
+          </h1>
+          <p className="text-gray-600 text-lg">
+            Everything you need to know about our non-medical travel concierge service.
+          </p>
+        </motion.div>
 
-      <CTASection />
+        {FAQS.map((section, si) => (
+          <motion.div
+            key={si}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: si * 0.1 }}
+            className="mb-12"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <HelpCircle className="w-4 h-4 text-[#FF8C42]" />
+              <h2 className="font-serif text-xl text-gray-900">{section.category}</h2>
+            </div>
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+              {section.questions.map((faq, qi) => (
+                <FAQItem key={qi} question={faq.q} answer={faq.a} />
+              ))}
+            </div>
+          </motion.div>
+        ))}
+
+        <div className="mt-16">
+          <DisclaimerBlock />
+        </div>
+      </div>
     </div>
   );
 }

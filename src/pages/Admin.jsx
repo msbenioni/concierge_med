@@ -29,6 +29,20 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
 import { TRIP_CONFIG, TRIP_STATUS, BOOKING_STATUS, USER_STATUS, HOSPITAL_REF_PREFIX } from "../constants";
+import { 
+  BACKGROUND_PRIMARY, 
+  TEXT_PRIMARY, 
+  ACCENT_PRIMARY, 
+  TEXT_PRIMARY_ALPHA_70, 
+  TEXT_PRIMARY_ALPHA_50, 
+  TEXT_PRIMARY_ALPHA_20, 
+  ACCENT_PRIMARY_ALPHA_20, 
+  GRADIENTS, 
+  GLASS, 
+  SHADOWS,
+  COMPONENTS,
+  BORDERS
+} from "../constants/colors";
 
 export default function Admin() {
   const [trips, setTrips] = useState([]);
@@ -344,7 +358,7 @@ export default function Admin() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ backgroundColor: BACKGROUND_PRIMARY }}>
       <div className="px-4 lg:px-8 py-6">
         {/* Header */}
         <motion.div
@@ -353,12 +367,12 @@ export default function Admin() {
           className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#0E7C8C] to-[#1BA8B8] flex items-center justify-center">
-              <Compass className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: GRADIENTS.ACCENT_PRIMARY }}>
+              <Compass className="w-5 h-5" style={{ color: COMPONENTS.BUTTON_PRIMARY_TEXT }} />
             </div>
             <div>
-              <h1 className="font-serif text-2xl text-gray-900">Concierge Desk</h1>
-              <p className="text-xs text-gray-500 font-sans">Manage bookings, journeys & payments</p>
+              <h1 className="font-serif text-2xl" style={{ color: TEXT_PRIMARY }}>Concierge Desk</h1>
+              <p className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Manage bookings, journeys & payments</p>
             </div>
           </div>
           <Button variant="outline" size="sm" className="rounded-full gap-2 text-xs" onClick={() => window.location.reload()}>
@@ -369,25 +383,25 @@ export default function Admin() {
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
-            { label: "Total Bookings", value: totalBookings, color: "text-gray-900" },
-            { label: "Confirmed", value: confirmed, color: "text-emerald-600" },
-            { label: "Reviewed", value: reviewed, color: "text-blue-600" },
-            { label: "Active Journeys", value: activeTrips, color: "text-[#0E7C8C]" },
+            { label: "Total Bookings", value: totalBookings, color: TEXT_PRIMARY },
+            { label: "Confirmed", value: confirmed, color: COMPONENTS.STATUS_SUCCESS },
+            { label: "Reviewed", value: reviewed, color: COMPONENTS.STATUS_INFO },
+            { label: "Active Journeys", value: activeTrips, color: ACCENT_PRIMARY },
           ].map((stat, i) => (
-            <div key={i} className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-              <p className="text-xs text-gray-500 font-sans uppercase tracking-wider mb-1">{stat.label}</p>
-              <p className={`text-2xl font-serif font-semibold ${stat.color}`}>{stat.value}</p>
+            <div key={i} className="rounded-xl p-5 shadow-sm" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${BORDERS.TEXT_SUBTLE}` }}>
+              <p className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>{stat.label}</p>
+              <p className="text-2xl font-serif font-semibold" style={{ color: stat.color }}>{stat.value}</p>
             </div>
           ))}
         </div>
 
         {/* Tabs */}
         <Tabs defaultValue="bookings" className="space-y-6">
-          <TabsList className="bg-white border border-gray-200 p-1 rounded-xl">
-            <TabsTrigger value="bookings" className="rounded-lg gap-2 text-xs font-sans data-[state=active]:bg-gray-900 data-[state=active]:text-white">
+          <TabsList className="p-1 rounded-xl" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${BORDERS.TEXT_SUBTLE}` }}>
+            <TabsTrigger value="bookings" className="rounded-lg gap-2 text-xs font-sans" style={{ color: TEXT_PRIMARY }}>
               <ClipboardList className="w-3.5 h-3.5" /> Bookings
             </TabsTrigger>
-            <TabsTrigger value="trips" className="rounded-lg gap-2 text-xs font-sans data-[state=active]:bg-gray-900 data-[state=active]:text-white">
+            <TabsTrigger value="trips" className="rounded-lg gap-2 text-xs font-sans" style={{ color: TEXT_PRIMARY }}>
               <Plane className="w-3.5 h-3.5" /> Journeys
             </TabsTrigger>
           </TabsList>
