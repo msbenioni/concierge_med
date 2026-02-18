@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
 import CTASection from "../components/compass-connect/CTASection";
+import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_50, ACCENT_PRIMARY, ACCENT_SECONDARY, ACCENT_PRIMARY_ALPHA_20, COMPONENTS, SHADOWS, GLASS, BORDERS } from "../constants/colors";
 
 const PHASES = [
   {
@@ -20,7 +21,7 @@ const PHASES = [
       "Terms acceptance for non-medical services",
       "Quick and secure form submission",
     ],
-    color: "#1F4E5F",
+    color: ACCENT_PRIMARY,
   },
   {
     num: "02",
@@ -34,7 +35,7 @@ const PHASES = [
       "Medical team reviews your health profile",
       "Compass Connect has no access to your medical data",
     ],
-    color: "#FF8C42",
+    color: ACCENT_PRIMARY,
   },
   {
     num: "03",
@@ -48,7 +49,7 @@ const PHASES = [
       "Compass Connect does not set or influence pricing",
       "Hospital fees paid directly to hospital",
     ],
-    color: "#FF8C42",
+    color: ACCENT_PRIMARY,
   },
   {
     num: "04",
@@ -62,7 +63,7 @@ const PHASES = [
       "Trip confirmed once 4 travelers join",
       "Full refund if minimum not met",
     ],
-    color: "#0F1C2E",
+    color: TEXT_PRIMARY,
   },
   {
     num: "05",
@@ -76,7 +77,7 @@ const PHASES = [
       "On-the-ground concierge available throughout",
       "Group companionship for reassurance",
     ],
-    color: "#1F4E5F",
+    color: ACCENT_PRIMARY,
   },
   {
     num: "06",
@@ -90,7 +91,7 @@ const PHASES = [
       "Access to group community for peer support",
       "Clear guidance on who to contact for what",
     ],
-    color: "#FF8C42",
+    color: ACCENT_PRIMARY,
   },
 ];
 
@@ -105,14 +106,14 @@ export default function HowItWorks() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-2xl"
           >
-            <span className="text-xs uppercase tracking-[0.2em] text-[#FF8C42] font-semibold">The Process</span>
+            <span className="text-xs uppercase tracking-[0.2em] font-semibold" style={{ color: ACCENT_PRIMARY }}>The Process</span>
             <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0F1C2E] mt-3"
-              style={{ fontFamily: 'Playfair Display, serif' }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-3"
+              style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}
             >
               How It Works
             </h1>
-            <p className="mt-5 text-lg text-[#7C848E] leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <p className="mt-5 text-lg leading-relaxed" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
               A transparent, five-phase journey from initial assessment to your return home. Every step is clearly defined.
             </p>
           </motion.div>
@@ -124,7 +125,7 @@ export default function HowItWorks() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="relative">
             {/* Vertical Line */}
-            <div className="hidden lg:block absolute left-[39px] top-0 bottom-0 w-px bg-gradient-to-b from-[#1F4E5F] via-[#FF8C42]/30 to-transparent" />
+            <div className="hidden lg:block absolute left-[39px] top-0 bottom-0 w-px" style={{ background: `linear-gradient(to bottom, ${TEXT_PRIMARY}, ${ACCENT_PRIMARY_ALPHA_20}, transparent)` }} />
 
             <div className="space-y-8 lg:space-y-12">
               {PHASES.map((phase, i) => (
@@ -148,22 +149,22 @@ export default function HowItWorks() {
                     </div>
 
                     {/* Content Card */}
-                    <div className="flex-1 bg-white rounded-2xl p-6 sm:p-8 lg:p-10 shadow-sm border border-[#FF8C42]/5 hover:shadow-md transition-shadow">
+                    <div className="flex-1 rounded-2xl p-6 sm:p-8 lg:p-10 shadow-sm hover:shadow-md transition-shadow" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
                       {/* Mobile Icon */}
                       <div className="lg:hidden flex items-center gap-4 mb-5">
                         <div
                           className="w-12 h-12 rounded-xl flex items-center justify-center"
                           style={{ backgroundColor: phase.color }}
                         >
-                          <phase.icon className="w-5 h-5 text-white" />
+                          <phase.icon className="w-5 h-5" style={{ color: TEXT_PRIMARY }} />
                         </div>
-                        <span className="text-3xl font-bold text-[#0F1C2E]/5" style={{ fontFamily: 'Playfair Display, serif' }}>
+                        <span className="text-3xl font-bold" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY_ALPHA_50 }}>
                           {phase.num}
                         </span>
                       </div>
 
                       <div className="flex items-center gap-4 mb-2">
-                        <span className="hidden lg:block text-4xl font-bold text-[#0F1C2E]/5" style={{ fontFamily: 'Playfair Display, serif' }}>
+                        <span className="hidden lg:block text-4xl font-bold" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY_ALPHA_50 }}>
                           {phase.num}
                         </span>
                         <div>
@@ -171,27 +172,27 @@ export default function HowItWorks() {
                             {phase.subtitle}
                           </span>
                           <h3
-                            className="text-2xl font-bold text-[#0F1C2E]"
-                            style={{ fontFamily: 'Playfair Display, serif' }}
+                            className="text-2xl font-bold"
+                            style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}
                           >
                             {phase.title}
                           </h3>
                         </div>
                       </div>
 
-                      <p className="text-[#7C848E] leading-relaxed mt-4 mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      <p className="leading-relaxed mt-4 mb-6" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
                         {phase.description}
                       </p>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {phase.details.map((detail, j) => (
-                          <div key={j} className="flex items-start gap-3">
-                            <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: `${phase.color}15` }}>
-                              <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: phase.color }} />
+                      <div className="space-y-3">
+                        {phase.details.map((detail, di) => (
+                          <div key={di} className="flex items-start gap-3">
+                            <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20 }}>
+                              <span className="text-xs font-bold" style={{ color: ACCENT_PRIMARY }}>{di + 1}</span>
                             </div>
-                            <span className="text-sm text-[#1E1E1E]/70" style={{ fontFamily: 'Inter, sans-serif' }}>
+                            <p className="text-sm leading-relaxed" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
                               {detail}
-                            </span>
+                            </p>
                           </div>
                         ))}
                       </div>
@@ -202,7 +203,20 @@ export default function HowItWorks() {
                             href={phase.cta.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FF8C42] text-[#0F1C2E] text-sm font-semibold hover:bg-[#b8953e] transition-all shadow-md shadow-[#FF8C42]/20"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-md"
+                            style={{ 
+                              backgroundColor: COMPONENTS.STATUS_WARNING, 
+                              color: TEXT_PRIMARY_ALPHA_50,
+                              boxShadow: SHADOWS.ACCENT_MEDIUM
+                            }}
+                            onMouseEnter={(e) => {
+                              e.target.style.backgroundColor = ACCENT_SECONDARY;
+                              e.target.style.boxShadow = SHADOWS.ACCENT_STRONG;
+                            }}
+                            onMouseLeave={(e) => {
+                              e.target.style.backgroundColor = COMPONENTS.STATUS_WARNING;
+                              e.target.style.boxShadow = SHADOWS.ACCENT_MEDIUM;
+                            }}
                           >
                             {phase.cta.label}
                             <ExternalLink className="w-3.5 h-3.5" />

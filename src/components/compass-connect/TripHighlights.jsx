@@ -51,7 +51,7 @@ const HIGHLIGHTS = [
 
 export default function TripHighlights() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
       {HIGHLIGHTS.map((item, i) => (
         <motion.div
           key={i}
@@ -59,7 +59,7 @@ export default function TripHighlights() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: i * 0.08 }}
-          className="group rounded-3xl p-8 hover:-translate-y-2 transition-all duration-500"
+          className="group rounded-3xl p-6 sm:p-8 hover:-translate-y-2 transition-all duration-500 min-h-[280px] flex flex-col"
           style={{ 
             backgroundColor: GLASS.CARD_BACKGROUND, 
             backdropFilter: 'blur(16px)',
@@ -73,7 +73,7 @@ export default function TripHighlights() {
           }}
         >
           <div 
-            className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 border"
+            className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 border flex-shrink-0"
             style={{ 
               background: `linear-gradient(135deg, ${ACCENT_PRIMARY_ALPHA_20}, ${ACCENT_PRIMARY_ALPHA_10})`,
               borderColor: BORDERS.ACCENT_SUBTLE
@@ -95,7 +95,7 @@ export default function TripHighlights() {
           >
             {item.title}
           </h3>
-          <p className="text-sm leading-relaxed" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>{item.description}</p>
+          <p className="text-sm leading-relaxed flex-grow" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>{item.description}</p>
         </motion.div>
       ))}
     </div>

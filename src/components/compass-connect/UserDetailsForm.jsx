@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_80, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_50, ACCENT_PRIMARY, ACCENT_PRIMARY_ALPHA_20, BACKGROUND_PRIMARY_ALPHA_10, COMPONENTS, GLASS, SHADOWS, BORDERS } from "../../constants/colors";
 
 const COUNTRIES = [
   "Australia",
@@ -83,17 +84,18 @@ export default function UserDetailsForm({ onSubmit, isLoading }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-[#FF8C42]/5"
+      className="rounded-2xl p-6 sm:p-8 shadow-sm"
+      style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}
     >
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="w-12 h-12 rounded-xl bg-[#0E7C8C]/10 flex items-center justify-center mx-auto mb-4">
-          <User className="w-6 h-6 text-[#0E7C8C]" />
+        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20 }}>
+          <User className="w-6 h-6" style={{ color: ACCENT_PRIMARY }} />
         </div>
-        <h3 className="text-xl font-semibold text-[#0E7C8C] mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+        <h3 className="text-xl font-semibold mb-2" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
           Start Your Journey
         </h3>
-        <p className="text-[#7A9BA8] text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+        <p className="text-sm" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
           Please provide your details to access the hospital health questionnaire
         </p>
       </div>
@@ -102,11 +104,11 @@ export default function UserDetailsForm({ onSubmit, isLoading }) {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Full Name */}
         <div>
-          <Label className="text-sm text-[#1E1E1E] mb-1.5 block font-medium">
+          <Label className="text-sm mb-1.5 block font-medium" style={{ color: TEXT_PRIMARY }}>
             Full Name *
           </Label>
           <div className="relative">
-            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#7A9BA8]" />
+            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: TEXT_PRIMARY_ALPHA_70 }} />
             <Input
               type="text"
               placeholder="Enter your full name"
@@ -125,11 +127,11 @@ export default function UserDetailsForm({ onSubmit, isLoading }) {
 
         {/* Email */}
         <div>
-          <Label className="text-sm text-[#1E1E1E] mb-1.5 block font-medium">
+          <Label className="text-sm mb-1.5 block font-medium" style={{ color: TEXT_PRIMARY }}>
             Email Address *
           </Label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#7A9BA8]" />
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: TEXT_PRIMARY_ALPHA_70 }} />
             <Input
               type="email"
               placeholder="your.email@example.com"
@@ -148,11 +150,11 @@ export default function UserDetailsForm({ onSubmit, isLoading }) {
 
         {/* Phone */}
         <div>
-          <Label className="text-sm text-[#1E1E1E] mb-1.5 block font-medium">
+          <Label className="text-sm mb-1.5 block font-medium" style={{ color: TEXT_PRIMARY }}>
             Phone Number *
           </Label>
           <div className="relative">
-            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#7A9BA8]" />
+            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: TEXT_PRIMARY_ALPHA_70 }} />
             <Input
               type="tel"
               placeholder="+64 21 123 4567"
@@ -171,11 +173,11 @@ export default function UserDetailsForm({ onSubmit, isLoading }) {
 
         {/* Country */}
         <div>
-          <Label className="text-sm text-[#1E1E1E] mb-1.5 block font-medium">
+          <Label className="text-sm mb-1.5 block font-medium" style={{ color: TEXT_PRIMARY }}>
             Country *
           </Label>
           <div className="relative">
-            <Globe className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#7A9BA8] z-10" />
+            <Globe className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 z-10" style={{ color: TEXT_PRIMARY_ALPHA_70 }} />
             <Select
               value={formData.country}
               onValueChange={(value) => handleInputChange("country", value)}
@@ -201,7 +203,7 @@ export default function UserDetailsForm({ onSubmit, isLoading }) {
         </div>
 
         {/* Terms and Privacy */}
-        <div className="bg-[#F9F9F9] rounded-xl p-4 border border-[#B8D963]/10">
+        <div className="rounded-xl p-4" style={{ backgroundColor: BACKGROUND_PRIMARY_ALPHA_10, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
           <div className="space-y-3">
             <div className="flex items-start gap-3">
               <input
@@ -209,9 +211,10 @@ export default function UserDetailsForm({ onSubmit, isLoading }) {
                 id="terms"
                 checked={formData.terms_accepted}
                 onChange={(e) => handleInputChange("terms_accepted", e.target.checked)}
-                className="mt-1 w-4 h-4 text-[#0E7C8C] border-gray-300 rounded focus:ring-[#0E7C8C]"
+                className="mt-1 w-4 h-4 rounded"
+                style={{ color: ACCENT_PRIMARY, borderColor: TEXT_PRIMARY_ALPHA_50 }}
               />
-              <label htmlFor="terms" className="text-sm text-[#7A9BA8] leading-relaxed cursor-pointer">
+              <label htmlFor="terms" className="text-sm leading-relaxed cursor-pointer" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
                 I understand that Compass Connect is a non-medical concierge service. All medical decisions and surgical care are provided solely by licensed hospitals and medical professionals. I agree to be contacted about my inquiry.
               </label>
             </div>
@@ -227,8 +230,11 @@ export default function UserDetailsForm({ onSubmit, isLoading }) {
         {/* Submit Button */}
         <Button
           type="submit"
-          disabled={isLoading}
-          className="w-full bg-[#0E7C8C] hover:bg-[#0E7C8C]/90 text-white py-3 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2"
+          disabled={isLoading || !formData.terms_accepted}
+          className="w-full py-3 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2"
+          style={{ backgroundColor: TEXT_PRIMARY, color: COMPONENTS.BUTTON_PRIMARY_TEXT }}
+          onMouseEnter={(e) => e.target.style.backgroundColor = TEXT_PRIMARY_ALPHA_80}
+          onMouseLeave={(e) => e.target.style.backgroundColor = TEXT_PRIMARY}
         >
           {isLoading ? (
             <>

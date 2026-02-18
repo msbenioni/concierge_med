@@ -26,6 +26,7 @@ import {
 import { format } from "date-fns";
 import DisclaimerBlock from "./DisclaimerBlock";
 import UserDetailsForm from "./UserDetailsForm";
+import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_20, TEXT_PRIMARY_ALPHA_50, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_80, ACCENT_PRIMARY, ACCENT_PRIMARY_ALPHA_20, ACCENT_PRIMARY_ALPHA_40, BACKGROUND_PRIMARY_ALPHA_10, COMPONENTS, GLASS, BORDERS } from "../../constants/colors";
 
 const STEPS = [
   { title: "Your Details", desc: "Provide contact information" },
@@ -163,11 +164,11 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
             {STEPS.slice(0, 5).map((s, i) => (
               <div key={i} className="flex items-center gap-2">
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-300 ${
-                    i <= step
-                      ? "bg-[#0F1C2E] text-white"
-                      : "bg-[#0F1C2E]/5 text-[#7C848E]"
-                  }`}
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-300"
+                  style={{
+                    backgroundColor: i <= step ? TEXT_PRIMARY : ACCENT_PRIMARY_ALPHA_20,
+                    color: i <= step ? COMPONENTS.BUTTON_PRIMARY_TEXT : TEXT_PRIMARY_ALPHA_50
+                  }}
                 >
                   {i < step ? (
                     <CheckCircle2 className="w-4 h-4" />
@@ -177,9 +178,10 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
                 </div>
                 {i < 3 && (
                   <div
-                    className={`hidden sm:block w-12 lg:w-20 h-0.5 transition-all duration-300 ${
-                      i < step ? "bg-[#FF8C42]" : "bg-[#0F1C2E]/5"
-                    }`}
+                    className="hidden sm:block w-12 lg:w-20 h-0.5 transition-all duration-300"
+                    style={{
+                      backgroundColor: i < step ? ACCENT_PRIMARY : ACCENT_PRIMARY_ALPHA_20
+                    }}
                   />
                 )}
               </div>
@@ -187,12 +189,12 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
           </div>
           <div className="text-center">
             <h3
-              className="text-xl font-bold text-[#0F1C2E]"
-              style={{ fontFamily: "Playfair Display, serif" }}
+              className="text-xl font-bold"
+              style={{ fontFamily: "Playfair Display, serif", color: TEXT_PRIMARY }}
             >
               {STEPS[step].title}
             </h3>
-            <p className="text-sm text-[#7C848E] mt-1" style={{ fontFamily: "Inter, sans-serif" }}>
+            <p className="text-sm mt-1" style={{ fontFamily: "Inter, sans-serif", color: TEXT_PRIMARY_ALPHA_50 }}>
               {STEPS[step].desc}
             </p>
           </div>
@@ -217,8 +219,8 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
 
           {/* Step 1: Questionnaire Confirmation */}
           {step === 1 && (
-            <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-[#FF8C42]/5">
-              <p className="text-[#7C848E] mb-6 leading-relaxed" style={{ fontFamily: "Inter, sans-serif" }}>
+            <div className="rounded-2xl p-6 sm:p-8 shadow-sm" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
+              <p className="mb-6 leading-relaxed" style={{ fontFamily: "Inter, sans-serif", color: TEXT_PRIMARY_ALPHA_50 }}>
                 Before booking your group travel seat, you must first complete the hospital's health questionnaire. This is assessed by Mexico Bariatric Center's medical team.
               </p>
 
@@ -226,14 +228,17 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
                 href="https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 p-4 rounded-xl bg-[#1F4E5F]/5 border border-[#1F4E5F]/10 hover:bg-[#1F4E5F]/10 transition-colors mb-6"
+                className="flex items-center gap-3 p-4 rounded-xl transition-colors mb-6"
+                style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20, border: `1px solid ${ACCENT_PRIMARY_ALPHA_30}` }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = ACCENT_PRIMARY_ALPHA_30}
+                onMouseLeave={(e) => e.target.style.backgroundColor = ACCENT_PRIMARY_ALPHA_20}
               >
-                <ExternalLink className="w-5 h-5 text-[#1F4E5F]" />
+                <ExternalLink className="w-5 h-5" style={{ color: ACCENT_PRIMARY }} />
                 <div>
-                  <span className="text-sm font-semibold text-[#0F1C2E] block">
+                  <span className="text-sm font-semibold block" style={{ color: TEXT_PRIMARY }}>
                     Hospital Health Questionnaire
                   </span>
-                  <span className="text-xs text-[#7C848E]">
+                  <span className="text-xs" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
                     mexicobariatriccenter.com
                   </span>
                 </div>
@@ -246,7 +251,8 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
                   className="mt-1"
                 />
                 <Label
-                  className="text-sm text-[#1E1E1E] leading-relaxed cursor-pointer"
+                  className="text-sm leading-relaxed cursor-pointer"
+                  style={{ color: TEXT_PRIMARY }}
                 >
                   I have completed the hospital health questionnaire.
                 </Label>
@@ -256,8 +262,8 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
 
           {/* Step 2: Quote Confirmation */}
           {step === 2 && (
-            <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-[#FF8C42]/5">
-              <p className="text-[#7C848E] mb-6 leading-relaxed" style={{ fontFamily: "Inter, sans-serif" }}>
+            <div className="rounded-2xl p-6 sm:p-8 shadow-sm" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
+              <p className="mb-6 leading-relaxed" style={{ fontFamily: "Inter, sans-serif", color: TEXT_PRIMARY_ALPHA_50 }}>
                 After the hospital assesses your questionnaire, they will send you a surgery quote directly. Please confirm you have received it before proceeding.
               </p>
 
@@ -268,7 +274,8 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
                   className="mt-1"
                 />
                 <Label
-                  className="text-sm text-[#1E1E1E] leading-relaxed cursor-pointer"
+                  className="text-sm leading-relaxed cursor-pointer"
+                  style={{ color: TEXT_PRIMARY }}
                 >
                   I have received my surgery quote from the hospital.
                 </Label>
@@ -278,41 +285,48 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
-                  className="space-y-4 pt-4 border-t border-[#FF8C42]/10"
+                  className="space-y-4 pt-4"
+                  style={{ borderTop: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}
                 >
-                  <p className="text-xs text-[#7C848E]" style={{ fontFamily: "Inter, sans-serif" }}>
+                  <p className="text-xs" style={{ fontFamily: "Inter, sans-serif", color: TEXT_PRIMARY_ALPHA_50 }}>
                     Optional — for coordination purposes only. Hospital fees are paid directly to the hospital.
                   </p>
                   <div>
-                    <Label className="text-sm text-[#1E1E1E] mb-1.5 block">Surgery Type</Label>
-                    <Select
-                      value={form.surgery_type}
-                      onValueChange={(v) => updateForm("surgery_type", v)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="bariatric">Bariatric Surgery</SelectItem>
-                        <SelectItem value="cosmetic">Cosmetic Surgery</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label className="text-sm text-[#1E1E1E] mb-1.5 block">Quote Amount (USD)</Label>
+                    <Label className="text-sm font-medium mb-1.5 block" style={{ color: TEXT_PRIMARY }}>
+                      Surgery Type
+                    </Label>
                     <Input
-                      type="number"
-                      placeholder="e.g. 4,500"
-                      value={form.quote_amount}
-                      onChange={(e) => updateForm("quote_amount", e.target.value)}
+                      type="text"
+                      placeholder="e.g., Gastric Sleeve, Gastric Bypass"
+                      value={form.surgery_type}
+                      onChange={(e) => updateForm("surgery_type", e.target.value)}
+                      className="w-full"
                     />
                   </div>
+
                   <div>
-                    <Label className="text-sm text-[#1E1E1E] mb-1.5 block">Quote Reference ID</Label>
+                    <Label className="text-sm font-medium mb-1.5 block" style={{ color: TEXT_PRIMARY }}>
+                      Quote Amount (USD)
+                    </Label>
                     <Input
-                      placeholder="e.g. MBC-12345"
+                      type="number"
+                      placeholder="e.g., 8500"
+                      value={form.quote_amount}
+                      onChange={(e) => updateForm("quote_amount", e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div>
+                    <Label className="text-sm font-medium mb-1.5 block" style={{ color: TEXT_PRIMARY }}>
+                      Hospital Reference Number
+                    </Label>
+                    <Input
+                      type="text"
+                      placeholder="e.g., MBC-123456"
                       value={form.quote_reference}
                       onChange={(e) => updateForm("quote_reference", e.target.value)}
+                      className="w-full"
                     />
                   </div>
                 </motion.div>
@@ -322,9 +336,9 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
 
           {/* Step 3: Trip & Personal Details */}
           {step === 3 && (
-            <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-[#FF8C42]/5 space-y-6">
+            <div className="rounded-2xl p-6 sm:p-8 shadow-sm space-y-6" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
               <div>
-                <Label className="text-sm text-[#1E1E1E] mb-1.5 block font-semibold">Select Group Trip *</Label>
+                <Label className="text-sm mb-1.5 block font-semibold" style={{ color: TEXT_PRIMARY }}>Select Group Trip *</Label>
                 <Select
                   value={form.trip_id}
                   onValueChange={(v) => updateForm("trip_id", v)}
@@ -344,10 +358,10 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
                 </Select>
               </div>
 
-              <div className="border-t border-[#FF8C42]/10 pt-6 space-y-4">
-                <h4 className="text-sm font-semibold text-[#0F1C2E]">Personal Details</h4>
+              <div className="pt-6 space-y-4" style={{ borderTop: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
+                <h4 className="text-sm font-semibold" style={{ color: TEXT_PRIMARY }}>Personal Details</h4>
                 <div>
-                  <Label className="text-sm text-[#1E1E1E] mb-1.5 block">Full Name *</Label>
+                  <Label className="text-sm mb-1.5 block" style={{ color: TEXT_PRIMARY }}>Full Name *</Label>
                   <Input
                     placeholder="Your full name"
                     value={form.full_name}
@@ -355,7 +369,7 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
                   />
                 </div>
                 <div>
-                  <Label className="text-sm text-[#1E1E1E] mb-1.5 block">Email *</Label>
+                  <Label className="text-sm mb-1.5 block" style={{ color: TEXT_PRIMARY }}>Email *</Label>
                   <Input
                     type="email"
                     placeholder="your@email.com"
@@ -364,7 +378,7 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
                   />
                 </div>
                 <div>
-                  <Label className="text-sm text-[#1E1E1E] mb-1.5 block">Phone *</Label>
+                  <Label className="text-sm mb-1.5 block" style={{ color: TEXT_PRIMARY }}>Phone *</Label>
                   <Input
                     type="tel"
                     placeholder="+64 21 000 0000"
@@ -373,7 +387,7 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
                   />
                 </div>
                 <div>
-                  <Label className="text-sm text-[#1E1E1E] mb-1.5 block">Departure City *</Label>
+                  <Label className="text-sm mb-1.5 block" style={{ color: TEXT_PRIMARY }}>Departure City *</Label>
                   <Input
                     placeholder="e.g. Auckland"
                     value={form.departure_city}
@@ -386,30 +400,30 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
 
           {/* Step 4: Payment */}
           {step === 4 && (
-            <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-[#FF8C42]/5">
+            <div className="rounded-2xl p-6 sm:p-8 shadow-sm" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
               <div className="text-center mb-8">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-[#FF8C42]/10 flex items-center justify-center mb-4">
-                  <CreditCard className="w-7 h-7 text-[#FF8C42]" />
+                <div className="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20 }}>
+                  <CreditCard className="w-7 h-7" style={{ color: ACCENT_PRIMARY }} />
                 </div>
-                <h3 className="text-2xl font-bold text-[#0F1C2E]" style={{ fontFamily: "Playfair Display, serif" }}>
+                <h3 className="text-2xl font-bold" style={{ fontFamily: "Playfair Display, serif", color: TEXT_PRIMARY }}>
                   Payment Summary
                 </h3>
               </div>
 
               {/* Summary */}
               {selectedTrip && (
-                <div className="bg-[#F4F1EB] rounded-xl p-5 mb-6 space-y-3">
+                <div className="rounded-xl p-5 mb-6 space-y-3" style={{ backgroundColor: BACKGROUND_PRIMARY_ALPHA_10 }}>
                   <div className="flex items-center gap-2 text-sm">
-                    <MapPin className="w-4 h-4 text-[#7C848E]" />
-                    <span className="text-[#1E1E1E] font-medium">{selectedTrip.departure_city} → {selectedTrip.destination}</span>
+                    <MapPin className="w-4 h-4" style={{ color: TEXT_PRIMARY_ALPHA_70 }} />
+                    <span className="font-medium" style={{ color: TEXT_PRIMARY }}>{selectedTrip.departure_city} → {selectedTrip.destination}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
-                    <Plane className="w-4 h-4 text-[#7C848E]" />
-                    <span className="text-[#1E1E1E]">{format(new Date(selectedTrip.departure_date), "d MMM yyyy")} – {format(new Date(selectedTrip.return_date), "d MMM yyyy")}</span>
+                    <Plane className="w-4 h-4" style={{ color: TEXT_PRIMARY_ALPHA_70 }} />
+                    <span style={{ color: TEXT_PRIMARY }}>{format(new Date(selectedTrip.departure_date), "d MMM yyyy")} – {format(new Date(selectedTrip.return_date), "d MMM yyyy")}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
-                    <Users className="w-4 h-4 text-[#7C848E]" />
-                    <span className="text-[#1E1E1E]">{form.full_name}</span>
+                    <Users className="w-4 h-4" style={{ color: TEXT_PRIMARY_ALPHA_70 }} />
+                    <span style={{ color: TEXT_PRIMARY }}>{form.full_name}</span>
                   </div>
                 </div>
               )}
@@ -417,36 +431,36 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
               {/* Breakdown */}
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-sm text-[#7C848E]">Group return airfare</span>
-                  <span className="text-sm font-medium text-[#1E1E1E]">Included</span>
+                  <span className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Group return airfare</span>
+                  <span className="text-sm font-medium" style={{ color: TEXT_PRIMARY }}>Included</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-sm text-[#7C848E]">Concierge support</span>
-                  <span className="text-sm font-medium text-[#1E1E1E]">Included</span>
+                  <span className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Concierge support</span>
+                  <span className="text-sm font-medium" style={{ color: TEXT_PRIMARY }}>Included</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-sm text-[#7C848E]">On-the-ground coordination</span>
-                  <span className="text-sm font-medium text-[#1E1E1E]">Included</span>
+                  <span className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>On-the-ground coordination</span>
+                  <span className="text-sm font-medium" style={{ color: TEXT_PRIMARY }}>Included</span>
                 </div>
-                <div className="border-t border-[#FF8C42]/10 pt-3 flex justify-between items-center">
-                  <span className="text-base font-semibold text-[#0F1C2E]">Total</span>
-                  <span className="text-2xl font-bold text-[#0F1C2E]" style={{ fontFamily: "Playfair Display, serif" }}>
+                <div className="pt-3 flex justify-between items-center" style={{ borderTop: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
+                  <span className="text-base font-semibold" style={{ color: TEXT_PRIMARY }}>Total</span>
+                  <span className="text-2xl font-bold" style={{ fontFamily: "Playfair Display, serif", color: TEXT_PRIMARY }}>
                     4,000
                   </span>
                 </div>
               </div>
 
               {/* Stripe Placeholder */}
-              <div className="p-5 rounded-xl border-2 border-dashed border-[#FF8C42]/20 bg-[#FF8C42]/[0.03] text-center mb-6">
-                <CreditCard className="w-8 h-8 text-[#FF8C42]/40 mx-auto mb-2" />
-                <p className="text-sm text-[#7C848E]" style={{ fontFamily: "Inter, sans-serif" }}>
+              <div className="p-5 rounded-xl border-2 border-dashed text-center mb-6" style={{ borderColor: ACCENT_PRIMARY_ALPHA_20, backgroundColor: ACCENT_PRIMARY_ALPHA_10 }}>
+                <CreditCard className="w-8 h-8 mx-auto mb-2" style={{ color: ACCENT_PRIMARY_ALPHA_40 }} />
+                <p className="text-sm" style={{ fontFamily: "Inter, sans-serif", color: TEXT_PRIMARY_ALPHA_70 }}>
                   Stripe payment integration will be configured here
                 </p>
               </div>
 
               <div className="flex items-start gap-2 mb-6">
-                <Shield className="w-4 h-4 text-[#1F4E5F] mt-0.5 flex-shrink-0" />
-                <p className="text-xs text-[#7C848E]">
+                <Shield className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: ACCENT_PRIMARY }} />
+                <p className="text-xs" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
                   This fee covers airfare and concierge services only. Hospital / surgical fees are paid separately, directly to the hospital.
                 </p>
               </div>
@@ -454,7 +468,10 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
               <Button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="w-full py-6 rounded-xl bg-[#0F1C2E] text-white font-semibold hover:bg-[#1a2d45] transition-all shadow-lg"
+                className="w-full py-6 rounded-xl font-semibold transition-all shadow-lg"
+                style={{ backgroundColor: TEXT_PRIMARY, color: COMPONENTS.BUTTON_PRIMARY_TEXT }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = TEXT_PRIMARY_ALPHA_80}
+                onMouseLeave={(e) => e.target.style.backgroundColor = TEXT_PRIMARY}
               >
                 {isSubmitting ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
@@ -467,17 +484,17 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
 
           {/* Step 5: Confirmation */}
           {step === 5 && bookingComplete && (
-            <div className="bg-white rounded-2xl p-8 sm:p-12 shadow-sm border border-[#FF8C42]/5 text-center">
-              <div className="w-20 h-20 mx-auto rounded-full bg-emerald-50 flex items-center justify-center mb-6">
-                <CheckCircle2 className="w-10 h-10 text-emerald-600" />
+            <div className="rounded-2xl p-8 sm:p-12 shadow-sm text-center" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
+              <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6" style={{ backgroundColor: COMPONENTS.SUCCESS_BACKGROUND }}>
+                <CheckCircle2 className="w-10 h-10" style={{ color: COMPONENTS.SUCCESS_TEXT }} />
               </div>
               <h2
-                className="text-3xl font-bold text-[#0F1C2E] mb-3"
-                style={{ fontFamily: "Playfair Display, serif" }}
+                className="text-3xl font-bold mb-3"
+                style={{ fontFamily: "Playfair Display, serif", color: TEXT_PRIMARY }}
               >
                 Booking Received
               </h2>
-              <p className="text-[#7C848E] max-w-md mx-auto mb-8 leading-relaxed" style={{ fontFamily: "Inter, sans-serif" }}>
+              <p className="max-w-md mx-auto mb-8 leading-relaxed" style={{ fontFamily: "Inter, sans-serif", color: TEXT_PRIMARY_ALPHA_70 }}>
                 Thank you for reserving your seat. Here's what happens next:
               </p>
 
@@ -489,10 +506,10 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
                   "Hospital fees are arranged separately between you and the hospital.",
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-[#FF8C42]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-xs font-bold text-[#FF8C42]">{i + 1}</span>
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20 }}>
+                      <span className="text-xs font-bold" style={{ color: ACCENT_PRIMARY }}>{i + 1}</span>
                     </div>
-                    <p className="text-sm text-[#1E1E1E]/70" style={{ fontFamily: "Inter, sans-serif" }}>
+                    <p className="text-sm" style={{ fontFamily: "Inter, sans-serif", color: TEXT_PRIMARY_ALPHA_70 }}>
                       {item}
                     </p>
                   </div>
@@ -511,8 +528,9 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
           {step > 0 ? (
             <Button
               variant="outline"
-              onClick={() => setStep(step - 1)}
-              className="rounded-xl px-6 py-3 border-[#0F1C2E]/10"
+              onClick={() => setStep((s) => Math.max(0, s - 1))}
+              className="rounded-xl px-6 py-3"
+              style={{ border: `1px solid ${TEXT_PRIMARY_ALPHA_20}` }}
             >
               <ChevronLeft className="w-4 h-4 mr-1" />
               Back
@@ -523,9 +541,12 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
 
           {step < 3 && (
             <Button
-              onClick={() => setStep(step + 1)}
+              onClick={() => setStep((s) => Math.min(4, s + 1))}
               disabled={!canProceed()}
-              className="rounded-xl px-6 py-3 bg-[#0F1C2E] text-white hover:bg-[#1a2d45] disabled:opacity-30"
+              className="rounded-xl px-6 py-3"
+              style={{ backgroundColor: TEXT_PRIMARY, color: COMPONENTS.BUTTON_PRIMARY_TEXT }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = TEXT_PRIMARY_ALPHA_80}
+              onMouseLeave={(e) => e.target.style.backgroundColor = TEXT_PRIMARY}
             >
               Continue
               <ChevronRight className="w-4 h-4 ml-1" />

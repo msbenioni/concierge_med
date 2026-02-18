@@ -4,6 +4,7 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
+import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, ACCENT_PRIMARY } from "../constants/colors";
 
 const FAQS = [
   {
@@ -89,13 +90,16 @@ function FAQItem({ question, answer }) {
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between py-5 text-left group"
       >
-        <span className="font-sans font-medium text-sm text-gray-900 pr-8 group-hover:text-[#FF8C42] transition-colors">
+        <span className="font-sans font-medium text-sm pr-8 transition-colors" style={{ color: TEXT_PRIMARY }} onMouseEnter={(e) => e.target.style.color = ACCENT_PRIMARY} onMouseLeave={(e) => e.target.style.color = TEXT_PRIMARY}>
           {question}
         </span>
         <ChevronDown
-          className={`w-4 h-4 text-gray-500 flex-shrink-0 transition-transform duration-300 ${
-            open ? "rotate-180 text-[#FF8C42]" : ""
+          className={`w-4 h-4 flex-shrink-0 transition-transform duration-300 ${
+            open ? "rotate-180" : ""
           }`}
+          style={{ color: TEXT_PRIMARY_ALPHA_50 }}
+          onMouseEnter={(e) => e.target.style.color = ACCENT_PRIMARY}
+          onMouseLeave={(e) => e.target.style.color = TEXT_PRIMARY_ALPHA_50}
         />
       </button>
       <AnimatePresence>
@@ -127,13 +131,13 @@ export default function FAQ() {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] text-[#FF8C42] mb-4 block">
+          <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
             Questions & Clarity
           </span>
-          <h1 className="font-serif text-4xl md:text-5xl text-gray-900 mb-4">
+          <h1 className="font-serif text-4xl md:text-5xl mb-4" style={{ color: TEXT_PRIMARY }}>
             Frequently Asked Questions
           </h1>
-          <p className="text-gray-600 text-lg">
+          <p className="text-lg" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
             Everything you need to know about our non-medical travel concierge service.
           </p>
         </motion.div>
@@ -148,8 +152,8 @@ export default function FAQ() {
             className="mb-12"
           >
             <div className="flex items-center gap-2 mb-4">
-              <HelpCircle className="w-4 h-4 text-[#FF8C42]" />
-              <h2 className="font-serif text-xl text-gray-900">{section.category}</h2>
+              <HelpCircle className="w-4 h-4" style={{ color: ACCENT_PRIMARY }} />
+              <h2 className="font-serif text-xl" style={{ color: TEXT_PRIMARY }}>{section.category}</h2>
             </div>
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
               {section.questions.map((faq, qi) => (

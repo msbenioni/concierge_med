@@ -29,6 +29,7 @@ export const COLORS = {
   TEXT_PRIMARY_ALPHA_20: 'rgba(255, 255, 255, 0.2)',   // Placeholder text
   TEXT_PRIMARY_ALPHA_25: 'rgba(255, 255, 255, 0.25)',  // Subtle text
   TEXT_PRIMARY_ALPHA_30: 'rgba(255, 255, 255, 0.3)',   // Muted text
+  TEXT_PRIMARY_ALPHA_35: 'rgba(255, 255, 255, 0.35)',  // Medium-muted text
   TEXT_PRIMARY_ALPHA_40: 'rgba(255, 255, 255, 0.4)',   // Subtle dividers
   TEXT_PRIMARY_ALPHA_50: 'rgba(255, 255, 255, 0.5)',   // Secondary text
   TEXT_PRIMARY_ALPHA_60: 'rgba(255, 255, 255, 0.6)',   // Content text
@@ -142,6 +143,7 @@ export const {
   TEXT_PRIMARY_ALPHA_20,
   TEXT_PRIMARY_ALPHA_25,
   TEXT_PRIMARY_ALPHA_30,
+  TEXT_PRIMARY_ALPHA_35,
   TEXT_PRIMARY_ALPHA_40,
   TEXT_PRIMARY_ALPHA_50,
   TEXT_PRIMARY_ALPHA_60,

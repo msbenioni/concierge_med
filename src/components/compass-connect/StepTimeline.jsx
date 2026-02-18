@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ClipboardCheck, FileText, Plane } from "lucide-react";
+import { TEXT_PRIMARY, ACCENT_PRIMARY, ACCENT_SECONDARY, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_50, ACCENT_PRIMARY_ALPHA_20, GLASS, SHADOWS } from "../../constants/colors";
 
 const STEPS = [
   {
@@ -8,21 +9,21 @@ const STEPS = [
     icon: ClipboardCheck,
     title: "Complete Hospital Questionnaire",
     desc: "Fill out the health questionnaire directly with our partner hospitals. This is your first step toward assessment.",
-    accent: "#0A4A52",
+    accent: ACCENT_PRIMARY,
   },
   {
     num: "02",
     icon: FileText,
     title: "Receive Your Surgery Quote",
     desc: "The hospital will assess your information and provide a personalised surgery quote directly to you.",
-    accent: "#5A6B00",
+    accent: ACCENT_SECONDARY,
   },
   {
     num: "03",
     icon: Plane,
     title: "Secure Your Group Travel Seat",
     desc: "Return to Compass Connect and book your seat for 4,000 — includes return flights, concierge support, and group coordination.",
-    accent: "#063A45",
+    accent: ACCENT_PRIMARY,
   },
 ];
 
@@ -36,11 +37,11 @@ export default function StepTimeline() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-xs uppercase tracking-[0.2em] text-[#B8D963] font-semibold">Your Journey</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0E7C8C] mt-3" style={{ fontFamily: 'Playfair Display, serif' }}>
+          <span className="text-xs uppercase tracking-[0.2em] font-semibold" style={{ color: ACCENT_PRIMARY }}>Your Journey</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-3" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
             How It Works
           </h2>
-          <p className="mt-4 text-[#7A9BA8] max-w-lg mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
+          <p className="mt-4 max-w-lg mx-auto" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
             Three clear steps from assessment to travel — with full transparency at every stage.
           </p>
         </motion.div>
@@ -55,31 +56,31 @@ export default function StepTimeline() {
               transition={{ delay: i * 0.15 }}
               className="group relative"
             >
-              <div className="bg-white rounded-2xl p-8 lg:p-10 shadow-sm hover:shadow-xl transition-all duration-500 border border-[#B8D963]/5 h-full">
+              <div className="rounded-2xl p-8 lg:p-10 shadow-sm hover:shadow-xl transition-all duration-500 h-full" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
                 {/* Step Number */}
                 <div className="flex items-center justify-between mb-8">
-                  <span className="text-5xl font-bold text-[#0E7C8C]/5" style={{ fontFamily: 'Playfair Display, serif' }}>
+                  <span className="text-5xl font-bold" style={{ fontFamily: 'Playfair Display, serif', color: ACCENT_PRIMARY_ALPHA_20 }}>
                     {step.num}
                   </span>
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300"
-                    style={{ backgroundColor: `${step.accent}10` }}
+                    style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20 }}
                   >
                     <step.icon className="w-5 h-5" style={{ color: step.accent }} />
                   </div>
                 </div>
 
-                <h3 className="text-xl font-semibold text-[#0E7C8C] mb-3" style={{ fontFamily: 'Playfair Display, serif' }}>
+                <h3 className="text-xl font-semibold mb-3" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
                   {step.title}
                 </h3>
-                <p className="text-[#7A9BA8] text-sm leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <p className="text-sm leading-relaxed" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_50 }}>
                   {step.desc}
                 </p>
               </div>
 
               {/* Connector line */}
               {i < STEPS.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 -right-4 lg:-right-4 w-8 border-t-2 border-dashed border-[#B8D963]/20" />
+                <div className="hidden md:block absolute top-1/2 -right-4 lg:-right-4 w-8 border-t-2 border-dashed" style={{ borderColor: ACCENT_PRIMARY_ALPHA_20 }} />
               )}
             </motion.div>
           ))}

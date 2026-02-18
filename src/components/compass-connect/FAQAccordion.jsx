@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { motion } from "framer-motion";
+import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, ACCENT_PRIMARY, ACCENT_PRIMARY_ALPHA_20, GLASS, BORDERS } from "../../constants/colors";
 
 export default function FAQAccordion({ items }) {
   return (
@@ -20,12 +21,13 @@ export default function FAQAccordion({ items }) {
         >
           <AccordionItem
             value={`faq-${i}`}
-            className="border border-[#FF8C42]/5 rounded-2xl bg-white px-6 shadow-sm data-[state=open]:shadow-md transition-shadow"
+            className="rounded-2xl px-6 shadow-sm data-[state=open]:shadow-md transition-shadow"
+            style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}
           >
-            <AccordionTrigger className="text-left text-[#0F1C2E] font-semibold text-base py-5 hover:no-underline" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <AccordionTrigger className="text-left font-semibold text-base py-5 hover:no-underline" style={{ color: TEXT_PRIMARY, fontFamily: 'Inter, sans-serif' }}>
               {item.question}
             </AccordionTrigger>
-            <AccordionContent className="text-[#7C848E] text-sm leading-relaxed pb-5" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <AccordionContent className="text-sm leading-relaxed pb-5" style={{ color: TEXT_PRIMARY_ALPHA_50, fontFamily: 'Inter, sans-serif' }}>
               {item.answer}
             </AccordionContent>
           </AccordionItem>

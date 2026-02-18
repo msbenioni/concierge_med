@@ -3,6 +3,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import { pagesConfig } from './pages.config'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, ACCENT_PRIMARY, COMPONENTS } from './constants/colors';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -37,9 +38,9 @@ function App() {
             <LayoutWrapper>
               <div className="flex items-center justify-center min-h-screen">
                 <div className="text-center">
-                  <h1 className="text-4xl font-bold text-[#0F1C2E] mb-4">Page Not Found</h1>
-                  <p className="text-[#7C848E] mb-8">The page you're looking for doesn't exist.</p>
-                  <a href="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0E7C8C] text-white font-semibold hover:bg-[#1BA8B8] transition-colors">
+                  <h1 className="text-4xl font-bold mb-4" style={{ color: TEXT_PRIMARY }}>Page Not Found</h1>
+                  <p className="mb-8" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>The page you're looking for doesn't exist.</p>
+                  <a href="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-colors" style={{ backgroundColor: ACCENT_PRIMARY, color: COMPONENTS.BUTTON_PRIMARY_TEXT }}>
                     Return Home
                   </a>
                 </div>

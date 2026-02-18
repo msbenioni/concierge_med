@@ -33,6 +33,7 @@ import {
   BACKGROUND_PRIMARY, 
   TEXT_PRIMARY, 
   ACCENT_PRIMARY, 
+  ACCENT_SECONDARY,
   TEXT_PRIMARY_ALPHA_70, 
   TEXT_PRIMARY_ALPHA_50, 
   TEXT_PRIMARY_ALPHA_20, 
@@ -719,7 +720,10 @@ export default function Admin() {
                 <h2 className="text-xl font-semibold text-gray-900">Manage Journeys</h2>
                 <Button
                   onClick={() => setShowAddForm(true)}
-                  className="bg-[#0E7C8C] hover:bg-[#1BA8B8] text-white rounded-xl"
+                  className="rounded-xl"
+                  style={{ backgroundColor: ACCENT_PRIMARY, color: COMPONENTS.BUTTON_PRIMARY_TEXT }}
+                  onMouseEnter={(e) => e.target.style.backgroundColor = ACCENT_SECONDARY}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = ACCENT_PRIMARY}
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Journey

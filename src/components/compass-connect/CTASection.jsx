@@ -9,6 +9,7 @@ import {
   TEXT_PRIMARY, 
   ACCENT_PRIMARY, 
   TEXT_PRIMARY_ALPHA_60, 
+  TEXT_PRIMARY_ALPHA_50,
   TEXT_PRIMARY_ALPHA_25, 
   ACCENT_PRIMARY_ALPHA_20, 
   GRADIENTS, 
@@ -54,11 +55,11 @@ export default function CTASection() {
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold text-sm transition-all duration-300 shadow-xl"
                 style={{ 
                   backgroundColor: COMPONENTS.STATUS_WARNING, 
-                  color: '#0F1C2E',
+                  color: TEXT_PRIMARY_ALPHA_50,
                   boxShadow: SHADOWS.ACCENT_MEDIUM
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#b8953e';
+                  e.target.style.backgroundColor = ACCENT_SECONDARY;
                   e.target.style.boxShadow = SHADOWS.ACCENT_STRONG;
                 }}
                 onMouseLeave={(e) => {

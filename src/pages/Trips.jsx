@@ -5,6 +5,7 @@ import { TRIP_CONFIG, TRIP_STATUS } from "../constants";
 import TripCard from "../components/compass-connect/TripCard";
 import CTASection from "../components/compass-connect/CTASection";
 import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
+import { TEXT_PRIMARY, ACCENT_PRIMARY, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_50 } from "../constants/colors";
 
 export default function Trips() {
   // Mock data for demonstration - this would come from your admin-managed data
@@ -63,22 +64,21 @@ export default function Trips() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-2xl"
           >
-            <span className="text-xs uppercase tracking-[0.2em] text-[#FF8C42] font-semibold">
+            <span className="text-xs uppercase tracking-[0.2em] font-semibold" style={{ color: ACCENT_PRIMARY }}>
               Upcoming Departures
             </span>
             <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0F1C2E] mt-3"
-              style={{ fontFamily: 'Playfair Display, serif' }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-3"
+              style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}
             >
               Group Trips
             </h1>
-            <p className="mt-5 text-lg text-[#7C848E] leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <p className="mt-5 text-lg leading-relaxed" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
               Browse upcoming group travel dates. Each trip includes return flights and full concierge support.
             </p>
           </motion.div>
         </div>
       </section>
-
 
       {/* Trip Cards */}
       <section className="py-8 lg:py-12">
@@ -91,7 +91,7 @@ export default function Trips() {
             </div>
           ) : (
             <div className="text-center py-20">
-              <p className="text-[#7C848E]" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <p style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_50 }}>
                 No trips available at the moment. Check back soon.
               </p>
             </div>

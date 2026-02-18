@@ -9,10 +9,14 @@ import {
   BACKGROUND_PRIMARY, 
   TEXT_PRIMARY, 
   ACCENT_PRIMARY, 
+  ACCENT_SECONDARY,
   TEXT_PRIMARY_ALPHA_70, 
+  TEXT_PRIMARY_ALPHA_60, 
   TEXT_PRIMARY_ALPHA_50, 
   TEXT_PRIMARY_ALPHA_20, 
+  TEXT_PRIMARY_ALPHA_80,
   ACCENT_PRIMARY_ALPHA_20, 
+  ACCENT_PRIMARY_ALPHA_10,
   GRADIENTS, 
   GLASS, 
   SHADOWS,
@@ -243,15 +247,15 @@ export default function Booking() {
 
             {/* Step 1: Select Journey */}
             {step === 1 && (
-              <motion.div key="s1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="bg-black/40 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-[#D4AF37]/20 space-y-6">
-                <h2 className="font-serif text-2xl text-white mb-6">Select Your Journey</h2>
+              <motion.div key="s1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="rounded-3xl p-8 shadow-2xl space-y-6" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
+                <h2 className="font-serif text-2xl mb-6" style={{ color: TEXT_PRIMARY }}>Select Your Journey</h2>
                 <div>
-                  <Label className="text-xs font-sans text-white/70">Journey *</Label>
+                  <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Journey *</Label>
                   <Select value={formData.trip_id} onValueChange={(v) => updateFormData("trip_id", v)}>
-                    <SelectTrigger className="mt-1.5 bg-white/10 border-white/20 text-white"><SelectValue placeholder="Choose a journey" /></SelectTrigger>
-                    <SelectContent className="bg-black/90 border-[#D4AF37]/20">
+                    <SelectTrigger className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}><SelectValue placeholder="Choose a journey" /></SelectTrigger>
+                    <SelectContent style={{ backgroundColor: GLASS.CARD_BACKGROUND, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
                       {mockTrips.map((t) => (
-                        <SelectItem key={t.id} value={t.id.toString()} className="text-white">
+                        <SelectItem key={t.id} value={t.id.toString()} style={{ color: TEXT_PRIMARY }}>
                           {t.title} — {t.destination}
                         </SelectItem>
                       ))}
@@ -259,23 +263,23 @@ export default function Booking() {
                   </Select>
                 </div>
                 {selectedTrip && (
-                  <div className="bg-[#D4AF37]/10 rounded-2xl p-4 text-sm text-white/80 border border-[#D4AF37]/20">
-                    <p className="font-medium text-white">{selectedTrip.title}</p>
+                  <div className="rounded-2xl p-4 text-sm border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20, color: TEXT_PRIMARY_ALPHA_80 }}>
+                    <p className="font-medium" style={{ color: TEXT_PRIMARY }}>{selectedTrip.title}</p>
                     <p>{selectedTrip.destination} • Min {selectedTrip.min_travelers} travelers</p>
-                    <p className="text-[#D4AF37] font-medium mt-1">
+                    <p className="font-medium mt-1" style={{ color: ACCENT_PRIMARY }}>
                       ${selectedTrip.price.toLocaleString()} USD concierge fee
                     </p>
                   </div>
                 )}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <Label className="text-xs font-sans text-white/70">Number of Travelers *</Label>
-                    <Input type="number" min="1" value={formData.travelers_count} onChange={(e) => updateFormData("travelers_count", parseInt(e.target.value) || 1)} className="mt-1.5 bg-white/10 border-white/20 text-white placeholder-white/50" />
-                    <p className="text-[11px] text-white/50 mt-1">Min. 4 travelers per cohort to proceed</p>
+                    <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Number of Travelers *</Label>
+                    <Input type="number" min="1" value={formData.travelers_count} onChange={(e) => updateFormData("travelers_count", parseInt(e.target.value) || 1)} className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
+                    <p className="text-[11px] mt-1" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Min. 4 travelers per cohort to proceed</p>
                   </div>
                   <div>
-                    <Label className="text-xs font-sans text-white/70">Preferred Travel Date</Label>
-                    <Input type="date" value={formData.preferred_date} onChange={(e) => updateFormData("preferred_date", e.target.value)} className="mt-1.5 bg-white/10 border-white/20 text-white" />
+                    <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Preferred Travel Date</Label>
+                    <Input type="date" value={formData.preferred_date} onChange={(e) => updateFormData("preferred_date", e.target.value)} className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
                   </div>
                 </div>
               </motion.div>
@@ -283,36 +287,36 @@ export default function Booking() {
 
             {/* Step 2: Preferences */}
             {step === 2 && (
-              <motion.div key="s2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="bg-black/40 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-[#D4AF37]/20 space-y-6">
-                <h2 className="font-serif text-2xl text-white mb-6">Logistics & Preferences</h2>
+              <motion.div key="s2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="rounded-3xl p-8 shadow-2xl space-y-6" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
+                <h2 className="font-serif text-2xl mb-6" style={{ color: TEXT_PRIMARY }}>Logistics & Preferences</h2>
                 <div>
-                  <Label className="text-xs font-sans text-white/70">Rooming Preference</Label>
+                  <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Rooming Preference</Label>
                   <Select value={formData.rooming_preference} onValueChange={(v) => updateFormData("rooming_preference", v)}>
-                    <SelectTrigger className="mt-1.5 bg-white/10 border-white/20 text-white"><SelectValue /></SelectTrigger>
-                    <SelectContent className="bg-black/90 border-[#D4AF37]/20">
-                      <SelectItem value="single" className="text-white">Single Room</SelectItem>
-                      <SelectItem value="shared" className="text-white">Shared Room</SelectItem>
-                      <SelectItem value="no_preference" className="text-white">No Preference</SelectItem>
+                    <SelectTrigger className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}><SelectValue /></SelectTrigger>
+                    <SelectContent style={{ backgroundColor: GLASS.CARD_BACKGROUND, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
+                      <SelectItem value="single" style={{ color: TEXT_PRIMARY }}>Single Room</SelectItem>
+                      <SelectItem value="shared" style={{ color: TEXT_PRIMARY }}>Shared Room</SelectItem>
+                      <SelectItem value="no_preference" style={{ color: TEXT_PRIMARY }}>No Preference</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
-                  <Label className="text-xs font-sans text-white/70">Mobility Needs</Label>
-                  <Textarea value={formData.mobility_needs} onChange={(e) => updateFormData("mobility_needs", e.target.value)} placeholder="Any mobility requirements we should know about..." className="mt-1.5 h-20 bg-white/10 border-white/20 text-white placeholder-white/50" />
+                  <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Mobility Needs</Label>
+                  <Textarea value={formData.mobility_needs} onChange={(e) => updateFormData("mobility_needs", e.target.value)} placeholder="Any mobility requirements we should know about..." className="mt-1.5 h-20" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
                 </div>
                 <div>
-                  <Label className="text-xs font-sans text-white/70">Dietary Notes</Label>
-                  <Textarea value={formData.dietary_notes} onChange={(e) => updateFormData("dietary_notes", e.target.value)} placeholder="Allergies, dietary restrictions..." className="mt-1.5 h-20 bg-white/10 border-white/20 text-white placeholder-white/50" />
+                  <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Dietary Notes</Label>
+                  <Textarea value={formData.dietary_notes} onChange={(e) => updateFormData("dietary_notes", e.target.value)} placeholder="Allergies, dietary restrictions..." className="mt-1.5 h-20" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
                 </div>
                 <div>
-                  <Label className="text-xs font-sans text-white/70">Special Requests</Label>
-                  <Textarea value={formData.special_requests} onChange={(e) => updateFormData("special_requests", e.target.value)} placeholder="Anything else you'd like us to know..." className="mt-1.5 h-20 bg-white/10 border-white/20 text-white placeholder-white/50" />
+                  <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Special Requests</Label>
+                  <Textarea value={formData.special_requests} onChange={(e) => updateFormData("special_requests", e.target.value)} placeholder="Anything else you'd like us to know..." className="mt-1.5 h-20" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
                 </div>
 
                 {/* Partner Clinic Form link */}
-                <div className="bg-[#D4AF37]/10 rounded-2xl p-6 border border-[#D4AF37]/20">
-                  <h3 className="font-serif text-lg text-white mb-3">Partner Clinic Form</h3>
-                  <p className="text-sm text-white/70 mb-4">
+                <div className="rounded-2xl p-6 border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
+                  <h3 className="font-serif text-lg mb-3" style={{ color: TEXT_PRIMARY }}>Partner Clinic Form</h3>
+                  <p className="text-sm mb-4" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
                     The partner hospital requires you to complete their medical questionnaire.
                     This is the hospital's own form — Compass Connect does not process or view medical information.
                   </p>
@@ -320,11 +324,20 @@ export default function Booking() {
                     href="#"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#D4AF37] text-[#D4AF37] text-sm font-sans font-medium hover:bg-[#D4AF37] hover:text-black transition-all"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-sans font-medium transition-all"
+                    style={{ borderColor: ACCENT_PRIMARY, color: ACCENT_PRIMARY }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = ACCENT_PRIMARY;
+                      e.target.style.color = TEXT_PRIMARY;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = 'transparent';
+                      e.target.style.color = ACCENT_PRIMARY;
+                    }}
                   >
                     Open Partner Clinic Form <ExternalLink className="w-3.5 h-3.5" />
                   </a>
-                  <p className="text-[11px] text-white/50 mt-2">
+                  <p className="text-[11px] mt-2" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
                     You can complete this after booking. Our concierge team will follow up.
                   </p>
                 </div>
@@ -334,19 +347,21 @@ export default function Booking() {
             {/* Step 3: Confirmation */}
             {step === 3 && bookingResult && (
               <motion.div key="s3" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="space-y-8">
-                <div className="bg-black/40 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-[#D4AF37]/20 text-center">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#B8941F] flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle2 className="w-8 h-8 text-black" />
+                <div className="rounded-3xl p-8 shadow-2xl text-center" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})` }}>
+                    <CheckCircle2 className="w-8 h-8" style={{ color: TEXT_PRIMARY }} />
                   </div>
-                  <h2 className="font-serif text-3xl text-white mb-2">Journey Reserved</h2>
-                  <p className="text-white/70 mb-4">Your booking has been submitted successfully.</p>
-                  <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20">
-                    <span className="text-sm text-white/50">Booking Reference:</span>
-                    <span className="font-mono font-semibold text-white">{bookingResult.booking_ref}</span>
+                  <h2 className="font-serif text-3xl mb-2" style={{ color: TEXT_PRIMARY }}>Journey Reserved</h2>
+                  <p className="mb-4" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Your booking has been submitted successfully.</p>
+                  <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
+                    <span className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Booking Reference:</span>
+                    <span className="font-mono font-semibold" style={{ color: TEXT_PRIMARY }}>{bookingResult.booking_ref}</span>
                     <button
                       type="button"
                       onClick={() => navigator.clipboard.writeText(bookingResult.booking_ref)}
-                      className="text-[#D4AF37] hover:text-[#B8941F]"
+                      style={{ color: ACCENT_PRIMARY }}
+                      onMouseEnter={(e) => e.target.style.color = ACCENT_SECONDARY}
+                      onMouseLeave={(e) => e.target.style.color = ACCENT_PRIMARY}
                     >
                       <Copy className="w-3.5 h-3.5" />
                     </button>
@@ -354,43 +369,43 @@ export default function Booking() {
                 </div>
 
                 {/* Next Steps */}
-                <div className="bg-black/40 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-[#D4AF37]/20">
-                  <h3 className="font-serif text-xl text-white mb-6">What happens next</h3>
+                <div className="rounded-3xl p-8 shadow-2xl" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
+                  <h3 className="font-serif text-xl mb-6" style={{ color: TEXT_PRIMARY }}>What happens next</h3>
                   <div className="space-y-4">
                     <div className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full bg-[#D4AF37]/10 flex items-center justify-center flex-shrink-0 border border-[#D4AF37]/20">
-                        <span className="text-[#D4AF37] font-semibold text-sm">1</span>
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
+                        <span className="font-semibold text-sm" style={{ color: ACCENT_PRIMARY }}>1</span>
                       </div>
                       <div>
-                        <p className="font-medium text-white">Review your booking</p>
-                        <p className="text-sm text-white/60">Check your email for booking confirmation</p>
+                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Review your booking</p>
+                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Check your email for booking confirmation</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full bg-[#D4AF37]/10 flex items-center justify-center flex-shrink-0 border border-[#D4AF37]/20">
-                        <span className="text-[#D4AF37] font-semibold text-sm">2</span>
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
+                        <span className="font-semibold text-sm" style={{ color: ACCENT_PRIMARY }}>2</span>
                       </div>
                       <div>
-                        <p className="font-medium text-white">Complete medical questionnaire</p>
-                        <p className="text-sm text-white/60">Partner hospital will send you their medical form</p>
+                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Complete medical questionnaire</p>
+                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Partner hospital will send you their medical form</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full bg-[#D4AF37]/10 flex items-center justify-center flex-shrink-0 border border-[#D4AF37]/20">
-                        <span className="text-[#D4AF37] font-semibold text-sm">3</span>
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
+                        <span className="font-semibold text-sm" style={{ color: ACCENT_PRIMARY }}>3</span>
                       </div>
                       <div>
-                        <p className="font-medium text-white">Payment coordination</p>
-                        <p className="text-sm text-white/60">We'll send payment links for concierge services</p>
+                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Payment coordination</p>
+                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>We'll send payment links for concierge services</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full bg-[#D4AF37]/10 flex items-center justify-center flex-shrink-0 border border-[#D4AF37]/20">
-                        <span className="text-[#D4AF37] font-semibold text-sm">4</span>
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
+                        <span className="font-semibold text-sm" style={{ color: ACCENT_PRIMARY }}>4</span>
                       </div>
                       <div>
-                        <p className="font-medium text-white">Travel preparation</p>
-                        <p className="text-sm text-white/60">Our team coordinates all logistics for your journey</p>
+                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Travel preparation</p>
+                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Our team coordinates all logistics for your journey</p>
                       </div>
                     </div>
                   </div>
@@ -412,7 +427,13 @@ export default function Booking() {
                   type="button"
                   onClick={nextStep}
                   disabled={!validateStep()}
-                  className="rounded-full px-8 gap-2 bg-gradient-to-r from-[#D4AF37] to-[#B8941F] text-black font-semibold hover:opacity-90 shadow-lg hover:shadow-[#D4AF37]/25"
+                  className="rounded-full px-8 gap-2 font-semibold shadow-lg"
+                  style={{ 
+                    background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})`, 
+                    color: TEXT_PRIMARY 
+                  }}
+                  onMouseEnter={(e) => e.target.style.opacity = '0.9'}
+                  onMouseLeave={(e) => e.target.style.opacity = '1'}
                 >
                   Continue <ArrowRight className="w-4 h-4" />
                 </Button>
@@ -420,7 +441,13 @@ export default function Booking() {
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="rounded-full px-8 gap-2 bg-gradient-to-r from-[#D4AF37] to-[#B8941F] text-black font-semibold hover:opacity-90 shadow-lg hover:shadow-[#D4AF37]/25"
+                  className="rounded-full px-8 gap-2 font-semibold shadow-lg"
+                  style={{ 
+                    background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})`, 
+                    color: TEXT_PRIMARY 
+                  }}
+                  onMouseEnter={(e) => e.target.style.opacity = '0.9'}
+                  onMouseLeave={(e) => e.target.style.opacity = '1'}
                 >
                   {submitting ? "Submitting..." : "Submit Reservation"} <ArrowRight className="w-4 h-4" />
                 </Button>

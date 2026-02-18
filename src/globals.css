@@ -6,18 +6,18 @@ css
 @tailwind utilities;
 
 :root {
-  --compass-navy: #0E7C8C;
-  --compass-teal: #1BA8B8;
-  --compass-gold: #B8D963;
-  --compass-ivory: #F9F9F9;
-  --compass-dark: #1E1E1E;
-  --compass-muted: #7A9BA8;
+  --accent-primary: #D4AF37;
+  --accent-secondary: #B8941F;
+  --accent-subtle: #E6C75A;
+  --text-primary: #FFFFF0;
+  --background-primary: #000000;
+  --text-primary-alpha-50: rgba(255, 255, 255, 0.5);
 }
 
 body {
   font-family: 'Inter', sans-serif;
-  color: var(--compass-dark);
-  background-color: #F9F9F9;
+  color: var(--text-primary);
+  background-color: var(--background-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -31,14 +31,14 @@ h1, h2, h3, h4, h5, h6 {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--compass-ivory);
+  background: var(--text-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--compass-muted);
+  background: var(--text-primary-alpha-50);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--compass-teal);
+  background: var(--accent-secondary);
 }
 
 /* Smooth scroll */

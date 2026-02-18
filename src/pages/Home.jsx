@@ -182,10 +182,10 @@ export default function Home() {
           <img
             src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1600&q=80"
             alt="Luxury travel services"
-            className="w-full h-96 object-cover"
+            className="w-full h-[700px] object-cover"
           />
           <div className="absolute inset-0" style={{ background: `linear-gradient(to top, ${BACKGROUND_PRIMARY}, ${BACKGROUND_PRIMARY_ALPHA_50}, transparent)` }} />
-          <div className="absolute bottom-0 left-0 right-0 p-8">
+          <div className="absolute bottom-0 left-0 right-0 p-8 pb-12">
             <TripHighlights />
           </div>
         </div>

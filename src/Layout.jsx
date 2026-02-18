@@ -82,11 +82,11 @@ export default function Layout({ children, currentPageName }) {
               className="ml-3 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 shadow-md flex items-center gap-2"
               style={{ 
                 backgroundColor: COMPONENTS.STATUS_WARNING, 
-                color: '#0F1C2E',
+                color: TEXT_PRIMARY_ALPHA_50,
                 boxShadow: SHADOWS.ACCENT_SUBTLE
               }}
               onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#FF7A2A';
+                e.target.style.backgroundColor = COMPONENTS.STATUS_WARNING;
                 e.target.style.boxShadow = SHADOWS.ACCENT_MEDIUM;
               }}
               onMouseLeave={(e) => {
@@ -150,7 +150,7 @@ export default function Layout({ children, currentPageName }) {
                   to={createPageUrl("Booking")}
                   onClick={() => setMobileOpen(false)}
                   className="mt-2 px-5 py-3 rounded-xl text-sm font-semibold text-center"
-                  style={{ backgroundColor: COMPONENTS.STATUS_WARNING, color: '#0F1C2E' }}
+                  style={{ backgroundColor: COMPONENTS.STATUS_WARNING, color: TEXT_PRIMARY_ALPHA_50 }}
                 >
                   Start Questionnaire →
                 </Link>

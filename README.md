@@ -28,6 +28,7 @@ Compass Connect specializes in coordinating group travel and non-medical support
 - **Interactive Forms** with real-time validation
 - **Beautiful Animations** with Framer Motion
 - **Progressive Web App** support with manifest
+- **Semantic Color System** - Luxurious black, ivory, and rose-gold theme throughout
 
 ### Admin Panel
 - **Fully Editable Spreadsheet-Style Table** for user management
@@ -45,6 +46,13 @@ Compass Connect specializes in coordinating group travel and non-medical support
 - **Group Trip Management** - Minimum traveler requirements (4 travelers)
 - **Stripe-Ready Payment Processing** - Currency-neutral pricing
 
+### Design System
+- **Centralized Color Constants** - Semantic naming system for maintainability
+- **Consistent Theme** - Black, ivory, and rose-gold palette across all components
+- **Glass Morphism Effects** - Modern backdrop blur and transparency
+- **Responsive Animations** - Smooth transitions and micro-interactions
+- **Component Library** - Reusable UI components with consistent styling
+
 ## 🛠️ Tech Stack
 
 - **Frontend:** React 18, Vite
@@ -56,6 +64,7 @@ Compass Connect specializes in coordinating group travel and non-medical support
 - **Development:** ESLint, TypeScript
 - **State Management:** React hooks, local state
 - **PWA:** Web App Manifest
+- **Color System:** Centralized semantic color constants
 
 ## 📦 Installation
 
@@ -95,6 +104,12 @@ src/
 │   │   ├── MultiStepBookingForm.jsx
 │   │   ├── HeroSection.jsx
 │   │   ├── TripCard.jsx
+│   │   ├── StatusBadge.jsx
+│   │   ├── CTASection.jsx
+│   │   ├── DisclaimerBlock.jsx
+│   │   ├── WhyGroupTravel.jsx
+│   │   ├── TripHighlights.jsx
+│   │   ├── StepTimeline.jsx
 │   │   └── ...
 │   └── ui/                       # shadcn/ui components
 ├── pages/                        # Page components
@@ -105,21 +120,37 @@ src/
 │   ├── Trips.jsx                 # Available trips
 │   └── Booking.jsx               # Booking form
 ├── constants/
+│   ├── colors.js                 # Centralized semantic color system
 │   └── index.js                  # Shared configuration constants
 ├── utils/
 │   └── index.ts                  # Utility functions
 ├── Layout.jsx                    # Main layout component
+├── globals.css                   # Global styles with CSS variables
 ├── App.jsx                       # Root app component
 └── main.jsx                      # App entry point
 ```
 
 ## 🔧 Configuration
 
+### Semantic Color System
+The project uses a centralized color constants file (`src/constants/colors.js`) for:
+- **Semantic Naming**: Purpose-based color names (e.g., `BACKGROUND_PRIMARY`, `ACCENT_PRIMARY`)
+- **Theme Consistency**: Black, ivory, and rose-gold palette throughout
+- **Maintainability**: Single source of truth for all colors
+- **CSS Variables**: Global CSS variables matching semantic names
+- **Component Integration**: All components use semantic color imports
+
 ### Shared Constants
-The project uses a centralized constants file (`src/constants/index.js`) for:
 - **Trip Configuration**: Minimum travelers (4), default price (4000), destination
 - **Status Options**: Trip statuses, booking statuses, user statuses
 - **Hospital References**: Prefix for automated reference generation
+
+### Design Features
+- **Glass Morphism**: Modern backdrop blur and transparency effects
+- **Gradient Overlays**: Beautiful color gradients for visual hierarchy
+- **Shadow System**: Consistent shadow depths for elevation
+- **Border System**: Subtle borders for content separation
+- **Animation System**: Smooth transitions and micro-interactions
 
 ### Admin Panel Features
 - **Editable Spreadsheet Table**: Excel-like interface for data management
@@ -150,24 +181,34 @@ The project uses a centralized constants file (`src/constants/index.js`) for:
 - Group travel requires **minimum 4 travelers** to proceed
 - **Admin panel** provides full trip and user management capabilities
 - **Real-time editing** allows immediate updates to all data fields
+- **Semantic color system** ensures consistent theming across the entire application
 
 ## 🔧 Recent Updates
 
 ### Latest Improvements
-- **Admin Panel Redesign**: Card-based layout converted to Excel-style spreadsheet
-- **Fully Editable Fields**: All table cells are now editable with real-time updates
-- **Optimized Column Widths**: Extra-wide columns for phone (288px), dates (320px), and notes (256px)
-- **Date Format Standardization**: dd/mmm/yy format for all travel dates
-- **Shared Constants System**: Centralized configuration for maintainability
-- **Currency-Neutral Pricing**: Removed hardcoded currency for Stripe integration
-- **Import Path Fixes**: Resolved all module resolution issues
-- **TypeScript Error Fixes**: Added proper fallback values for parseInt operations
+- **Complete Color System Refactor**: Implemented semantic color naming system
+- **Centralized Color Constants**: All colors now use purpose-based semantic names
+- **Theme Consistency**: Black, ivory, and rose-gold palette throughout
+- **Glass Morphism Design**: Modern backdrop blur and transparency effects
+- **Component Library Updates**: All components use semantic color imports
+- **CSS Variables Update**: Global styles renamed to match semantic names
+- **Manifest Theme Update**: PWA manifest colors aligned with theme
+- **Animation Enhancements**: Smooth transitions and hover effects
+- **Error Resolution**: Fixed all color-related import/export issues
 
 ### Technical Improvements
-- **React Router Future Flags**: Enabled v7 compatibility features
-- **PWA Manifest**: Added web app manifest for mobile support
-- **Error Handling**: Improved null safety and error boundaries
 - **Code Organization**: Better separation of concerns with constants
+- **Import Path Fixes**: Resolved all module resolution issues
+- **TypeScript Error Fixes**: Added proper fallback values for operations
+- **Performance Optimizations**: Efficient color constant usage
+- **Maintainability Boost**: Single source of truth for all colors
+
+### Design System Features
+- **Semantic Naming**: Colors named by purpose (e.g., `BACKGROUND_PRIMARY`, `ACCENT_PRIMARY`)
+- **Alpha Variants**: Transparency levels for hover states and overlays
+- **Gradient System**: Pre-defined gradients for visual hierarchy
+- **Shadow System**: Consistent shadow depths for elevation
+- **Border System**: Subtle borders for content separation
 
 ## 🤝 Contributing
 
