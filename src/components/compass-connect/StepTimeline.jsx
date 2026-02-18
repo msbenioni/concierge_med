@@ -7,22 +7,22 @@ const STEPS = [
     num: "01",
     icon: ClipboardCheck,
     title: "Complete Hospital Questionnaire",
-    desc: "Fill out the health questionnaire directly with Mexico Bariatric Center. This is your first step toward assessment.",
-    accent: "#1BA8B8",
+    desc: "Fill out the health questionnaire directly with our partner hospitals. This is your first step toward assessment.",
+    accent: "#0A4A52",
   },
   {
     num: "02",
     icon: FileText,
     title: "Receive Your Surgery Quote",
     desc: "The hospital will assess your information and provide a personalised surgery quote directly to you.",
-    accent: "#B8D963",
+    accent: "#5A6B00",
   },
   {
     num: "03",
     icon: Plane,
     title: "Secure Your Group Travel Seat",
-    desc: "Return to Atlas and book your seat for $3,500 NZD — includes return flights, concierge support, and group coordination. Minimum 4 travelers required.",
-    accent: "#0E7C8C",
+    desc: "Return to Compass Connect and book your seat for $3,500 NZD — includes return flights, concierge support, and group coordination.",
+    accent: "#063A45",
   },
 ];
 

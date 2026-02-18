@@ -5,7 +5,7 @@ export default function DisclaimerBlock({ compact = false }) {
   if (compact) {
     return (
       <p className="text-xs text-[#7C848E] leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
-        Atlas is a non-medical concierge service. All medical decisions and surgical care are provided solely by licensed professionals.
+        Compass Connect is a non-medical concierge service. All medical decisions and surgical care are provided solely by licensed professionals.
       </p>
     );
   }
@@ -21,7 +21,7 @@ export default function DisclaimerBlock({ compact = false }) {
             Trust & Transparency
           </h4>
           <p className="text-sm text-[#7C848E] leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
-            We are not a medical provider. All medical advice, assessment, surgery and aftercare are provided solely by our partner hospitals and their licensed professionals. Hospital fees are paid directly to the hospital. Atlas provides non-medical concierge and travel coordination only.
+            We are not a medical provider. All medical advice, assessment, surgery and aftercare are provided solely by our partner hospitals and their licensed professionals. Hospital fees are paid directly to the hospital. Compass Connect provides non-medical concierge and travel coordination only.
           </p>
         </div>
       </div>

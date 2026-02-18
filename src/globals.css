@@ -6,17 +6,17 @@ css
 @tailwind utilities;
 
 :root {
-  --atlas-navy: #0E7C8C;
-  --atlas-teal: #1BA8B8;
-  --atlas-gold: #B8D963;
-  --atlas-ivory: #F9F9F9;
-  --atlas-dark: #1E1E1E;
-  --atlas-muted: #7A9BA8;
+  --compass-navy: #0E7C8C;
+  --compass-teal: #1BA8B8;
+  --compass-gold: #B8D963;
+  --compass-ivory: #F9F9F9;
+  --compass-dark: #1E1E1E;
+  --compass-muted: #7A9BA8;
 }
 
 body {
   font-family: 'Inter', sans-serif;
-  color: var(--atlas-dark);
+  color: var(--compass-dark);
   background-color: #F9F9F9;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -31,14 +31,14 @@ h1, h2, h3, h4, h5, h6 {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--atlas-ivory);
+  background: var(--compass-ivory);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--atlas-muted);
+  background: var(--compass-muted);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--atlas-teal);
+  background: var(--compass-teal);
 }
 
 /* Smooth scroll */

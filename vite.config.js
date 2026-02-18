@@ -4,7 +4,11 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  logLevel: 'error', // Suppress warnings, only show errors
+  server: {
+    host: true,
+    port: 5173,
+    open: false
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

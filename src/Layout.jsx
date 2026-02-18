@@ -26,7 +26,7 @@ export default function Layout({ children, currentPageName }) {
             </div>
             <div className="leading-tight">
               <span className="text-[#0E7C8C] font-semibold text-lg tracking-tight" style={{ fontFamily: 'Playfair Display, serif' }}>
-                Atlas
+                Compass Connect
               </span>
               <span className="block text-[10px] text-[#7A9BA8] uppercase tracking-[0.2em] font-medium">
                 Medical Tourism Concierge
@@ -122,7 +122,7 @@ export default function Layout({ children, currentPageName }) {
                   <Globe className="w-4 h-4 text-[#B8D963]" />
                 </div>
                 <div className="leading-tight">
-                  <span className="text-white font-semibold" style={{ fontFamily: 'Playfair Display, serif' }}>Atlas</span>
+                  <span className="text-white font-semibold" style={{ fontFamily: 'Playfair Display, serif' }}>Compass Connect</span>
                   <span className="block text-[9px] text-[#B8D963] uppercase tracking-[0.2em]">Medical Tourism Concierge</span>
                 </div>
               </div>
@@ -163,10 +163,10 @@ export default function Layout({ children, currentPageName }) {
           {/* Legal Disclaimer */}
           <div className="border-t border-white/10 pt-8">
             <p className="text-xs text-white/30 leading-relaxed max-w-4xl">
-              Atlas Medical Tourism Concierge is an independent, non-medical concierge service. All medical decisions, assessments, and surgical care are provided solely by licensed hospitals and medical professionals. Atlas does not collect medical information, provide medical advice, or make clinical decisions. Hospital fees are paid directly to the hospital. The NZD $3,500 group travel fee covers airfare and concierge support only.
+              Compass Connect is an independent, non-medical concierge service. All medical decisions, assessments, and surgical care are provided solely by licensed hospitals and medical professionals. Compass Connect does not collect medical information, provide medical advice, or make clinical decisions. Hospital fees are paid directly to the hospital. The NZD $3,500 group travel fee covers airfare and concierge support only.
             </p>
             <p className="text-xs text-white/20 mt-4">
-              © {new Date().getFullYear()} Atlas Medical Tourism Concierge. All rights reserved.
+              © {new Date().getFullYear()} Compass Connect. All rights reserved.
             </p>
           </div>
         </div>

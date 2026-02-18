@@ -1,9 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Info, Loader2 } from "lucide-react";
-import TripCard from "../components/atlas/TripCard";
-import CTASection from "../components/atlas/CTASection";
-import DisclaimerBlock from "../components/atlas/DisclaimerBlock";
+import TripCard from "../components/compass-connect/TripCard";
+import CTASection from "../components/compass-connect/CTASection";
+import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
 
 export default function Trips() {
   // Mock data for demonstration

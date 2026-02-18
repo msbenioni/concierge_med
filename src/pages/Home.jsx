@@ -1,10 +1,10 @@
 import React from "react";
-import HeroSection from "../components/atlas/HeroSection";
-import StepTimeline from "../components/atlas/StepTimeline";
-import WhatWeDoSection from "../components/atlas/WhatWeDoSection";
-import WhyGroupTravel from "../components/atlas/WhyGroupTravel";
-import DisclaimerBlock from "../components/atlas/DisclaimerBlock";
-import CTASection from "../components/atlas/CTASection";
+import HeroSection from "../components/compass-connect/HeroSection";
+import StepTimeline from "../components/compass-connect/StepTimeline";
+import WhatWeDoSection from "../components/compass-connect/WhatWeDoSection";
+import WhyGroupTravel from "../components/compass-connect/WhyGroupTravel";
+import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
+import CTASection from "../components/compass-connect/CTASection";
 
 export default function Home() {
   return (

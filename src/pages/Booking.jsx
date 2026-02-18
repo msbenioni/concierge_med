@@ -1,8 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
-import MultiStepBookingForm from "../components/atlas/MultiStepBookingForm";
-import DisclaimerBlock from "../components/atlas/DisclaimerBlock";
+import MultiStepBookingForm from "../components/compass-connect/MultiStepBookingForm";
+import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
 
 export default function Booking() {
   const urlParams = new URLSearchParams(window.location.search);

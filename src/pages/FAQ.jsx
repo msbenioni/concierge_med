@@ -1,16 +1,16 @@
 import React from "react";
 import { motion } from "framer-motion";
-import FAQAccordion from "../components/atlas/FAQAccordion";
-import CTASection from "../components/atlas/CTASection";
+import FAQAccordion from "../components/compass-connect/FAQAccordion";
+import CTASection from "../components/compass-connect/CTASection";
 
 const FAQ_ITEMS = [
   {
     question: "Do you provide medical advice?",
-    answer: "No. Atlas is a non-medical concierge service. We do not provide medical advice, assessment, or clinical decisions of any kind. All medical matters are handled exclusively by our partner hospitals and their licensed medical professionals. We coordinate travel and provide emotional and logistical support only.",
+    answer: "No. Compass Connect is a non-medical concierge service. We do not provide medical advice, assessment, or clinical decisions of any kind. All medical matters are handled exclusively by our partner hospitals and their licensed medical professionals. We coordinate travel and provide emotional and logistical support only.",
   },
   {
     question: "Who do I pay for surgery?",
-    answer: "All surgical and medical fees are paid directly to the partner hospital. Atlas does not collect, process, or handle any medical payments. The $3,500 NZD you pay to Atlas covers only your group airfare and concierge support services.",
+    answer: "All surgical and medical fees are paid directly to the partner hospital. Compass Connect does not collect, process, or handle any medical payments. The $3,500 NZD you pay to Compass Connect covers only your group airfare and concierge support services.",
   },
   {
     question: "What does the $3,500 NZD include?",
@@ -22,7 +22,7 @@ const FAQ_ITEMS = [
   },
   {
     question: "Can I travel alone instead of with a group?",
-    answer: "Atlas specialises in group travel coordination. Our service is built around the benefits of shared journeys — including emotional support, lower costs, and structured logistics. If you prefer to travel independently, you are welcome to arrange your own travel and work directly with the hospital.",
+    answer: "Compass Connect specialises in group travel coordination. Our service is built around the benefits of shared journeys — including emotional support, lower costs, and structured logistics. If you prefer to travel independently, you are welcome to arrange your own travel and work directly with the hospital.",
   },
   {
     question: "Do you support both bariatric and cosmetic surgery?",
@@ -30,15 +30,15 @@ const FAQ_ITEMS = [
   },
   {
     question: "What happens if my surgery is cancelled by the hospital?",
-    answer: "If the hospital determines that surgery cannot proceed for any reason, Atlas will assist with your travel arrangements home. Refund policies for medical fees are governed by the hospital's own terms. Atlas will refund the travel component where applicable, minus any non-recoverable flight costs.",
+    answer: "If the hospital determines that surgery cannot proceed for any reason, Compass Connect will assist with your travel arrangements home. Refund policies for medical fees are governed by the hospital's own terms. Compass Connect will refund the travel component where applicable, minus any non-recoverable flight costs.",
   },
   {
     question: "How does the health questionnaire work?",
-    answer: "The health questionnaire is completed on our partner hospital's website. It is a confidential medical form reviewed by the hospital's medical team. Atlas does not have access to your medical information. Once assessed, the hospital will contact you directly with a surgery quote.",
+    answer: "The health questionnaire is completed on our partner hospital's website. It is a confidential medical form reviewed by the hospital's medical team. Compass Connect does not have access to your medical information. Once assessed, the hospital will contact you directly with a surgery quote.",
   },
   {
-    question: "Is Atlas affiliated with the hospitals?",
-    answer: "Atlas is an independent concierge service. While we work closely with our partner hospitals to coordinate travel for patients, we are not a medical provider, subsidiary, or official representative of any hospital. We operate independently to provide non-medical travel and support services.",
+    question: "Is Compass Connect affiliated with the hospitals?",
+    answer: "Compass Connect is an independent concierge service. While we work closely with our partner hospitals to coordinate travel for patients, we are not a medical provider, subsidiary, or official representative of any hospital. We operate independently to provide non-medical travel and support services.",
   },
 ];
 

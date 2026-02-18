@@ -81,7 +81,7 @@ export default function WhatWeDoSection() {
             viewport={{ once: true }}
           >
             <RoleColumn
-              title="Atlas Provides"
+              title="Compass Connect Provides"
               subtitle="Concierge & Travel"
               items={WE_PROVIDE}
               accent="#1BA8B8"

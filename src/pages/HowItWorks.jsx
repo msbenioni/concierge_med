@@ -4,8 +4,8 @@ import {
   ClipboardCheck, FileText, Plane, Stethoscope, HeartPulse,
   ChevronRight, ExternalLink
 } from "lucide-react";
-import DisclaimerBlock from "../components/atlas/DisclaimerBlock";
-import CTASection from "../components/atlas/CTASection";
+import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
+import CTASection from "../components/compass-connect/CTASection";
 
 const PHASES = [
   {
@@ -13,12 +13,12 @@ const PHASES = [
     icon: ClipboardCheck,
     title: "Hospital Assessment",
     subtitle: "Complete the health questionnaire",
-    description: "Your journey begins with the Mexico Bariatric Center's online health questionnaire. This is completed directly with the hospital — Atlas does not collect or handle any medical information.",
+    description: "Your journey begins with the Mexico Bariatric Center's online health questionnaire. This is completed directly with the hospital — Compass Connect does not collect or handle any medical information.",
     details: [
       "Free, confidential assessment",
       "Completed directly on hospital website",
       "Medical team reviews your health profile",
-      "Atlas has no access to your medical data",
+      "Compass Connect has no access to your medical data",
     ],
     cta: {
       label: "Start Questionnaire",
@@ -36,7 +36,7 @@ const PHASES = [
     details: [
       "Quote sent directly from hospital",
       "Includes all medical and surgical fees",
-      "Atlas does not set or influence pricing",
+      "Compass Connect does not set or influence pricing",
       "Hospital fees paid directly to hospital",
     ],
     color: "#FF8C42",
@@ -45,8 +45,8 @@ const PHASES = [
     num: "03",
     icon: Plane,
     title: "Group Booking",
-    subtitle: "Secure your travel seat with Atlas",
-    description: "With your hospital quote confirmed, return to Atlas to book your seat on an upcoming group trip. Pay NZD $3,500 which covers return flights and full concierge support.",
+    subtitle: "Secure your travel seat with Compass Connect",
+    description: "With your hospital quote confirmed, return to Compass Connect to book your seat on an upcoming group trip. Pay NZD $3,500 which covers return flights and full concierge support.",
     details: [
       "Select from available group trips",
       "$3,500 NZD includes flights + concierge",
@@ -60,9 +60,9 @@ const PHASES = [
     icon: Stethoscope,
     title: "Travel & Surgery",
     subtitle: "Clear roles, seamless experience",
-    description: "During your trip, Atlas handles all travel logistics and non-medical support, while the hospital manages your entire surgical journey and clinical care.",
+    description: "During your trip, Compass Connect handles all travel logistics and non-medical support, while the hospital manages your entire surgical journey and clinical care.",
     details: [
-      "Atlas: airport transfers, accommodation logistics, emotional support",
+      "Compass Connect: airport transfers, accommodation logistics, emotional support",
       "Hospital: surgery, clinical decisions, medical aftercare",
       "On-the-ground concierge available throughout",
       "Group companionship for reassurance",
@@ -74,10 +74,10 @@ const PHASES = [
     icon: HeartPulse,
     title: "Return & Ongoing Support",
     subtitle: "Continued care after you return home",
-    description: "After your procedure, the hospital provides ongoing medical follow-up and instructions. Atlas remains available for non-medical support and coordination as you recover at home.",
+    description: "After your procedure, the hospital provides ongoing medical follow-up and instructions. Compass Connect remains available for non-medical support and coordination as you recover at home.",
     details: [
       "Hospital provides medical follow-up plan",
-      "Atlas offers non-medical check-in support",
+      "Compass Connect offers non-medical check-in support",
       "Access to group community for peer support",
       "Clear guidance on who to contact for what",
     ],
