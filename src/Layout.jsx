@@ -5,8 +5,14 @@ import { Menu, X, Globe, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   BACKGROUND_PRIMARY, 
+  BACKGROUND_DEEP,
+  BACKGROUND_PRIMARY_ALPHA_50,
+  BACKGROUND_PRIMARY_ALPHA_60,
+  BACKGROUND_PRIMARY_ALPHA_70,
+  BACKGROUND_PRIMARY_ALPHA_80,
   TEXT_PRIMARY, 
-  ACCENT_PRIMARY, 
+  ACCENT_PRIMARY,
+  ACCENT_SECONDARY,
   TEXT_PRIMARY_ALPHA_80,
   TEXT_PRIMARY_ALPHA_70, 
   TEXT_PRIMARY_ALPHA_60,
@@ -14,6 +20,7 @@ import {
   TEXT_PRIMARY_ALPHA_30,
   TEXT_PRIMARY_ALPHA_20,
   ACCENT_PRIMARY_ALPHA_20, 
+  ESPRESSO_ALPHA_12,
   GRADIENTS, 
   GLASS, 
   SHADOWS,
@@ -22,10 +29,8 @@ import {
 } from "./constants/colors";
 
 const NAV_ITEMS = [
-  { label: "Home", page: "Home" },
   { label: "How It Works", page: "HowItWorks" },
   { label: "Group Trips", page: "Trips" },
-  { label: "Book Now", page: "Booking" },
   { label: "FAQ", page: "FAQ" },
   { label: "Admin", page: "Admin" },
 ];
@@ -39,8 +44,12 @@ export default function Layout({ children, currentPageName }) {
       <header className="sticky top-0 z-50 backdrop-blur-xl px-5 sm:px-8 py-4 flex items-center justify-between" style={{ backgroundColor: GLASS.CARD_BACKGROUND, borderBottom: `1px solid ${BORDERS.ACCENT_SUBTLE}` }}>
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
           <Link to={createPageUrl("Home")} className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg transition-shadow" style={{ backgroundColor: ACCENT_PRIMARY, boxShadow: SHADOWS.ACCENT_SUBTLE }} onMouseEnter={(e) => e.target.style.boxShadow = SHADOWS.ACCENT_MEDIUM} onMouseLeave={(e) => e.target.style.boxShadow = SHADOWS.ACCENT_SUBTLE}>
-              <Globe className="w-5 h-5" style={{ color: COMPONENTS.BUTTON_PRIMARY_TEXT }} />
+            <div className="w-16 h-16 rounded-xl flex items-center justify-center transition-shadow overflow-hidden">
+              <img 
+                src="/compass_logo.png" 
+                alt="Compass Connect Logo" 
+                className="w-14 h-14 object-contain"
+              />
             </div>
             <div className="leading-tight">
               <span className="font-semibold text-lg tracking-tight" style={{ color: ACCENT_PRIMARY, fontFamily: 'Playfair Display, serif' }}>
@@ -94,7 +103,7 @@ export default function Layout({ children, currentPageName }) {
                 e.target.style.boxShadow = SHADOWS.ACCENT_SUBTLE;
               }}
             >
-              Start Questionnaire
+              Book Now
               <ChevronRight className="w-4 h-4" />
             </Link>
           </nav>
@@ -152,7 +161,7 @@ export default function Layout({ children, currentPageName }) {
                   className="mt-2 px-5 py-3 rounded-xl text-sm font-semibold text-center"
                   style={{ backgroundColor: COMPONENTS.STATUS_WARNING, color: TEXT_PRIMARY_ALPHA_50 }}
                 >
-                  Start Questionnaire →
+                  Book Now →
                 </Link>
               </nav>
             </motion.div>
@@ -164,43 +173,33 @@ export default function Layout({ children, currentPageName }) {
       <main className="flex-1">{children}</main>
 
       {/* Footer */}
-      <footer style={{ backgroundColor: ACCENT_PRIMARY, color: TEXT_PRIMARY_ALPHA_80 }}>
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20 }}>
-                  <Globe className="w-4 h-4" style={{ color: TEXT_PRIMARY }} />
+      <footer style={{ backgroundColor: BACKGROUND_DEEP, color: BACKGROUND_PRIMARY }}>
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            {/* Brand Section */}
+            <div className="md:col-span-1">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img 
+                    src="/compass_logo.png" 
+                    alt="Compass Connect Logo" 
+                    className="w-10 h-10 object-contain"
+                  />
                 </div>
                 <div className="leading-tight">
-                  <span className="font-semibold" style={{ color: TEXT_PRIMARY, fontFamily: 'Playfair Display, serif' }}>Compass Connect</span>
-                  <span className="block text-[9px] uppercase tracking-[0.2em]" style={{ color: TEXT_PRIMARY }}>Medical Tourism Concierge</span>
+                  <span className="font-semibold" style={{ color: BACKGROUND_PRIMARY, fontFamily: 'Playfair Display, serif' }}>Compass Connect</span>
+                  <span className="block text-[9px] uppercase tracking-[0.2em]" style={{ color: BACKGROUND_PRIMARY_ALPHA_80 }}>Medical Tourism Concierge</span>
                 </div>
               </div>
-              <p className="text-sm leading-relaxed max-w-xs" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
+              <p className="text-sm leading-relaxed" style={{ color: BACKGROUND_PRIMARY_ALPHA_70 }}>
                 Independent, non-medical concierge service supporting NZ & AU patients travelling overseas for surgery.
               </p>
             </div>
+
+            {/* Hospital Partner Section */}
             <div>
-              <h4 className="text-xs uppercase tracking-[0.2em] mb-4 font-semibold" style={{ color: TEXT_PRIMARY }}>Navigate</h4>
-              <div className="flex flex-col gap-2">
-                {NAV_ITEMS.map((item) => (
-                  <Link
-                    key={item.page}
-                    to={createPageUrl(item.page)}
-                    className="text-sm transition-colors"
-                    style={{ color: TEXT_PRIMARY_ALPHA_60 }}
-                    onMouseEnter={(e) => e.target.style.color = COMPONENTS.STATUS_WARNING}
-                    onMouseLeave={(e) => e.target.style.color = TEXT_PRIMARY_ALPHA_60}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h4 className="text-xs uppercase tracking-[0.2em] mb-4 font-semibold" style={{ color: TEXT_PRIMARY }}>Hospital Partner</h4>
-              <p className="text-sm leading-relaxed mb-3" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
+              <h4 className="text-xs uppercase tracking-[0.2em] mb-3 font-semibold" style={{ color: BACKGROUND_PRIMARY }}>Hospital Partner</h4>
+              <p className="text-sm leading-relaxed mb-2" style={{ color: BACKGROUND_PRIMARY_ALPHA_70 }}>
                 All medical assessment and surgical care is provided by our accredited partner hospitals.
               </p>
               <a
@@ -208,22 +207,27 @@ export default function Layout({ children, currentPageName }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm transition-colors font-medium"
-                style={{ color: COMPONENTS.STATUS_WARNING }}
+                style={{ color: ACCENT_SECONDARY }}
                 onMouseEnter={(e) => e.target.style.opacity = '0.8'}
                 onMouseLeave={(e) => e.target.style.opacity = '1'}
               >
                 Visit Hospital Website →
               </a>
             </div>
+
+            {/* Legal Section */}
+            <div>
+              <h4 className="text-xs uppercase tracking-[0.2em] mb-3 font-semibold" style={{ color: BACKGROUND_PRIMARY }}>Legal</h4>
+              <p className="text-xs leading-relaxed" style={{ color: BACKGROUND_PRIMARY_ALPHA_60 }}>
+                Compass Connect is an independent, non-medical concierge service. All medical decisions, assessments, and surgical care are provided solely by licensed hospitals and medical professionals. Compass Connect does not collect medical information, provide medical advice, or make clinical decisions.
+              </p>
+            </div>
           </div>
 
-          {/* Legal Disclaimer */}
-          <div style={{ borderTop: `1px solid ${BORDERS.TEXT_SUBTLE}` }} className="pt-8">
-            <p className="text-xs leading-relaxed max-w-4xl" style={{ color: TEXT_PRIMARY_ALPHA_30 }}>
-              Compass Connect is an independent, non-medical concierge service. All medical decisions, assessments, and surgical care are provided solely by licensed hospitals and medical professionals. Compass Connect does not collect medical information, provide medical advice, or make clinical decisions. Hospital fees are paid directly to the hospital. The 4,000 group travel fee covers airfare and concierge support only.
-            </p>
-            <p className="text-xs mt-4" style={{ color: TEXT_PRIMARY_ALPHA_20 }}>
-              © {new Date().getFullYear()} Compass Connect. All rights reserved.
+          {/* Copyright Row - Centered */}
+          <div style={{ borderTop: `1px solid ${ESPRESSO_ALPHA_12}` }} className="pt-6 mt-6">
+            <p className="text-xs text-center" style={{ color: BACKGROUND_PRIMARY_ALPHA_50 }}>
+              © {new Date().getFullYear()} Compass Connect. All rights reserved. | Powered by <a href="https://www.saasycookies.com" target="_blank" rel="noopener noreferrer" style={{ color: ACCENT_SECONDARY }} onMouseEnter={(e) => e.target.style.opacity = '0.8'} onMouseLeave={(e) => e.target.style.opacity = '1'}>SaaSy Cookies Ltd</a>
             </p>
           </div>
         </div>

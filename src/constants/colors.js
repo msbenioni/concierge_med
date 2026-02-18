@@ -2,129 +2,163 @@
 // Colors are named by their purpose, not their appearance
 
 export const COLORS = {
-  // Primary Colors - Named by purpose
-  BACKGROUND_PRIMARY: '#000000',        // Main page background
-  BACKGROUND_SECONDARY: '#0A0A0A',     // Dark sections/overlays
-  BACKGROUND_TERTIARY: '#1A1A1A',      // Cards and interactive elements
+  // Background Ramp (cohesive scroll) - New System
+  BACKGROUND_PRIMARY: '#F3EFE8',      // Warm Stone (main canvas)
+  BACKGROUND_SECONDARY: '#EEE7DE',    // Warm Stone (slightly deeper - section alt)
+  BACKGROUND_TERTIARY: '#E7DED3',     // Soft panel base (replaces full taupe)
+  BACKGROUND_INSET: '#D8CFC4',        // Soft Taupe (inset blocks only)
+  BACKGROUND_DEEP: '#2C2623',         // Espresso (rare: footer/testimonial/CTA)
   
-  // Text Colors - Named by purpose
-  TEXT_PRIMARY: '#FFFFFF',              // Main text color
-  TEXT_SECONDARY: '#F8F8F8',           // Subtle text, less important
-  TEXT_MUTED: '#FFFFF0',                // Very subtle text, placeholders
-  TEXT_DISABLED: '#F5F5DC',            // Disabled/inactive text
+  // Text Colors - Named by purpose - New Palette
+  TEXT_PRIMARY: '#2C2623',            // Espresso Brown
+  TEXT_SECONDARY: '#4A4541',         // Lighter Espresso
+  TEXT_TERTIARY: '#6F7B6B',          // Muted Olive
   
-  // Accent Colors - Named by purpose
-  ACCENT_PRIMARY: '#D4AF37',            // Main accent (buttons, highlights)
-  ACCENT_SECONDARY: '#B8941F',         // Secondary accent (hover states)
-  ACCENT_SUBTLE: '#E6C75A',             // Subtle accent (borders, dividers)
-  ACCENT_PALE: '#F4E5C2',               // Very subtle accent (backgrounds)
+  // Accent Colors - Named by purpose - Brilliance Gold System
+  ACCENT_PRIMARY: '#C79A3A',          // Richer gold mid (more gold, less brown)
+  ACCENT_SECONDARY: '#F3E3B8',        // Champagne highlight
+  ACCENT_SUBTLE: '#E4C978',          // Light gold mid
+  ACCENT_DEEP: '#8C651E',            // NEW: Deep edge for "metal"
+  ACCENT_HIGHLIGHT: '#FFF4D6',      // NEW: Specular highlight
+  ACCENT_PALE: '#D9C4A8',            // Very Light Gold
   
-  // Opacity Variants - Named by purpose
-  ACCENT_PRIMARY_ALPHA_10: 'rgba(212, 175, 55, 0.1)',   // Hover backgrounds
-  ACCENT_PRIMARY_ALPHA_20: 'rgba(212, 175, 55, 0.2)',   // Active states
-  ACCENT_PRIMARY_ALPHA_30: 'rgba(212, 175, 55, 0.3)',   // Emphasis areas
-  ACCENT_PRIMARY_ALPHA_50: 'rgba(212, 175, 55, 0.5)',   // Overlays
+  // Olive Tint (for subtle spa feel) - New System
+  OLIVE_TINT_10: 'rgba(111, 123, 107, 0.10)',  // Subtle olive overlay
+  OLIVE_TINT_16: 'rgba(111, 123, 107, 0.16)',  // Medium olive overlay
   
-  TEXT_PRIMARY_ALPHA_10: 'rgba(255, 255, 255, 0.1)',   // Very subtle text
-  TEXT_PRIMARY_ALPHA_20: 'rgba(255, 255, 255, 0.2)',   // Placeholder text
-  TEXT_PRIMARY_ALPHA_25: 'rgba(255, 255, 255, 0.25)',  // Subtle text
-  TEXT_PRIMARY_ALPHA_30: 'rgba(255, 255, 255, 0.3)',   // Muted text
-  TEXT_PRIMARY_ALPHA_35: 'rgba(255, 255, 255, 0.35)',  // Medium-muted text
-  TEXT_PRIMARY_ALPHA_40: 'rgba(255, 255, 255, 0.4)',   // Subtle dividers
-  TEXT_PRIMARY_ALPHA_50: 'rgba(255, 255, 255, 0.5)',   // Secondary text
-  TEXT_PRIMARY_ALPHA_60: 'rgba(255, 255, 255, 0.6)',   // Content text
-  TEXT_PRIMARY_ALPHA_70: 'rgba(255, 255, 255, 0.7)',   // Important text
-  TEXT_PRIMARY_ALPHA_80: 'rgba(255, 255, 255, 0.8)',   // Heading text
-  TEXT_PRIMARY_ALPHA_90: 'rgba(255, 255, 255, 0.9)',   // Bright text
+  // Opacity Variants - Named by purpose - Updated for Brilliance Gold
+  ACCENT_PRIMARY_ALPHA_10: 'rgba(199, 154, 58, 0.1)',   // Hover backgrounds
+  ACCENT_PRIMARY_ALPHA_20: 'rgba(199, 154, 58, 0.2)',   // Active states
+  ACCENT_PRIMARY_ALPHA_30: 'rgba(199, 154, 58, 0.3)',   // Emphasis areas
+  ACCENT_PRIMARY_ALPHA_50: 'rgba(199, 154, 58, 0.5)',   // Overlays
   
-  BACKGROUND_PRIMARY_ALPHA_10: 'rgba(0, 0, 0, 0.1)',   // Very subtle overlays
-  BACKGROUND_PRIMARY_ALPHA_20: 'rgba(0, 0, 0, 0.2)',   // Light overlays
-  BACKGROUND_PRIMARY_ALPHA_30: 'rgba(0, 0, 0, 0.3)',   // Medium overlays
-  BACKGROUND_PRIMARY_ALPHA_40: 'rgba(0, 0, 0, 0.4)',   // Card backgrounds
-  BACKGROUND_PRIMARY_ALPHA_50: 'rgba(0, 0, 0, 0.5)',   // Dark overlays
-  BACKGROUND_PRIMARY_ALPHA_60: 'rgba(0, 0, 0, 0.6)',   // Heavy overlays
-  BACKGROUND_PRIMARY_ALPHA_70: 'rgba(0, 0, 0, 0.7)',   // Very heavy overlays
-  BACKGROUND_PRIMARY_ALPHA_80: 'rgba(0, 0, 0, 0.8)',   // Maximum overlays
+  // Espresso Anchor Opacity Variants (for controlled dark moments)
+  ESPRESSO_ALPHA_08: 'rgba(44, 38, 35, 0.08)',      // Subtle dividers/borders
+  ESPRESSO_ALPHA_10: 'rgba(44, 38, 35, 0.10)',      // Light overlays
+  ESPRESSO_ALPHA_12: 'rgba(44, 38, 35, 0.12)',      // Medium overlays
+  ESPRESSO_ALPHA_85: 'rgba(44, 38, 35, 0.85)',      // Hero overlay (85% opacity)
+  ESPRESSO_ALPHA_92: 'rgba(44, 38, 35, 0.92)',      // Solid band (92% opacity)
   
-  // Gradients - Named by purpose
+  TEXT_PRIMARY_ALPHA_10: 'rgba(44, 38, 35, 0.1)',   // Very subtle text
+  TEXT_PRIMARY_ALPHA_20: 'rgba(44, 38, 35, 0.2)',   // Placeholder text
+  TEXT_PRIMARY_ALPHA_25: 'rgba(44, 38, 35, 0.25)',  // Subtle text
+  TEXT_PRIMARY_ALPHA_30: 'rgba(44, 38, 35, 0.3)',   // Muted text
+  TEXT_PRIMARY_ALPHA_35: 'rgba(44, 38, 35, 0.35)',  // Medium-muted text
+  TEXT_PRIMARY_ALPHA_40: 'rgba(44, 38, 35, 0.4)',   // Subtle dividers
+  TEXT_PRIMARY_ALPHA_50: 'rgba(44, 38, 35, 0.5)',   // Secondary text
+  TEXT_PRIMARY_ALPHA_60: 'rgba(44, 38, 35, 0.6)',   // Content text
+  TEXT_PRIMARY_ALPHA_70: 'rgba(44, 38, 35, 0.7)',   // Important text
+  TEXT_PRIMARY_ALPHA_80: 'rgba(44, 38, 35, 0.8)',   // Heading text
+  TEXT_PRIMARY_ALPHA_90: 'rgba(44, 38, 35, 0.9)',   // Bright text
+  
+  BACKGROUND_PRIMARY_ALPHA_10: 'rgba(243, 239, 232, 0.1)',   // Very subtle overlays
+  BACKGROUND_PRIMARY_ALPHA_20: 'rgba(243, 239, 232, 0.2)',   // Light overlays
+  BACKGROUND_PRIMARY_ALPHA_30: 'rgba(243, 239, 232, 0.3)',   // Medium overlays
+  BACKGROUND_PRIMARY_ALPHA_40: 'rgba(243, 239, 232, 0.4)',   // Card backgrounds
+  BACKGROUND_PRIMARY_ALPHA_50: 'rgba(243, 239, 232, 0.5)',   // Dark overlays
+  BACKGROUND_PRIMARY_ALPHA_60: 'rgba(243, 239, 232, 0.6)',   // Heavy overlays
+  BACKGROUND_PRIMARY_ALPHA_70: 'rgba(243, 239, 232, 0.7)',   // Very heavy overlays
+  BACKGROUND_PRIMARY_ALPHA_80: 'rgba(243, 239, 232, 0.8)',   // Maximum overlays
+  
+  // Gradients - Named by purpose - Brilliance Gold System
   GRADIENTS: {
-    ACCENT_PRIMARY: 'linear-gradient(to right, #D4AF37, #B8941F)',           // Main buttons, CTAs
-    ACCENT_PRIMARY_REVERSE: 'linear-gradient(to left, #D4AF37, #B8941F)',   // Special effects
-    ACCENT_PRIMARY_RADIAL: 'radial-gradient(circle, #D4AF37, #B8941F)',     // Spotlight effects
+    // 5-Stop Brilliance Gold (specular highlight) - Enhanced
+    GOLD_BRILLIANCE: 'linear-gradient(135deg, #FFF4D6 0%, #F3E3B8 18%, #E4C978 42%, #C79A3A 70%, #8C651E 100%)',
+    ACCENT_PRIMARY: 'linear-gradient(to right, #F3E3B8, #C79A3A)',           // Simple gold gradient (updated)
+    ACCENT_PRIMARY_REVERSE: 'linear-gradient(to left, #F3E3B8, #C79A3A)',   // Special effects
+    ACCENT_PRIMARY_RADIAL: 'radial-gradient(circle, #F3E3B8, #C79A3A)',     // Spotlight effects
     
-    BACKGROUND_DARK_TO_LIGHT: 'linear-gradient(to bottom, #000000, #0A0A0A)', // Section transitions
-    BACKGROUND_LIGHT_TO_DARK: 'linear-gradient(to bottom, #0A0A0A, #000000)', // Section transitions
+    // Gold Reflect Effect (metallic sheen)
+    GOLD_REFLECT: 'linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.12) 35%, rgba(255,255,255,0) 60%)',
     
-    OVERLAY_IMAGE_DARK: 'linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.5), rgba(0,0,0,0.8))', // Hero images
-    OVERLAY_IMAGE_MEDIUM: 'linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.6), rgba(0,0,0,0.8))', // Testimonial images
+    // Stone-to-Stone Transitions (cohesive)
+    SECTION_FADE: 'linear-gradient(180deg, rgba(243,239,232,0) 0%, rgba(243,239,232,1) 70%)',
+    SECTION_BLEND: 'linear-gradient(180deg, #F3EFE8 0%, #EEE7DE 100%)',
     
-    OVERLAY_TEXT_LIGHT: 'linear-gradient(to top, rgba(255,255,240,0.8), rgba(255,255,240,0.4), transparent)', // Text overlays
+    OVERLAY_IMAGE_DARK: 'linear-gradient(to bottom, rgba(44,38,35,0.7), rgba(44,38,35,0.5), rgba(44,38,35,0.8))', // Hero images
+    OVERLAY_IMAGE_MEDIUM: 'linear-gradient(to bottom, rgba(44,38,35,0.8), rgba(44,38,35,0.6), rgba(44,38,35,0.8))', // Testimonial images
+    
+    OVERLAY_TEXT_LIGHT: 'linear-gradient(to top, rgba(243,239,232,0.8), rgba(243,239,232,0.4), transparent)', // Text overlays
   },
   
-  // Glass Morphism Effects - Named by purpose
+  // Glass Morphism Effects - Named by purpose - Warm Stone Base
   GLASS: {
-    CARD_BACKGROUND: 'rgba(0, 0, 0, 0.4)',      // Main card backgrounds
-    CARD_HOVER: 'rgba(0, 0, 0, 0.6)',           // Hover state cards
-    CARD_ACTIVE: 'rgba(0, 0, 0, 0.8)',          // Active/focused cards
+    CARD_BACKGROUND: 'rgba(243, 239, 232, 0.55)',      // Main card backgrounds (Warm Stone)
+    CARD_HOVER: 'rgba(243, 239, 232, 0.70)',           // Hover state cards
+    CARD_ACTIVE: 'rgba(243, 239, 232, 0.82)',          // Active/focused cards
     
-    ACCENT_BACKGROUND: 'rgba(212, 175, 55, 0.1)', // Accent glass backgrounds
-    ACCENT_HOVER: 'rgba(212, 175, 55, 0.2)',      // Accent hover states
-    ACCENT_ACTIVE: 'rgba(212, 175, 55, 0.3)',     // Accent active states
+    ACCENT_BACKGROUND: 'rgba(184, 146, 58, 0.1)',     // Accent glass backgrounds (Antique Gold)
+    ACCENT_HOVER: 'rgba(184, 146, 58, 0.2)',          // Accent hover states
+    ACCENT_ACTIVE: 'rgba(184, 146, 58, 0.3)',         // Accent active states
+    
+    TEXT_OVERLAY: 'rgba(243, 239, 232, 0.05)',        // Text overlay backgrounds (Warm Stone)
+    BORDER_SUBTLE: 'rgba(44, 38, 35, 0.10)',          // Subtle borders (Espresso Brown)
   },
   
-  // Shadows - Named by purpose
+  // Shadow System - Named by purpose - Enhanced Gold Pop
   SHADOWS: {
-    ACCENT_SUBTLE: '0 4px 20px rgba(212, 175, 55, 0.15)',    // Subtle accent shadows
-    ACCENT_MEDIUM: '0 8px 30px rgba(212, 175, 55, 0.25)',    // Medium accent shadows
-    ACCENT_STRONG: '0 12px 40px rgba(212, 175, 55, 0.35)',    // Strong accent shadows
+    SUBTLE: '0 1px 3px rgba(44, 38, 35, 0.12)',       // Subtle shadows (Espresso Brown)
+    MEDIUM: '0 4px 6px rgba(44, 38, 35, 0.15)',        // Medium shadows
+    LARGE: '0 10px 15px rgba(44, 38, 35, 0.2)',        // Large shadows
+    ACCENT_LIGHT: '0 4px 12px rgba(199, 154, 58, 0.15)', // Accent shadows (updated gold)
+    ACCENT_MEDIUM: '0 8px 24px rgba(199, 154, 58, 0.25)', // Medium accent shadows (updated gold)
+    ACCENT_STRONG: '0 16px 32px rgba(199, 154, 58, 0.35)', // Strong accent shadows (updated gold)
     
-    BACKGROUND_SUBTLE: '0 4px 20px rgba(0, 0, 0, 0.3)',        // Subtle background shadows
-    BACKGROUND_MEDIUM: '0 8px 30px rgba(0, 0, 0, 0.5)',        // Medium background shadows
-    BACKGROUND_STRONG: '0 12px 40px rgba(0, 0, 0, 0.7)',        // Strong background shadows
+    // Enhanced Gold Pop (metallic button treatment)
+    GOLD_POP: '0 10px 28px rgba(199, 154, 58, 0.28), 0 2px 8px rgba(44, 38, 35, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.55)',
+    
+    // Gold Button Border (subtle definition)
+    GOLD_BORDER: '1px solid rgba(140, 101, 30, 0.25)',
   },
   
-  // Border Colors - Named by purpose
+  // Border System - Named by purpose - New Palette
   BORDERS: {
-    ACCENT_SUBTLE: 'rgba(212, 175, 55, 0.2)',   // Subtle accent borders
-    ACCENT_MEDIUM: 'rgba(212, 175, 55, 0.4)',   // Medium accent borders
-    ACCENT_STRONG: 'rgba(212, 175, 55, 0.6)',   // Strong accent borders
+    SUBTLE: 'rgba(44, 38, 35, 0.1)',                  // Subtle borders (Espresso Brown)
+    MEDIUM: 'rgba(44, 38, 35, 0.2)',                  // Medium borders
+    STRONG: 'rgba(44, 38, 35, 0.3)',                  // Strong borders
     
-    TEXT_SUBTLE: 'rgba(255, 255, 255, 0.1)',   // Subtle text borders
-    TEXT_MEDIUM: 'rgba(255, 255, 255, 0.2)',   // Medium text borders
-    TEXT_STRONG: 'rgba(255, 255, 255, 0.3)',   // Strong text borders
+    ACCENT_SUBTLE: 'rgba(184, 146, 58, 0.2)',         // Subtle accent borders (Antique Gold)
+    ACCENT_MEDIUM: 'rgba(184, 146, 58, 0.4)',         // Medium accent borders
+    ACCENT_STRONG: 'rgba(184, 146, 58, 0.6)',         // Strong accent borders
+    
+    TEXT_SUBTLE: 'rgba(44, 38, 35, 0.15)',            // Subtle text borders
+    TEXT_MEDIUM: 'rgba(44, 38, 35, 0.25)',            // Medium text borders
   },
   
-  // Component-Specific Colors
+  // Component-Specific Colors - Named by purpose - Enhanced Gold System
   COMPONENTS: {
-    // Button Colors
-    BUTTON_PRIMARY: '#D4AF37',              // Main button background
-    BUTTON_PRIMARY_TEXT: '#000000',        // Main button text
-    BUTTON_SECONDARY: 'rgba(255, 255, 255, 0.1)', // Secondary button background
-    BUTTON_SECONDARY_TEXT: '#FFFFFF',      // Secondary button text
+    BUTTON_PRIMARY: '#C79A3A',                         // Primary button background (richer gold)
+    BUTTON_PRIMARY_TEXT: '#2C2623',                    // Primary button text (Espresso for premium contrast)
+    BUTTON_PRIMARY_HOVER: '#F3E3B8',                   // Primary button hover (champagne highlight)
     
-    // Input Colors
-    INPUT_BACKGROUND: 'rgba(255, 255, 255, 0.1)',  // Input field background
-    INPUT_BORDER: 'rgba(255, 255, 255, 0.2)',        // Input field border
-    INPUT_TEXT: '#FFFFFF',                         // Input field text
-    INPUT_PLACEHOLDER: 'rgba(255, 255, 255, 0.5)',  // Input placeholder text
+    BUTTON_SECONDARY: 'rgba(44, 38, 35, 0.1)',        // Secondary button background (Espresso Brown)
+    BUTTON_SECONDARY_TEXT: '#2C2623',                 // Secondary button text
+    BUTTON_SECONDARY_HOVER: 'rgba(44, 38, 35, 0.2)',  // Secondary button hover
     
-    // Card Colors
-    CARD_BACKGROUND: 'rgba(0, 0, 0, 0.4)',       // Card background
-    CARD_BORDER: 'rgba(212, 175, 55, 0.2)',       // Card border
-    CARD_HOVER_BACKGROUND: 'rgba(0, 0, 0, 0.6)', // Card hover background
+    INPUT_BACKGROUND: 'rgba(231, 222, 211, 0.3)',     // Input field background (E7DED3)
+    INPUT_BORDER: 'rgba(199, 154, 58, 0.3)',         // Input field border (updated gold)
+    INPUT_TEXT: '#2C2623',                            // Input field text (Espresso Brown)
+    INPUT_PLACEHOLDER: 'rgba(44, 38, 35, 0.5)',      // Input placeholder
     
-    // Navigation Colors
-    NAV_BACKGROUND: '#000000',               // Navigation background
-    NAV_TEXT: '#FFFFFF',                     // Navigation text
-    NAV_TEXT_HOVER: '#D4AF37',               // Navigation hover text
-    NAV_BORDER: 'rgba(212, 175, 55, 0.2)',   // Navigation borders
+    CARD_BACKGROUND: 'rgba(231, 222, 211, 0.4)',     // Card background (E7DED3)
+    CARD_BORDER: 'rgba(199, 154, 58, 0.2)',           // Card border (updated gold)
+    CARD_SHADOW: '0 4px 6px rgba(44, 38, 35, 0.15)',  // Card shadow (Espresso Brown)
     
-    // Status Colors
-    STATUS_SUCCESS: '#10B981',               // Success states
-    STATUS_WARNING: '#F59E0B',               // Warning states
-    STATUS_ERROR: '#EF4444',                 // Error states
-    STATUS_INFO: '#3B82F6',                   // Info states
-  }
+    NAV_BACKGROUND: 'rgba(243, 239, 232, 0.95)',     // Navigation background (Warm Stone)
+    NAV_BORDER: 'rgba(199, 154, 58, 0.2)',            // Navigation border (updated gold)
+    NAV_TEXT: '#2C2623',                              // Navigation text (Espresso Brown)
+    NAV_TEXT_HOVER: '#C79A3A',                        // Navigation text hover (updated gold)
+    
+    FOOTER_BACKGROUND: '#F3EFE8',                     // Footer background (Warm Stone)
+    FOOTER_TEXT: 'rgba(44, 38, 35, 0.7)',            // Footer text (Espresso Brown)
+    FOOTER_LINK: '#C79A3A',                           // Footer link (updated gold)
+    FOOTER_LINK_HOVER: '#F3E3B8',                     // Footer link hover (champagne)
+    
+    STATUS_SUCCESS: '#7A9A7F',                        // Success status (muted green)
+    STATUS_WARNING: '#F3E3B8',                        // Warning status (champagne)
+    STATUS_ERROR: '#B85D5D',                          // Error status (muted red)
+    STATUS_INFO: '#7A8FB8',                           // Info status (muted blue)
+  },
 };
 
 // Quick access constants for commonly used colors
@@ -132,12 +166,25 @@ export const {
   BACKGROUND_PRIMARY,
   BACKGROUND_SECONDARY,
   BACKGROUND_TERTIARY,
+  BACKGROUND_INSET,
+  BACKGROUND_DEEP,
   TEXT_PRIMARY,
   TEXT_SECONDARY,
   ACCENT_PRIMARY,
   ACCENT_SECONDARY,
   ACCENT_SUBTLE,
+  ACCENT_DEEP,
+  ACCENT_HIGHLIGHT,
   ACCENT_PALE,
+  // Olive tint overlays
+  OLIVE_TINT_10,
+  OLIVE_TINT_16,
+  // Espresso anchor moments
+  ESPRESSO_ALPHA_08,
+  ESPRESSO_ALPHA_10,
+  ESPRESSO_ALPHA_12,
+  ESPRESSO_ALPHA_85,
+  ESPRESSO_ALPHA_92,
   // All text opacity variants
   TEXT_PRIMARY_ALPHA_10,
   TEXT_PRIMARY_ALPHA_20,
@@ -169,7 +216,7 @@ export const {
   GLASS,
   SHADOWS,
   BORDERS,
-  COMPONENTS
+  COMPONENTS,
 } = COLORS;
 
 // Legacy aliases for backward compatibility (deprecated)
