@@ -1,47 +1,56 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { createPageUrl } from "../utils";
 import MultiStepBookingForm from "../components/compass-connect/MultiStepBookingForm";
 import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
+import { TRIP_CONFIG, TRIP_STATUS } from "../constants";
 
 export default function Booking() {
   const urlParams = new URLSearchParams(window.location.search);
   const preselectedTripId = urlParams.get("trip") || "";
 
-  // Mock data for demonstration
+  // Mock data for demonstration - this would come from your admin-managed data
   const mockTrips = [
     {
       id: 1,
       departure_city: "Auckland",
-      destination: "Tijuana, Mexico",
+      destination: TRIP_CONFIG.DESTINATION,
       departure_date: "2024-03-15",
       return_date: "2024-03-22",
       confirmed_count: 6,
-      min_travelers: 8,
-      price_nzd: 3500,
-      status: "available"
+      min_travelers: TRIP_CONFIG.MIN_TRAVELERS,
+      price: TRIP_CONFIG.DEFAULT_PRICE,
+      status: TRIP_STATUS.AVAILABLE,
+      hospital_approved: true,
+      hospital_reference: "MBC-2024-0315"
     },
     {
       id: 2,
       departure_city: "Sydney",
-      destination: "Bangkok, Thailand",
+      destination: TRIP_CONFIG.DESTINATION,
       departure_date: "2024-04-12",
       return_date: "2024-04-19",
       confirmed_count: 3,
-      min_travelers: 8,
-      price_nzd: 3500,
-      status: "available"
+      min_travelers: TRIP_CONFIG.MIN_TRAVELERS,
+      price: TRIP_CONFIG.DEFAULT_PRICE,
+      status: TRIP_STATUS.AVAILABLE,
+      hospital_approved: true,
+      hospital_reference: "MBC-2024-0412"
     },
     {
       id: 3,
       departure_city: "Melbourne",
-      destination: "Seoul, South Korea",
+      destination: TRIP_CONFIG.DESTINATION,
       departure_date: "2024-05-10",
       return_date: "2024-05-17",
       confirmed_count: 9,
-      min_travelers: 8,
-      price_nzd: 3500,
-      status: "waitlist"
+      min_travelers: TRIP_CONFIG.MIN_TRAVELERS,
+      price: TRIP_CONFIG.DEFAULT_PRICE,
+      status: TRIP_STATUS.WAITLIST,
+      hospital_approved: true,
+      hospital_reference: "MBC-2024-0510"
     }
   ];
 

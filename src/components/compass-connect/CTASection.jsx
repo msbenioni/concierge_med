@@ -34,15 +34,13 @@ export default function CTASection() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to={createPageUrl("Booking")}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#FF8C42] text-[#0F1C2E] font-semibold text-sm hover:bg-[#b8953e] transition-all duration-300 shadow-xl shadow-[#FF8C42]/25"
               >
                 Start Health Questionnaire
                 <ChevronRight className="w-4 h-4" />
-              </a>
+              </Link>
               <Link
                 to={createPageUrl("Trips")}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white/10 text-white font-semibold text-sm hover:bg-white/20 transition-all duration-300 border border-white/15"

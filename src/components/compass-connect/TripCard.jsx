@@ -81,10 +81,9 @@ export default function TripCard({ trip, index = 0 }) {
             <div>
               <span className="text-xs text-[#7A9BA8] uppercase tracking-wider">From</span>
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-bold text-[#0E7C8C]" style={{ fontFamily: 'Playfair Display, serif' }}>
-                  ${trip.price_nzd?.toLocaleString()}
-                </span>
-                <span className="text-sm text-[#7A9BA8]">NZD</span>
+                  <span className="text-3xl font-bold text-[#0E7C8C]" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    {trip.price_nzd?.toLocaleString()}
+                  </span>
               </div>
             </div>
             <div className="flex items-center gap-1.5 text-xs text-[#7A9BA8]">

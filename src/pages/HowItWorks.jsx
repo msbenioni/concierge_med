@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  ClipboardCheck, FileText, Plane, Stethoscope, HeartPulse,
+  User, ClipboardCheck, FileText, Plane, Stethoscope, HeartPulse,
   ChevronRight, ExternalLink
 } from "lucide-react";
 import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
@@ -10,29 +10,38 @@ import CTASection from "../components/compass-connect/CTASection";
 const PHASES = [
   {
     num: "01",
+    icon: User,
+    title: "Your Details",
+    subtitle: "Provide contact information",
+    description: "Start by providing your basic contact details. This helps us track your journey and ensures you receive important updates about your travel coordination.",
+    details: [
+      "Full name, email, and phone number",
+      "Country of residence",
+      "Terms acceptance for non-medical services",
+      "Quick and secure form submission",
+    ],
+    color: "#1F4E5F",
+  },
+  {
+    num: "02",
     icon: ClipboardCheck,
     title: "Hospital Assessment",
     subtitle: "Complete the health questionnaire",
-    description: "Your journey begins with the Mexico Bariatric Center's online health questionnaire. This is completed directly with the hospital — Compass Connect does not collect or handle any medical information.",
+    description: "After submitting your details, you'll access the hospital's secure health questionnaire. This is completed directly with the hospital — Compass Connect does not collect or handle any medical information.",
     details: [
       "Free, confidential assessment",
       "Completed directly on hospital website",
       "Medical team reviews your health profile",
       "Compass Connect has no access to your medical data",
     ],
-    cta: {
-      label: "Start Questionnaire",
-      href: "https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120",
-      external: true,
-    },
-    color: "#1F4E5F",
+    color: "#FF8C42",
   },
   {
-    num: "02",
+    num: "03",
     icon: FileText,
     title: "Surgery Quote",
     subtitle: "Receive pricing directly from hospital",
-    description: "Once the hospital has assessed your information, they will provide a personalised surgery quote directly to you. This includes all medical fees, hospital stay, and clinical aftercare.",
+    description: "Once the hospital has assessed your questionnaire, they will provide a personalised surgery quote directly to you. This includes all medical fees, hospital stay, and clinical aftercare.",
     details: [
       "Quote sent directly from hospital",
       "Includes all medical and surgical fees",
@@ -42,21 +51,21 @@ const PHASES = [
     color: "#FF8C42",
   },
   {
-    num: "03",
+    num: "04",
     icon: Plane,
     title: "Group Booking",
     subtitle: "Secure your travel seat with Compass Connect",
-    description: "With your hospital quote confirmed, return to Compass Connect to book your seat on an upcoming group trip. Pay NZD $3,500 which covers return flights and full concierge support.",
+    description: "With your hospital quote confirmed, return to Compass Connect to book your seat on an upcoming group trip. Pay 4,000 which covers return flights and full concierge support.",
     details: [
       "Select from available group trips",
-      "$3,500 NZD includes flights + concierge",
+      "4,000 includes flights + concierge",
       "Trip confirmed once 4 travelers join",
       "Full refund if minimum not met",
     ],
     color: "#0F1C2E",
   },
   {
-    num: "04",
+    num: "05",
     icon: Stethoscope,
     title: "Travel & Surgery",
     subtitle: "Clear roles, seamless experience",
@@ -70,7 +79,7 @@ const PHASES = [
     color: "#1F4E5F",
   },
   {
-    num: "05",
+    num: "06",
     icon: HeartPulse,
     title: "Return & Ongoing Support",
     subtitle: "Continued care after you return home",

@@ -16,7 +16,7 @@ const REASONS = [
   {
     icon: BadgeDollarSign,
     title: "Lower Travel Costs",
-    desc: "Group coordination means reduced airfare costs, all included in your $3,500 NZD fee.",
+    desc: "Group coordination means reduced airfare costs, all included in your 4,000 fee.",
   },
   {
     icon: Shield,

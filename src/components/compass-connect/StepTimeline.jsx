@@ -21,7 +21,7 @@ const STEPS = [
     num: "03",
     icon: Plane,
     title: "Secure Your Group Travel Seat",
-    desc: "Return to Compass Connect and book your seat for $3,500 NZD — includes return flights, concierge support, and group coordination.",
+    desc: "Return to Compass Connect and book your seat for 4,000 — includes return flights, concierge support, and group coordination.",
     accent: "#063A45",
   },
 ];

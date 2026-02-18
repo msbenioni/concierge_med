@@ -25,9 +25,11 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import DisclaimerBlock from "./DisclaimerBlock";
+import UserDetailsForm from "./UserDetailsForm";
 
 const STEPS = [
-  { title: "Questionnaire", desc: "Confirm health assessment" },
+  { title: "Your Details", desc: "Provide contact information" },
+  { title: "Questionnaire", desc: "Complete health assessment" },
   { title: "Hospital Quote", desc: "Confirm your quote" },
   { title: "Trip & Details", desc: "Select trip & enter details" },
   { title: "Payment", desc: "Confirm & pay" },
@@ -39,15 +41,25 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingComplete, setBookingComplete] = useState(false);
   const [form, setForm] = useState({
+    // User details (step 0)
+    full_name: "",
+    email: "",
+    phone: "",
+    country: "",
+    terms_accepted: false,
+    user_details_submitted: false,
+    
+    // Questionnaire (step 1)
     completed_questionnaire: false,
+    
+    // Hospital quote (step 2)
     received_quote: false,
     surgery_type: "",
     quote_amount: "",
     quote_reference: "",
+    
+    // Trip details (step 3)
     trip_id: preselectedTripId || "",
-    full_name: "",
-    email: "",
-    phone: "",
     departure_city: "",
   });
 
@@ -58,16 +70,72 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
   const canProceed = () => {
     switch (step) {
       case 0:
-        return form.completed_questionnaire;
+        return form.user_details_submitted;
       case 1:
-        return form.received_quote;
+        return form.completed_questionnaire;
       case 2:
-        return form.trip_id && form.full_name && form.email && form.phone && form.departure_city;
+        return form.received_quote;
       case 3:
+        return form.trip_id && form.departure_city;
+      case 4:
         return true;
       default:
         return false;
     }
+  };
+
+  const handleQuestionnaireComplete = async (checked) => {
+    updateForm("completed_questionnaire", checked);
+    
+    if (checked && !form.completed_questionnaire) {
+      // Send notification to admin that user completed questionnaire
+      const notificationData = {
+        user: {
+          full_name: form.full_name,
+          email: form.email,
+          phone: form.phone,
+          country: form.country
+        },
+        action: "questionnaire_completed",
+        timestamp: new Date().toISOString(),
+        hospital_reference: "MBC-" + Date.now().toString().slice(-6)
+      };
+      
+      console.log("NOTIFICATION: User completed questionnaire:", notificationData);
+      
+      // Here you would send this to your backend/admin notification system
+      // This could be:
+      // - Email notification to admin
+      // - Database entry for admin dashboard
+      // - Webhook to admin system
+      // - Slack/Discord notification
+    }
+  };
+
+  const handleUserDetailsSubmit = async (userData) => {
+    setIsSubmitting(true);
+    
+    // Here you would:
+    // 1. Save user details to your database
+    // 2. Send notification to admin that user has submitted details
+    // 3. Track that user is ready for questionnaire
+    
+    console.log("User details submitted:", userData);
+    
+    // Update form with user details
+    setForm(prev => ({
+      ...prev,
+      ...userData,
+      user_details_submitted: true
+    }));
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    setIsSubmitting(false);
+    
+    // Move to next step (questionnaire)
+    setStep(step + 1);
   };
 
   const handleSubmit = async () => {
@@ -81,7 +149,7 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
     });
     setIsSubmitting(false);
     setBookingComplete(true);
-    setStep(4);
+    setStep(5);
   };
 
   const selectedTrip = trips.find((t) => t.id === form.trip_id);
@@ -89,10 +157,10 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
   return (
     <div className="max-w-2xl mx-auto">
       {/* Progress */}
-      {step < 4 && (
+      {step < 5 && (
         <div className="mb-10">
           <div className="flex items-center justify-between mb-4">
-            {STEPS.slice(0, 4).map((s, i) => (
+            {STEPS.slice(0, 5).map((s, i) => (
               <div key={i} className="flex items-center gap-2">
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-300 ${
@@ -139,8 +207,16 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.2 }}
         >
-          {/* Step 1: Questionnaire Confirmation */}
+          {/* Step 0: User Details */}
           {step === 0 && (
+            <UserDetailsForm
+              onSubmit={handleUserDetailsSubmit}
+              isLoading={isSubmitting}
+            />
+          )}
+
+          {/* Step 1: Questionnaire Confirmation */}
+          {step === 1 && (
             <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-[#FF8C42]/5">
               <p className="text-[#7C848E] mb-6 leading-relaxed" style={{ fontFamily: "Inter, sans-serif" }}>
                 Before booking your group travel seat, you must first complete the hospital's health questionnaire. This is assessed by Mexico Bariatric Center's medical team.
@@ -165,13 +241,11 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
 
               <div className="flex items-start gap-3">
                 <Checkbox
-                  id="questionnaire"
                   checked={form.completed_questionnaire}
-                  onCheckedChange={(checked) => updateForm("completed_questionnaire", checked)}
+                  onCheckedChange={handleQuestionnaireComplete}
                   className="mt-1"
                 />
                 <Label
-                  htmlFor="questionnaire"
                   className="text-sm text-[#1E1E1E] leading-relaxed cursor-pointer"
                 >
                   I have completed the hospital health questionnaire.
@@ -181,7 +255,7 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
           )}
 
           {/* Step 2: Quote Confirmation */}
-          {step === 1 && (
+          {step === 2 && (
             <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-[#FF8C42]/5">
               <p className="text-[#7C848E] mb-6 leading-relaxed" style={{ fontFamily: "Inter, sans-serif" }}>
                 After the hospital assesses your questionnaire, they will send you a surgery quote directly. Please confirm you have received it before proceeding.
@@ -189,13 +263,11 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
 
               <div className="flex items-start gap-3 mb-8">
                 <Checkbox
-                  id="quote"
                   checked={form.received_quote}
                   onCheckedChange={(checked) => updateForm("received_quote", checked)}
                   className="mt-1"
                 />
                 <Label
-                  htmlFor="quote"
                   className="text-sm text-[#1E1E1E] leading-relaxed cursor-pointer"
                 >
                   I have received my surgery quote from the hospital.
@@ -249,7 +321,7 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
           )}
 
           {/* Step 3: Trip & Personal Details */}
-          {step === 2 && (
+          {step === 3 && (
             <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-[#FF8C42]/5 space-y-6">
               <div>
                 <Label className="text-sm text-[#1E1E1E] mb-1.5 block font-semibold">Select Group Trip *</Label>
@@ -313,7 +385,7 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
           )}
 
           {/* Step 4: Payment */}
-          {step === 3 && (
+          {step === 4 && (
             <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-[#FF8C42]/5">
               <div className="text-center mb-8">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-[#FF8C42]/10 flex items-center justify-center mb-4">
@@ -359,7 +431,7 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
                 <div className="border-t border-[#FF8C42]/10 pt-3 flex justify-between items-center">
                   <span className="text-base font-semibold text-[#0F1C2E]">Total</span>
                   <span className="text-2xl font-bold text-[#0F1C2E]" style={{ fontFamily: "Playfair Display, serif" }}>
-                    $3,500 <span className="text-sm font-normal text-[#7C848E]">NZD</span>
+                    4,000
                   </span>
                 </div>
               </div>
@@ -394,7 +466,7 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
           )}
 
           {/* Step 5: Confirmation */}
-          {step === 4 && bookingComplete && (
+          {step === 5 && bookingComplete && (
             <div className="bg-white rounded-2xl p-8 sm:p-12 shadow-sm border border-[#FF8C42]/5 text-center">
               <div className="w-20 h-20 mx-auto rounded-full bg-emerald-50 flex items-center justify-center mb-6">
                 <CheckCircle2 className="w-10 h-10 text-emerald-600" />

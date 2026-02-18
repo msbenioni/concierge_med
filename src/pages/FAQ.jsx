@@ -10,15 +10,15 @@ const FAQ_ITEMS = [
   },
   {
     question: "Who do I pay for surgery?",
-    answer: "All surgical and medical fees are paid directly to the partner hospital. Compass Connect does not collect, process, or handle any medical payments. The $3,500 NZD you pay to Compass Connect covers only your group airfare and concierge support services.",
+    answer: "All surgical and medical fees are paid directly to the partner hospital. Compass Connect does not collect, process, or handle any medical payments. The 4,000 you pay to Compass Connect covers only your group airfare and concierge support services.",
   },
   {
-    question: "What does the $3,500 NZD include?",
-    answer: "Your $3,500 NZD fee includes return flights from your departure city, airport transfers, on-the-ground concierge support, travel logistics coordination, and group travel companionship. It does not include hospital or surgical fees, which are paid directly to the hospital.",
+    question: "What does the 4,000 include?",
+    answer: "Your 4,000 fee includes return flights from your departure city, airport transfers, on-the-ground concierge support, travel logistics coordination, and group travel companionship. It does not include hospital or surgical fees, which are paid directly to the hospital.",
   },
   {
     question: "What if fewer than 4 travelers join a trip?",
-    answer: "Each group trip requires a minimum of 4 confirmed travelers to proceed. If the minimum is not met, the trip will not go ahead and you will receive a full refund of your $3,500 NZD payment. We will notify you as early as possible if this occurs.",
+    answer: "Each group trip requires a minimum of 4 confirmed travelers to proceed. If the minimum is not met, the trip will not go ahead and you will receive a full refund of your 4,000 payment. We will notify you as early as possible if this occurs.",
   },
   {
     question: "Can I travel alone instead of with a group?",

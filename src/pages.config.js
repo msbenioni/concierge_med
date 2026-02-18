@@ -52,6 +52,7 @@ import HowItWorks from './pages/HowItWorks';
 import Trips from './pages/Trips';
 import FAQ from './pages/FAQ';
 import Booking from './pages/Booking';
+import Admin from './pages/Admin';
 import __Layout from './Layout.jsx';
 
 
@@ -61,6 +62,7 @@ export const PAGES = {
     "Trips": Trips,
     "FAQ": FAQ,
     "Booking": Booking,
+    "Admin": Admin,
 }
 
 export const pagesConfig = {

@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { label: "Group Trips", page: "Trips" },
   { label: "Book Now", page: "Booking" },
   { label: "FAQ", page: "FAQ" },
+  { label: "Admin", page: "Admin" },
 ];
 
 export default function Layout({ children, currentPageName }) {
@@ -49,15 +50,13 @@ export default function Layout({ children, currentPageName }) {
                 {item.label}
               </Link>
             ))}
-            <a
-              href="https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to={createPageUrl("Booking")}
               className="ml-3 px-5 py-2.5 rounded-xl bg-[#FF8C42] text-[#0F1C2E] text-sm font-semibold hover:bg-[#FF7A2A] transition-all duration-200 shadow-md shadow-[#FF8C42]/20 flex items-center gap-2"
             >
               Start Questionnaire
               <ChevronRight className="w-4 h-4" />
-            </a>
+            </Link>
           </nav>
 
           {/* Mobile Toggle */}
@@ -94,15 +93,13 @@ export default function Layout({ children, currentPageName }) {
                     {item.label}
                   </Link>
                 ))}
-                <a
-                  href="https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to={createPageUrl("Booking")}
                   onClick={() => setMobileOpen(false)}
                   className="mt-2 px-5 py-3 rounded-xl bg-[#FF8C42] text-[#0F1C2E] text-sm font-semibold text-center"
                 >
                   Start Questionnaire →
-                </a>
+                </Link>
               </nav>
             </motion.div>
           )}
@@ -163,7 +160,7 @@ export default function Layout({ children, currentPageName }) {
           {/* Legal Disclaimer */}
           <div className="border-t border-white/10 pt-8">
             <p className="text-xs text-white/30 leading-relaxed max-w-4xl">
-              Compass Connect is an independent, non-medical concierge service. All medical decisions, assessments, and surgical care are provided solely by licensed hospitals and medical professionals. Compass Connect does not collect medical information, provide medical advice, or make clinical decisions. Hospital fees are paid directly to the hospital. The NZD $3,500 group travel fee covers airfare and concierge support only.
+              Compass Connect is an independent, non-medical concierge service. All medical decisions, assessments, and surgical care are provided solely by licensed hospitals and medical professionals. Compass Connect does not collect medical information, provide medical advice, or make clinical decisions. Hospital fees are paid directly to the hospital. The 4,000 group travel fee covers airfare and concierge support only.
             </p>
             <p className="text-xs text-white/20 mt-4">
               © {new Date().getFullYear()} Compass Connect. All rights reserved.
