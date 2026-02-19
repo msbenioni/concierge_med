@@ -35,10 +35,8 @@ import {
 } from "@/components/ui/select";
 
 const STEP_LABELS = [
-  { icon: User, label: "Traveler Details" },
-  { icon: Plane, label: "Select Journey" },
-  { icon: Settings, label: "Preferences" },
-  { icon: CheckCircle2, label: "Confirmation" },
+  { icon: User, label: "Interest Details" },
+  { icon: CheckCircle2, label: "Interest Received" },
 ];
 
 function generateBookingRef() {
@@ -52,88 +50,51 @@ export default function Booking() {
   const [step, setStep] = useState(0);
   const [bookingResult, setBookingResult] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [userSubmitted, setUserSubmitted] = useState(false); // Track if user actually clicked submit
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     country: "",
-    emergency_contact_name: "",
-    emergency_contact_phone: "",
-    trip_id: "",
-    travelers_count: 4,
+    departure_country: "",
+    departure_city: "",
+    other_country: "",
     preferred_date: "",
-    rooming_preference: "no_preference",
     mobility_needs: "",
     dietary_notes: "",
     special_requests: "",
   });
 
   const urlParams = new URLSearchParams(window.location.search);
-  const preselectedTripId = urlParams.get("trip") || "";
 
-  // Mock trips data
-  const mockTrips = [
-    {
-      id: 1,
-      title: "Auckland Medical Journey",
-      departure_city: "Auckland",
-      destination: TRIP_CONFIG.DESTINATION,
-      departure_date: "2024-03-15",
-      return_date: "2024-03-22",
-      confirmed_count: 6,
-      min_travelers: TRIP_CONFIG.MIN_TRAVELERS,
-      price: TRIP_CONFIG.DEFAULT_PRICE,
-      status: TRIP_STATUS.AVAILABLE,
-      hospital_approved: true,
-      hospital_reference: "MBC-2024-0315"
-    },
-    {
-      id: 2,
-      title: "Sydney Medical Journey",
-      departure_city: "Sydney",
-      destination: TRIP_CONFIG.DESTINATION,
-      departure_date: "2024-04-12",
-      return_date: "2024-04-19",
-      confirmed_count: 3,
-      min_travelers: TRIP_CONFIG.MIN_TRAVELERS,
-      price: TRIP_CONFIG.DEFAULT_PRICE,
-      status: TRIP_STATUS.AVAILABLE,
-      hospital_approved: true,
-      hospital_reference: "MBC-2024-0412"
-    },
-    {
-      id: 3,
-      title: "Melbourne Medical Journey",
-      departure_city: "Melbourne",
-      destination: TRIP_CONFIG.DESTINATION,
-      departure_date: "2024-05-10",
-      return_date: "2024-05-17",
-      confirmed_count: 9,
-      min_travelers: TRIP_CONFIG.MIN_TRAVELERS,
-      price: TRIP_CONFIG.DEFAULT_PRICE,
-      status: TRIP_STATUS.AVAILABLE,
-      hospital_approved: true,
-      hospital_reference: "MBC-2024-0510"
-    }
-  ];
-
-  const selectedTrip = mockTrips.find((t) => t.id === parseInt(formData.trip_id));
-
+  // Debug: Track step changes
   useEffect(() => {
-    if (preselectedTripId) {
-      setFormData(prev => ({ ...prev, trip_id: preselectedTripId }));
-    }
-  }, [preselectedTripId]);
+    console.log('Step changed to:', step);
+  }, [step]);
 
   const updateFormData = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const nextStep = () => setStep((s) => Math.min(s + 1, 3));
-  const prevStep = () => setStep((s) => Math.max(s - 1, 0));
+  const nextStep = () => {
+    console.log('nextStep called, current step:', step); // Debug log
+    setStep((s) => Math.min(s + 1, 1)); // Max 1 step (0, 1)
+  };
+  const prevStep = () => {
+    console.log('prevStep called, current step:', step); // Debug log
+    setStep((s) => Math.max(s - 1, 0));
+  };
 
   const onSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission
+    console.log('Form submitted, current step:', step, 'userSubmitted:', userSubmitted); // Debug log
+    
+    // Only proceed if user actually clicked submit button
+    if (!userSubmitted) {
+      console.log('Ignoring automatic form submission');
+      return;
+    }
+    
     setSubmitting(true);
     
     // Simulate API call
@@ -143,8 +104,8 @@ export default function Booking() {
     const booking = {
       ...formData,
       booking_ref: ref,
-      trip_title: selectedTrip?.title || "Unknown Journey",
-      travelers_count: Number(formData.travelers_count),
+      trip_title: "Medical Journey Consultation",
+      travelers_count: 1,
       booking_status: "new",
       payment_status: "unpaid",
       flight_status: "not_started",
@@ -153,32 +114,57 @@ export default function Booking() {
       questionnaire_complete: false,
     };
     
+    // TODO: Send confirmation email to customer with interest reference
+    // Email should include:
+    // - Interest reference number (booking_ref)
+    // - Link to health questionnaire
+    // - Instructions that they'll receive hospital quote via email
+    // - Information that they can use hospital reference to organize travel with us
+    
     setBookingResult(booking);
-    setStep(3);
+    setStep(1); // Go to confirmation page (step 1)
     setSubmitting(false);
+    setUserSubmitted(false); // Reset flag
   };
 
   const validateStep = () => {
-    if (step === 0) return formData.name && formData.email && formData.phone && formData.country && formData.emergency_contact_name && formData.emergency_contact_phone;
-    if (step === 1) return formData.trip_id && formData.travelers_count >= 1;
-    return true;
+    let isValid = false;
+    if (step === 0) {
+      // Combine traveler details and departure location requirements
+      const travelerValid = formData.name && formData.email && formData.phone && formData.country;
+      const departureValid = formData.departure_country && formData.departure_city && formData.preferred_date;
+      const otherCountryValid = formData.departure_country === 'other' ? formData.other_country : true;
+      
+      isValid = travelerValid && departureValid && otherCountryValid;
+    }
+    
+    console.log('Validation for step', step, ':', isValid, formData); // Debug log
+    return isValid;
   };
 
   return (
     <div style={{ backgroundColor: BACKGROUND_PRIMARY, color: TEXT_PRIMARY }}>
-      <div className="max-w-3xl mx-auto px-6 lg:px-12">
-        {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
-          <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
-            Ultra-Premium Concierge Booking
-          </span>
-          <h1 className="font-serif text-4xl md:text-5xl mb-4" style={{ color: TEXT_PRIMARY }}>
-            Reserve Your Journey
-          </h1>
-          <p className="text-lg" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
-            Complete the form below to reserve your spot. Medical care is provided by partner hospitals.
-          </p>
-        </motion.div>
+      {/* Top padding section */}
+      <section className="py-16 px-6 lg:px-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Header */}
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="mb-2">
+            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
+              Medical Journey Interest
+            </span>
+            <h1 className="font-serif text-4xl md:text-5xl mb-2" style={{ color: TEXT_PRIMARY }}>
+              Express Your Interest
+            </h1>
+            <p className="text-lg mb-0" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
+              Complete the form below to express interest in our exclusive concierge services. 
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Main booking form */}
+      <section className="pt-2 pb-32 px-6 lg:px-12">
+        <div className="max-w-3xl mx-auto">
 
         {/* Step indicator */}
         <div className="flex items-center gap-2 mb-10 overflow-x-auto pb-2">
@@ -205,10 +191,10 @@ export default function Booking() {
         </div>
 
         <form onSubmit={onSubmit}>
-          <AnimatePresence mode="wait">
-            {/* Step 0: Traveler Details */}
+          <AnimatePresence mode="pop">
+            {/* Step 0: Combined Traveler & Journey Details */}
             {step === 0 && (
-              <motion.div key="s0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="rounded-3xl p-8 shadow-2xl space-y-6" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${BORDERS.ACCENT_SUBTLE}` }}>
+              <motion.div key="s0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="rounded-3xl p-8 shadow-2xl space-y-8" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${BORDERS.ACCENT_SUBTLE}` }}>
                 <h2 className="font-serif text-2xl mb-6" style={{ color: TEXT_PRIMARY }}>Traveler Details</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -228,132 +214,98 @@ export default function Booking() {
                     <Input value={formData.country} onChange={(e) => updateFormData("country", e.target.value)} placeholder="New Zealand" className="mt-1.5" style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, border: `1px solid ${COMPONENTS.INPUT_BORDER}`, color: COMPONENTS.INPUT_TEXT }} />
                   </div>
                 </div>
-                <div className="pt-6" style={{ borderTop: `1px solid ${BORDERS.TEXT_SUBTLE}` }}>
-                  <p className="text-xs mb-4" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Emergency Contact</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div style={{ borderTop: `1px solid ${BORDERS.TEXT_SUBTLE}` }} className="pt-8">
+                  <h2 className="font-serif text-2xl mb-6" style={{ color: TEXT_PRIMARY }}>Departure Location</h2>
+                  <div className="space-y-6">
                     <div>
-                      <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Emergency Contact Name *</Label>
-                      <Input value={formData.emergency_contact_name} onChange={(e) => updateFormData("emergency_contact_name", e.target.value)} className="mt-1.5" style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, border: `1px solid ${COMPONENTS.INPUT_BORDER}`, color: COMPONENTS.INPUT_TEXT }} />
+                      <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Departure Country *</Label>
+                      <Select value={formData.departure_country} onValueChange={(v) => updateFormData("departure_country", v)}>
+                        <SelectTrigger className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
+                          <SelectValue placeholder="Select country" />
+                        </SelectTrigger>
+                        <SelectContent style={{ backgroundColor: BACKGROUND_PRIMARY, borderColor: ACCENT_PRIMARY_ALPHA_20, border: '1px solid' }}>
+                          <SelectItem value="new_zealand" style={{ color: TEXT_PRIMARY }}>New Zealand</SelectItem>
+                          <SelectItem value="australia" style={{ color: TEXT_PRIMARY }}>Australia</SelectItem>
+                          <SelectItem value="other" style={{ color: TEXT_PRIMARY }}>Other</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
+                    {formData.departure_country === 'other' && (
+                      <div>
+                        <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Specify Country *</Label>
+                        <Input value={formData.other_country} onChange={(e) => updateFormData("other_country", e.target.value)} placeholder="Enter country name" className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
+                      </div>
+                    )}
                     <div>
-                      <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Emergency Contact Phone *</Label>
-                      <Input value={formData.emergency_contact_phone} onChange={(e) => updateFormData("emergency_contact_phone", e.target.value)} className="mt-1.5" style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, border: `1px solid ${COMPONENTS.INPUT_BORDER}`, color: COMPONENTS.INPUT_TEXT }} />
+                      <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
+                        {formData.departure_country === 'other' ? 'City *' : 'Departure City *'}
+                      </Label>
+                      <Input value={formData.departure_city} onChange={(e) => updateFormData("departure_city", e.target.value)} placeholder="City you will be traveling from" className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Step 1: Select Journey */}
-            {step === 1 && (
-              <motion.div key="s1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="rounded-3xl p-8 shadow-2xl space-y-6" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
-                <h2 className="font-serif text-2xl mb-6" style={{ color: TEXT_PRIMARY }}>Select Your Journey</h2>
-                <div>
-                  <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Journey *</Label>
-                  <Select value={formData.trip_id} onValueChange={(v) => updateFormData("trip_id", v)}>
-                    <SelectTrigger className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}><SelectValue placeholder="Choose a journey" /></SelectTrigger>
-                    <SelectContent style={{ backgroundColor: GLASS.CARD_BACKGROUND, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
-                      {mockTrips.map((t) => (
-                        <SelectItem key={t.id} value={t.id.toString()} style={{ color: TEXT_PRIMARY }}>
-                          {t.title} — {t.destination}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                {selectedTrip && (
-                  <div className="rounded-2xl p-4 text-sm border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20, color: TEXT_PRIMARY_ALPHA_80 }}>
-                    <p className="font-medium" style={{ color: TEXT_PRIMARY }}>{selectedTrip.title}</p>
-                    <p>{selectedTrip.destination} • Min {selectedTrip.min_travelers} travelers</p>
-                    <p className="font-medium mt-1" style={{ color: ACCENT_PRIMARY }}>
-                      ${selectedTrip.price.toLocaleString()} USD concierge fee
-                    </p>
-                  </div>
-                )}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Number of Travelers *</Label>
-                    <Input type="number" min="1" value={formData.travelers_count} onChange={(e) => updateFormData("travelers_count", parseInt(e.target.value) || 1)} className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
-                    <p className="text-[11px] mt-1" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Min. 4 travelers per cohort to proceed</p>
-                  </div>
-                  <div>
-                    <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Preferred Travel Date</Label>
-                    <Input type="date" value={formData.preferred_date} onChange={(e) => updateFormData("preferred_date", e.target.value)} className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Step 2: Preferences */}
-            {step === 2 && (
-              <motion.div key="s2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="rounded-3xl p-8 shadow-2xl space-y-6" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
-                <h2 className="font-serif text-2xl mb-6" style={{ color: TEXT_PRIMARY }}>Logistics & Preferences</h2>
-                <div>
-                  <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Rooming Preference</Label>
-                  <Select value={formData.rooming_preference} onValueChange={(v) => updateFormData("rooming_preference", v)}>
-                    <SelectTrigger className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}><SelectValue /></SelectTrigger>
-                    <SelectContent style={{ backgroundColor: GLASS.CARD_BACKGROUND, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
-                      <SelectItem value="single" style={{ color: TEXT_PRIMARY }}>Single Room</SelectItem>
-                      <SelectItem value="shared" style={{ color: TEXT_PRIMARY }}>Shared Room</SelectItem>
-                      <SelectItem value="no_preference" style={{ color: TEXT_PRIMARY }}>No Preference</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Mobility Needs</Label>
-                  <Textarea value={formData.mobility_needs} onChange={(e) => updateFormData("mobility_needs", e.target.value)} placeholder="Any mobility requirements we should know about..." className="mt-1.5 h-20" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
-                </div>
-                <div>
-                  <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Dietary Notes</Label>
-                  <Textarea value={formData.dietary_notes} onChange={(e) => updateFormData("dietary_notes", e.target.value)} placeholder="Allergies, dietary restrictions..." className="mt-1.5 h-20" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
-                </div>
-                <div>
-                  <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Special Requests</Label>
-                  <Textarea value={formData.special_requests} onChange={(e) => updateFormData("special_requests", e.target.value)} placeholder="Anything else you'd like us to know..." className="mt-1.5 h-20" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
-                </div>
-
-                {/* Partner Clinic Form link */}
-                <div className="rounded-2xl p-6 border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
-                  <h3 className="font-serif text-lg mb-3" style={{ color: TEXT_PRIMARY }}>Partner Clinic Form</h3>
-                  <p className="text-sm mb-4" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
-                    The partner hospital requires you to complete their medical questionnaire.
-                    This is the hospital's own form — Compass Connect does not process or view medical information.
-                  </p>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-sans font-medium transition-all"
-                    style={{ borderColor: ACCENT_PRIMARY, color: ACCENT_PRIMARY }}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = ACCENT_PRIMARY;
-                      e.target.style.color = TEXT_PRIMARY;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'transparent';
-                      e.target.style.color = ACCENT_PRIMARY;
-                    }}
-                  >
-                    Open Partner Clinic Form <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                  <p className="text-[11px] mt-2" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
-                    You can complete this after booking. Our concierge team will follow up.
+                  <p className="text-[11px] mt-3" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
+                    Your departure location will help us coordinate travel arrangements. Specific journey details will be discussed during consultation.
                   </p>
                 </div>
+
+                <div>
+                    <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Travel Month</Label>
+                  <div className="grid grid-cols-2 gap-3 mt-1.5">
+                    <div>
+                      <Select value={formData.preferred_date?.split('-')[1] || ''} onValueChange={(month) => {
+                        const year = formData.preferred_date?.split('-')[0] || '2026';
+                        updateFormData("preferred_date", `${year}-${month}`);
+                      }}>
+                        <SelectTrigger style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
+                          <SelectValue placeholder="Month" />
+                        </SelectTrigger>
+                        <SelectContent style={{ backgroundColor: BACKGROUND_PRIMARY, borderColor: ACCENT_PRIMARY_ALPHA_20, border: '1px solid' }}>
+                          <SelectItem value="01" style={{ color: TEXT_PRIMARY }}>January</SelectItem>
+                          <SelectItem value="02" style={{ color: TEXT_PRIMARY }}>February</SelectItem>
+                          <SelectItem value="03" style={{ color: TEXT_PRIMARY }}>March</SelectItem>
+                          <SelectItem value="04" style={{ color: TEXT_PRIMARY }}>April</SelectItem>
+                          <SelectItem value="05" style={{ color: TEXT_PRIMARY }}>May</SelectItem>
+                          <SelectItem value="06" style={{ color: TEXT_PRIMARY }}>June</SelectItem>
+                          <SelectItem value="07" style={{ color: TEXT_PRIMARY }}>July</SelectItem>
+                          <SelectItem value="08" style={{ color: TEXT_PRIMARY }}>August</SelectItem>
+                          <SelectItem value="09" style={{ color: TEXT_PRIMARY }}>September</SelectItem>
+                          <SelectItem value="10" style={{ color: TEXT_PRIMARY }}>October</SelectItem>
+                          <SelectItem value="11" style={{ color: TEXT_PRIMARY }}>November</SelectItem>
+                          <SelectItem value="12" style={{ color: TEXT_PRIMARY }}>December</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Select value={formData.preferred_date?.split('-')[0] || ''} onValueChange={(year) => {
+                        const month = formData.preferred_date?.split('-')[1] || '01';
+                        updateFormData("preferred_date", `${year}-${month}`);
+                      }}>
+                        <SelectTrigger style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
+                          <SelectValue placeholder="Year" />
+                        </SelectTrigger>
+                        <SelectContent style={{ backgroundColor: BACKGROUND_PRIMARY, borderColor: ACCENT_PRIMARY_ALPHA_20, border: '1px solid' }}>
+                          <SelectItem value="2026" style={{ color: TEXT_PRIMARY }}>2026</SelectItem>
+                          <SelectItem value="2027" style={{ color: TEXT_PRIMARY }}>2027</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             )}
 
-            {/* Step 3: Confirmation */}
-            {step === 3 && bookingResult && (
+            {/* Step 1: Confirmation */}
+            {step === 1 && bookingResult && (
               <motion.div key="s3" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="space-y-8">
                 <div className="rounded-3xl p-8 shadow-2xl text-center" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
                   <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})` }}>
-                    <CheckCircle2 className="w-8 h-8" style={{ color: TEXT_PRIMARY }} />
+                    <CheckCircle2 className="w-8 h-4" style={{ color: TEXT_PRIMARY }} />
                   </div>
-                  <h2 className="font-serif text-3xl mb-2" style={{ color: TEXT_PRIMARY }}>Journey Reserved</h2>
-                  <p className="mb-4" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Your booking has been submitted successfully.</p>
+                  <h2 className="font-serif text-3xl mb-2" style={{ color: TEXT_PRIMARY }}>Interest Received</h2>
+                  <p className="mb-4" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Your interest has been submitted successfully. Complete the health questionnaire below to receive your custom quote.</p>
                   <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
-                    <span className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Booking Reference:</span>
+                    <span className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Interest Reference:</span>
                     <span className="font-mono font-semibold" style={{ color: TEXT_PRIMARY }}>{bookingResult.booking_ref}</span>
                     <button
                       type="button"
@@ -367,17 +319,21 @@ export default function Booking() {
                   </div>
                 </div>
 
-                {/* Next Steps */}
+                {/* Partner Form Section */}
                 <div className="rounded-3xl p-8 shadow-2xl" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
-                  <h3 className="font-serif text-xl mb-6" style={{ color: TEXT_PRIMARY }}>What happens next</h3>
-                  <div className="space-y-4">
+                  <h3 className="font-serif text-xl mb-4" style={{ color: TEXT_PRIMARY }}>Receive Your Custom Quote</h3>
+                  <p className="mb-6" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
+                    Our partner clinic requires you to complete the below health questionnaire to receive your personalized quote. They will email your quote with a hospital reference number, which you can use to organize travel arrangements with us.
+                  </p>
+                  
+                  <div className="space-y-4 mb-6">
                     <div className="flex gap-3">
                       <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
                         <span className="font-semibold text-sm" style={{ color: ACCENT_PRIMARY }}>1</span>
                       </div>
                       <div>
-                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Review your booking</p>
-                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Check your email for booking confirmation</p>
+                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Medical questionnaire</p>
+                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Complete the partner hospital's medical form</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -385,8 +341,8 @@ export default function Booking() {
                         <span className="font-semibold text-sm" style={{ color: ACCENT_PRIMARY }}>2</span>
                       </div>
                       <div>
-                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Complete medical questionnaire</p>
-                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Partner hospital will send you their medical form</p>
+                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Receive quote via email</p>
+                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Get personalized pricing with hospital reference number</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -394,68 +350,69 @@ export default function Booking() {
                         <span className="font-semibold text-sm" style={{ color: ACCENT_PRIMARY }}>3</span>
                       </div>
                       <div>
-                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Payment coordination</p>
-                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>We'll send payment links for concierge services</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
-                        <span className="font-semibold text-sm" style={{ color: ACCENT_PRIMARY }}>4</span>
-                      </div>
-                      <div>
-                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Travel preparation</p>
-                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Our team coordinates all logistics for your journey</p>
+                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Organize travel arrangements</p>
+                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Click email link with hospital reference to book travel</p>
                       </div>
                     </div>
                   </div>
+
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button
+                      type="button"
+                      onClick={() => window.open(process.env.REACT_APP_PARTNER_LINK_MBC || 'https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120', '_blank')}
+                      className="rounded-full px-8 gap-2 font-semibold shadow-lg flex-1"
+                      style={{ 
+                        background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})`, 
+                        color: TEXT_PRIMARY 
+                      }}
+                      onMouseEnter={(e) => e.target.style.opacity = '0.9'}
+                      onMouseLeave={(e) => e.target.style.opacity = '1'}
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Complete Medical Form
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => window.location.href = createPageUrl("Home")}
+                      className="rounded-full px-8 gap-2"
+                      style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}
+                    >
+                      Return Home
+                    </Button>
+                  </div>
+                  
+                  <p className="text-xs mt-4 text-center" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
+                    {/* TODO: Save interest data to database for follow-up */}
+                  </p>
                 </div>
               </motion.div>
             )}
-          </AnimatePresence>
-
           {/* Navigation */}
-          {step < 3 && (
+          {step < 1 && (
             <div className="flex justify-between items-center mt-8">
-              {step > 0 ? (
-                <Button type="button" variant="outline" onClick={prevStep} className="rounded-full px-6 gap-2 bg-white/10 border-white/20 text-white hover:bg-white/20">
-                  <ArrowLeft className="w-4 h-4" /> Back
-                </Button>
-              ) : <div />}
-              {step < 2 ? (
-                <Button
-                  type="button"
-                  onClick={nextStep}
-                  disabled={!validateStep()}
-                  className="rounded-full px-8 gap-2 font-semibold shadow-lg"
-                  style={{ 
-                    background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})`, 
-                    color: TEXT_PRIMARY 
-                  }}
-                  onMouseEnter={(e) => e.target.style.opacity = '0.9'}
-                  onMouseLeave={(e) => e.target.style.opacity = '1'}
-                >
-                  Continue <ArrowRight className="w-4 h-4" />
-                </Button>
-              ) : (
-                <Button
-                  type="submit"
-                  disabled={submitting}
-                  className="rounded-full px-8 gap-2 font-semibold shadow-lg"
-                  style={{ 
-                    background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})`, 
-                    color: TEXT_PRIMARY 
-                  }}
-                  onMouseEnter={(e) => e.target.style.opacity = '0.9'}
-                  onMouseLeave={(e) => e.target.style.opacity = '1'}
-                >
-                  {submitting ? "Submitting..." : "Submit Reservation"} <ArrowRight className="w-4 h-4" />
-                </Button>
-              )}
+              <div></div> {/* No back button on first step */}
+              <Button
+                type="submit"
+                disabled={submitting}
+                onClick={() => setUserSubmitted(true)} // Set flag when user clicks submit
+                className="rounded-full px-8 gap-2 font-semibold shadow-lg"
+                style={{ 
+                  background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})`, 
+                  color: TEXT_PRIMARY 
+                }}
+                onMouseEnter={(e) => e.target.style.opacity = '0.9'}
+                onMouseLeave={(e) => e.target.style.opacity = '1'}
+              >
+                {submitting ? "Submitting..." : "Submit Interest"} <ArrowRight className="w-4 h-4" />
+              </Button>
             </div>
           )}
+          </AnimatePresence>
         </form>
 
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

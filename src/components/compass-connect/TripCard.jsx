@@ -24,7 +24,6 @@ import {
 
 export default function TripCard({ trip, index = 0, featured = false }) {
   const seatsLeft = (trip.min_travelers || 0) - (trip.confirmed_count || 0);
-  const priceDisplay = `$${(trip.price || 0).toLocaleString()} USD`;
 
   return (
     <motion.div
@@ -45,13 +44,51 @@ export default function TripCard({ trip, index = 0, featured = false }) {
         <div className={`relative overflow-hidden ${featured ? "md:w-2/5 h-64 md:h-auto" : "h-56"}`}>
           <img
             src={trip.image_url || (() => {
-              const imageMap = {
-                1: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80&auto=format&fit=crop",
-                2: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop",
-                3: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80&auto=format&fit=crop",
-                4: "https://images.unsplash.com/photo-1571003123894-1f0e994e8752?w=600&q=80&auto=format&fit=crop"
+              // Extract country from destination (default to Mexico)
+              const destination = trip.destination || 'Tijuana, Mexico';
+              const country = destination.split(',').pop().trim().toLowerCase();
+              
+              // Destination-based image rotations
+              const destinationImages = {
+                'mexico': [
+                  "/mexico/arquitectura.jpeg",     // Mexico architecture
+                  "/mexico/flags.jpeg",             // Mexican flags
+                  "/mexico/la_luchadora_mexicana.jpeg", // Mexican culture
+                  "/mexico/mexico_city.jpeg",       // Mexico City
+                  "/mexico/mexico_variety.jpeg",    // Mexico variety
+                  "/mexico/mexico_villa.jpeg",      // Mexico villa/resort
+                  "/mexico/san_miguel.jpeg",        // San Miguel de Allende
+                  "/mexico/viva_mexico.jpeg"        // Viva Mexico celebration
+                ],
+                'usa': [
+                  "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80&auto=format&fit=crop", // New York
+                  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop", // California
+                  "https://images.unsplash.com/photo-1571003123894-1f0e994e8752?w=600&q=80&auto=format&fit=crop", // Miami
+                  "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80&auto=format&fit=crop"  // USA landscape
+                ],
+                'canada': [
+                  "https://images.unsplash.com/photo-1532274402911-5a369e4c4bb5?w=600&q=80&auto=format&fit=crop", // Toronto
+                  "https://images.unsplash.com/photo-1517420843989-8a592b1f2d7b?w=600&q=80&auto=format&fit=crop", // Vancouver
+                  "https://images.unsplash.com/photo-1534231456194-b85fd531c7f0?w=600&q=80&auto=format&fit=crop"  // Canada nature
+                ],
+                'australia': [
+                  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop", // Sydney
+                  "https://images.unsplash.com/photo-1529258873992-84c290bffaf0?w=600&q=80&auto=format&fit=crop", // Melbourne
+                  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop"  // Australia coast
+                ],
+                'new zealand': [
+                  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop", // Auckland
+                  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop", // NZ landscape
+                  "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=600&q=80&auto=format&fit=crop"  // New Zealand mountains
+                ]
               };
-              return imageMap[trip.id] || imageMap[1];
+              
+              // Get images for the destination, default to Mexico if not found
+              const images = destinationImages[country] || destinationImages['mexico'];
+              
+              // Rotate based on trip ID to ensure variety
+              const imageIndex = (trip.id - 1) % images.length;
+              return images[imageIndex];
             })()}
             alt={trip.title || `${trip.departure_city} to ${trip.destination}`}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -142,37 +179,31 @@ export default function TripCard({ trip, index = 0, featured = false }) {
             </div>
           )}
 
-          <div className="flex items-center justify-between pt-6" style={{ borderTop: `1px solid ${BORDERS.TEXT_SUBTLE}` }}>
-            <div>
-              <span className="text-xs font-sans uppercase tracking-wider" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Concierge Fee</span>
-              <p className="text-xl font-serif font-semibold" style={{ color: TEXT_PRIMARY }}>{priceDisplay}</p>
-            </div>
-            <Link
-              to={createPageUrl(`Booking?trip=${trip.id}`)}
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full text-sm font-sans font-semibold transition-all duration-300 shadow-lg group/btn"
-              style={{ 
-                background: GRADIENTS.ACCENT_PRIMARY, 
-                color: COMPONENTS.BUTTON_PRIMARY_TEXT,
-                boxShadow: SHADOWS.ACCENT_MEDIUM
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.opacity = '0.9';
-                e.target.style.boxShadow = SHADOWS.ACCENT_STRONG;
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.opacity = '1';
-                e.target.style.boxShadow = SHADOWS.ACCENT_MEDIUM;
-              }}
-            >
-              Reserve
-              <ArrowRight 
-                className="w-4 h-4 transition-transform duration-300" 
-                style={{ transform: 'translateX(0)' }}
-                onMouseEnter={(e) => e.target.style.transform = 'translateX(4px)'}
-                onMouseLeave={(e) => e.target.style.transform = 'translateX(0)'}
-              />
-            </Link>
-          </div>
+          <Link
+            to={createPageUrl(`Booking?trip=${trip.id}`)}
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-full text-sm font-sans font-semibold transition-all duration-300 shadow-lg group/btn"
+            style={{ 
+              background: GRADIENTS.ACCENT_PRIMARY, 
+              color: COMPONENTS.BUTTON_PRIMARY_TEXT,
+              boxShadow: SHADOWS.ACCENT_MEDIUM
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.opacity = '0.9';
+              e.target.style.boxShadow = SHADOWS.ACCENT_STRONG;
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.opacity = '1';
+              e.target.style.boxShadow = SHADOWS.ACCENT_MEDIUM;
+            }}
+          >
+            Reserve
+            <ArrowRight 
+              className="w-4 h-4 transition-transform duration-300" 
+              style={{ transform: 'translateX(0)' }}
+              onMouseEnter={(e) => e.target.style.transform = 'translateX(4px)'}
+              onMouseLeave={(e) => e.target.style.transform = 'translateX(0)'}
+            />
+          </Link>
         </div>
       </div>
     </motion.div>

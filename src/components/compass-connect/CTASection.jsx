@@ -7,7 +7,8 @@ import {
   BACKGROUND_PRIMARY, 
   BACKGROUND_SECONDARY,
   TEXT_PRIMARY, 
-  ACCENT_PRIMARY, 
+  ACCENT_PRIMARY,
+  ACCENT_SECONDARY, 
   TEXT_PRIMARY_ALPHA_60, 
   TEXT_PRIMARY_ALPHA_50,
   TEXT_PRIMARY_ALPHA_25, 
@@ -85,7 +86,7 @@ export default function CTASection() {
                   e.target.style.backgroundColor = COMPONENTS.BUTTON_SECONDARY;
                 }}
               >
-                View Group Trips
+                View Travel Groups
               </Link>
             </div>
 

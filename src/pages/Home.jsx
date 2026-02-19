@@ -231,7 +231,7 @@ export default function Home() {
                 Book Your Group Journey
               </h3>
               <p className="text-sm leading-relaxed" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
-                Join your approved cohort and let us handle all travel logistics and support.
+                Join your approved travel group and let us handle all travel logistics and support.
               </p>
             </motion.div>
           </div>
@@ -373,25 +373,25 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-16"
+            className="text-center max-w-2xl mx-auto mb-16"
           >
-            <div>
-              <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
-                Elite Journeys
-              </span>
-              <h2 className="font-serif text-4xl md:text-5xl" style={{ color: TEXT_PRIMARY }}>
-                Curated Travel Cohorts
-              </h2>
+            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
+              Elite Journeys
+            </span>
+            <h2 className="font-serif text-4xl md:text-5xl" style={{ color: TEXT_PRIMARY }}>
+              Elite Travel Groups
+            </h2>
+            <div className="mt-6">
+              <Link
+                to={createPageUrl("Trips")}
+                className="inline-flex items-center gap-2 font-sans font-medium text-sm transition-all duration-300"
+                style={{ color: ACCENT_PRIMARY }}
+                onMouseEnter={(e) => e.target.style.gap = '0.75rem'}
+                onMouseLeave={(e) => e.target.style.gap = '0.5rem'}
+              >
+                View all journeys <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
-            <Link
-              to={createPageUrl("Trips")}
-              className="inline-flex items-center gap-2 font-sans font-medium text-sm transition-all duration-300"
-              style={{ color: ACCENT_PRIMARY }}
-              onMouseEnter={(e) => e.target.style.gap = '0.75rem'}
-              onMouseLeave={(e) => e.target.style.gap = '0.5rem'}
-            >
-              View all journeys <ArrowRight className="w-4 h-4" />
-            </Link>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-12">

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
-import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, ACCENT_PRIMARY } from "../constants/colors";
+import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, TEXT_PRIMARY_ALPHA_70, ACCENT_PRIMARY } from "../constants/colors";
 
 const FAQS = [
   {
@@ -28,15 +28,15 @@ const FAQS = [
     questions: [
       {
         q: "What is the minimum group size?",
-        a: "All travel cohorts require a minimum of 4 travelers to proceed. This allows us to provide dedicated concierge support while keeping costs accessible. If the minimum isn't met, we'll work with you on alternative dates or offer a full refund of concierge fees."
+        a: "All travel groups require a minimum of 4 travelers to proceed. This allows us to provide dedicated concierge support while keeping costs accessible. If the minimum isn't met, we'll work with you on alternative dates or offer a full refund of concierge fees."
       },
       {
         q: "Can I travel alone?",
-        a: "Our service is designed for group travel cohorts. You'll book with a group of at least 4 travelers heading to the same destination. This isn't just for cost — the companionship and shared experience is a core part of what we offer."
+        a: "Our service is designed for group travel groups. You'll book with a group of at least 4 travelers heading to the same destination. This isn't just for cost — the companionship and shared experience is a core part of what we offer."
       },
       {
         q: "Who are my travel companions?",
-        a: "Your travel cohort consists of other individuals traveling to the same destination for their own procedures at partner hospitals. All travelers receive the same level of concierge support."
+        a: "Your travel group consists of other individuals traveling to the same destination for their own procedures at partner hospitals. All travelers receive the same level of concierge support."
       },
     ],
   },
@@ -53,11 +53,11 @@ const FAQS = [
       },
       {
         q: "How do I pay Compass Connect?",
-        a: "After your booking is confirmed and the travel cohort is viable (minimum 4), we'll send you a secure Stripe payment link for the concierge and travel services fee. Payment is secure and processed through Stripe."
+        a: "After your booking is confirmed and the travel group is viable (minimum 4), we'll send you a secure Stripe payment link for the concierge and travel services fee. Payment is secure and processed through Stripe."
       },
       {
         q: "What is your refund policy?",
-        a: "If a travel cohort doesn't reach the minimum 4 travelers and must be cancelled, you'll receive a full refund of your concierge fee. For individual cancellations, please contact us as terms vary based on timing."
+        a: "If a travel group doesn't reach the minimum 4 travelers and must be cancelled, you'll receive a full refund of your concierge fee. For individual cancellations, please contact us as terms vary based on timing."
       },
     ],
   },

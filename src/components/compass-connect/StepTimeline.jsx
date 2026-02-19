@@ -22,7 +22,7 @@ const STEPS = [
     num: "03",
     icon: Plane,
     title: "Secure Your Group Travel Seat",
-    desc: "Return to Compass Connect and book your seat for 4,000 — includes return flights, concierge support, and group coordination.",
+    desc: "Return to Compass Connect to organise your travel — includes return flights, concierge support, and group coordination.",
     accent: ACCENT_PRIMARY,
   },
 ];

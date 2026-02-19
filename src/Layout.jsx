@@ -30,9 +30,9 @@ import {
 
 const NAV_ITEMS = [
   { label: "How It Works", page: "HowItWorks" },
-  { label: "Group Trips", page: "Trips" },
+  { label: "Travel Groups", page: "Trips" },
   { label: "FAQ", page: "FAQ" },
-  { label: "Admin", page: "Admin" },
+  { label: "Concierge Desk", page: "Admin" },
 ];
 
 export default function Layout({ children, currentPageName }) {

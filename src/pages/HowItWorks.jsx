@@ -55,10 +55,10 @@ const PHASES = [
     icon: Plane,
     title: "Group Booking",
     subtitle: "Secure your travel seat with Compass Connect",
-    description: "With your hospital quote confirmed, return to Compass Connect to book your seat on an upcoming group trip. Pay 4,000 which covers return flights and full concierge support.",
+    description: "With your hospital quote confirmed, return to Compass Connect to book your seat on an upcoming travel group. Pay the concierge fee which covers return flights and full concierge support.",
     details: [
-      "Select from available group trips",
-      "4,000 includes flights + concierge",
+      "Select from available travel groups",
+      "Concierge fee includes flights + support",
       "Trip confirmed once 4 travelers join",
       "Full refund if minimum not met",
     ],
@@ -105,14 +105,11 @@ export default function HowItWorks() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-2xl"
           >
-            <span className="text-xs uppercase tracking-[0.2em] font-semibold" style={{ color: ACCENT_PRIMARY }}>The Process</span>
-            <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-3"
-              style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}
-            >
+            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>The Process</span>
+            <h1 className="font-serif text-4xl md:text-5xl mb-4" style={{ color: TEXT_PRIMARY }}>
               How It Works
             </h1>
-            <p className="mt-5 text-lg leading-relaxed" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
+            <p className="text-lg" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
               A transparent, five-phase journey from initial assessment to your return home. Every step is clearly defined.
             </p>
           </motion.div>

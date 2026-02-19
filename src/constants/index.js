@@ -1,10 +1,8 @@
 // Trip configuration constants
 export const TRIP_CONFIG = {
   MIN_TRAVELERS: 4,
-  DEFAULT_PRICE: 4000,
   DEFAULT_STATUS: 'available',
-  DESTINATION: 'Tijuana, Mexico',
-  DEFAULT_CURRENCY: 'USD'
+  DESTINATION: 'Tijuana, Mexico'
 };
 
 // Trip status options

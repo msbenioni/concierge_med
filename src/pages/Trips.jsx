@@ -63,16 +63,13 @@ export default function Trips() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-2xl"
           >
-            <span className="text-xs uppercase tracking-[0.2em] font-semibold" style={{ color: ACCENT_PRIMARY }}>
+            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
               Upcoming Departures
             </span>
-            <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-3"
-              style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}
-            >
-              Group Trips
+            <h1 className="font-serif text-4xl md:text-5xl mb-4" style={{ color: TEXT_PRIMARY }}>
+              Travel Groups
             </h1>
-            <p className="mt-5 text-lg leading-relaxed" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
+            <p className="text-lg" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
               Browse upcoming group travel dates. Each trip includes return flights and full concierge support.
             </p>
           </motion.div>

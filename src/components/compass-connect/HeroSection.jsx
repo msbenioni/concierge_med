@@ -97,7 +97,7 @@ export default function HeroSection() {
                   e.target.style.backgroundColor = COMPONENTS.BUTTON_SECONDARY;
                 }}
               >
-                View Upcoming Group Trips
+                View Upcoming Travel Groups
               </Link>
             </div>
           </motion.div>
