@@ -105,7 +105,7 @@ export default function Layout({ children, currentPageName }) {
                 e.target.style.boxShadow = SHADOWS.ACCENT_SUBTLE;
               }}
             >
-              Book Now
+              Register Your Interest
               <ChevronRight className="w-4 h-4" />
             </Link>
           </nav>
@@ -163,7 +163,7 @@ export default function Layout({ children, currentPageName }) {
                   className="mt-2 px-5 py-3 rounded-xl text-sm font-semibold text-center"
                   style={{ backgroundColor: COMPONENTS.STATUS_WARNING, color: TEXT_PRIMARY_ALPHA_50 }}
                 >
-                  Book Now →
+                  Register Your Interest →
                 </Link>
               </nav>
             </motion.div>

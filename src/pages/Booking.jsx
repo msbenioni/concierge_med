@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
 import LoadingSpinner from "../components/compass-connect/LoadingSpinner";
 import { TRIP_CONFIG, TRIP_STATUS, BOOKING_STATUS, USER_STATUS, HOSPITAL_REF_PREFIX } from "../constants";
+import { sendInterestConfirmationEmail } from "../services/emailService";
+import { databaseService } from "../services/databaseService";
 import { 
   BACKGROUND_PRIMARY, 
   TEXT_PRIMARY, 
@@ -61,6 +63,7 @@ export default function Booking() {
     departure_city: "",
     other_country: "",
     preferred_date: "",
+    surgery_type: "bariatric",
     mobility_needs: "",
     dietary_notes: "",
     special_requests: "",
@@ -103,9 +106,18 @@ export default function Booking() {
     
     const ref = generateBookingRef();
     const booking = {
-      ...formData,
       booking_ref: ref,
-      trip_title: "Medical Journey Consultation",
+      first_name: formData.name.split(' ')[0] || formData.name,
+      last_name: formData.name.split(' ').slice(1).join(' ') || '',
+      email: formData.email,
+      phone: formData.phone,
+      country: formData.country,
+      departure_country: formData.departure_country,
+      departure_city: formData.departure_city,
+      preferred_date: formData.preferred_date,
+      other_country: formData.other_country || null,
+      trip_type: formData.surgery_type,
+      trip_title: formData.surgery_type === 'bariatric' ? 'Bariatric Surgery Journey' : 'Cosmetic Surgery Journey',
       travelers_count: 1,
       booking_status: "new",
       payment_status: "unpaid",
@@ -113,19 +125,45 @@ export default function Booking() {
       accommodation_status: "not_started",
       transfers_status: "not_started",
       questionnaire_complete: false,
+      notes: `Mobility needs: ${formData.mobility_needs || 'None'} | Dietary: ${formData.dietary_notes || 'None'} | Special requests: ${formData.special_requests || 'None'}`,
     };
     
-    // TODO: Send confirmation email to customer with interest reference
-    // Email should include:
-    // - Interest reference number (booking_ref)
-    // - Link to health questionnaire
-    // - Instructions that they'll receive hospital quote via email
-    // - Information that they can use hospital reference to organize travel with us
+    // Send confirmation email to customer with interest reference
+    try {
+      console.log('Sending confirmation email to:', booking.email, 'with ref:', booking.booking_ref);
+      const emailResult = await sendInterestConfirmationEmail(booking);
+      if (emailResult.success) {
+        console.log('✅ Confirmation email sent successfully to:', booking.email);
+      } else {
+        console.error('❌ Failed to send confirmation email:', emailResult.error);
+        // Continue with booking process even if email fails
+      }
+    } catch (error) {
+      console.error('❌ Error sending confirmation email:', error);
+      // Continue with booking process even if email fails
+    }
+
+    // Save interest data to database for follow-up
+    try {
+      const dbResult = await databaseService.createInterest(booking);
+      if (!dbResult.success) {
+        console.error('Failed to save interest to database:', dbResult.error);
+        // Continue with process even if database save fails
+      } else {
+        console.log('Interest saved to database:', dbResult.data);
+      }
+    } catch (error) {
+      console.error('Error saving interest to database:', error);
+      // Continue with process even if database save fails
+    }
     
     setBookingResult(booking);
     setStep(1); // Go to confirmation page (step 1)
     setSubmitting(false);
     setUserSubmitted(false); // Reset flag
+    
+    // Scroll to top after successful submission
+    window.scrollTo(0, 0);
   };
 
   const validateStep = () => {
@@ -134,9 +172,10 @@ export default function Booking() {
       // Combine traveler details and departure location requirements
       const travelerValid = formData.name && formData.email && formData.phone && formData.country;
       const departureValid = formData.departure_country && formData.departure_city && formData.preferred_date;
+      const surgeryValid = formData.surgery_type;
       const otherCountryValid = formData.departure_country === 'other' ? formData.other_country : true;
       
-      isValid = travelerValid && departureValid && otherCountryValid;
+      isValid = travelerValid && departureValid && surgeryValid && otherCountryValid;
     }
     
     console.log('Validation for step', step, ':', isValid, formData); // Debug log
@@ -294,7 +333,23 @@ export default function Booking() {
                 </div>
 
                 <div>
-                    <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Travel Month</Label>
+                  <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Surgery Type *</Label>
+                  <Select value={formData.surgery_type} onValueChange={(value) => updateFormData("surgery_type", value)}>
+                    <SelectTrigger className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
+                      <SelectValue placeholder="Select surgery type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="bariatric">Bariatric Surgery</SelectItem>
+                      <SelectItem value="cosmetic">Cosmetic Surgery</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-[11px] mt-1.5" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
+                    Select the type of surgery you're interested in pursuing.
+                  </p>
+                </div>
+
+                <div>
+                    <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Preferred Travel Month</Label>
                   <div className="grid grid-cols-2 gap-3 mt-1.5">
                     <div>
                       <Select value={formData.preferred_date?.split('-')[1] || ''} onValueChange={(month) => {
@@ -427,7 +482,7 @@ export default function Booking() {
                   </div>
                   
                   <p className="text-xs mt-4 text-center" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
-                    {/* TODO: Save interest data to database for follow-up */}
+                    Your interest has been registered and we'll be in touch soon.
                   </p>
                 </div>
               </motion.div>

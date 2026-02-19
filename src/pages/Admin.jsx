@@ -21,30 +21,37 @@ import {
   RefreshCw,
   Copy,
   ExternalLink,
-  Link2
+  Link2,
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  FileText
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TRIP_CONFIG, TRIP_STATUS, BOOKING_STATUS, USER_STATUS, HOSPITAL_REF_PREFIX } from "../constants";
-import { mockTrips, mockNotifications } from "../data/mockData";
-import { getStatusClassName, getStatusLabel } from "../constants/statusConfig";
+import { databaseService } from "../services/databaseService";
 import { 
   BACKGROUND_PRIMARY, 
   TEXT_PRIMARY, 
   ACCENT_PRIMARY, 
-  ACCENT_SECONDARY,
   TEXT_PRIMARY_ALPHA_70, 
+  TEXT_PRIMARY_ALPHA_60, 
   TEXT_PRIMARY_ALPHA_50, 
   TEXT_PRIMARY_ALPHA_20, 
+  TEXT_PRIMARY_ALPHA_80,
   ACCENT_PRIMARY_ALPHA_20, 
+  ACCENT_PRIMARY_ALPHA_10,
   GRADIENTS, 
   GLASS, 
   SHADOWS,
   COMPONENTS,
   BORDERS
 } from "../constants/colors";
+import { mockTrips, mockNotifications } from "../data/mockData";
+import { getStatusClassName, getStatusLabel } from "../constants/statusConfig";
 
 export default function Admin() {
   const [trips, setTrips] = useState([]);
@@ -57,8 +64,12 @@ export default function Admin() {
   const [isLoadingTrips, setIsLoadingTrips] = useState(false);
   const [isLoadingNotifications, setIsLoadingNotifications] = useState(false);
   const [error, setError] = useState(null);
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
-  // Initialize with mock data (simulate API calls)
+  // Initialize with database data
   useEffect(() => {
     const loadData = async () => {
       setIsLoadingTrips(true);
@@ -66,14 +77,38 @@ export default function Admin() {
       setError(null);
       
       try {
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        setTrips(mockTrips);
-        setNotifications(mockNotifications);
+        // Load trips from database
+        const tripsResult = await databaseService.getAllTrips();
+        if (tripsResult.success) {
+          setTrips(tripsResult.data);
+        } else {
+          console.error('Failed to load trips:', tripsResult.error);
+          // Fallback to mock data if database fails
+          const { mockTrips } = await import("../data/mockData");
+          setTrips(mockTrips);
+        }
+
+        // Load interests/notifications from database
+        const interestsResult = await databaseService.getInterests();
+        if (interestsResult.success) {
+          setNotifications(interestsResult.data);
+        } else {
+          console.error('Failed to load interests:', interestsResult.error);
+          // Fallback to mock data if database fails
+          const { mockNotifications } = await import("../data/mockData");
+          setNotifications(mockNotifications);
+        }
       } catch (err) {
         setError("Failed to load data. Please try again.");
         console.error("Error loading admin data:", err);
+        // Fallback to mock data
+        try {
+          const { mockTrips, mockNotifications } = await import("../data/mockData");
+          setTrips(mockTrips);
+          setNotifications(mockNotifications);
+        } catch (fallbackErr) {
+          console.error("Failed to load fallback data:", fallbackErr);
+        }
       } finally {
         setIsLoadingTrips(false);
         setIsLoadingNotifications(false);
@@ -137,7 +172,7 @@ export default function Admin() {
   };
 
   // CSV Export Functions
-  const exportToCSV = (data, filename) => {
+  const exportToCSVGeneric = (data, filename) => {
     const headers = Object.keys(data[0] || {});
     const csvHeaders = headers.join(',');
     const csvRows = data.map(row => 
@@ -180,7 +215,7 @@ export default function Admin() {
       hospital_reference: trip.hospital_reference
     }));
     
-    exportToCSV(tripsData, 'trips.csv');
+    exportToCSVGeneric(tripsData, 'trips.csv');
   };
 
   const exportNotifications = () => {
@@ -204,7 +239,7 @@ export default function Admin() {
       payment_link_url: notification.payment_link_url || ''
     }));
     
-    exportToCSV(notificationsData, 'notifications.csv');
+    exportToCSVGeneric(notificationsData, 'notifications.csv');
   };
 
   const [newTrip, setNewTrip] = useState({
@@ -265,18 +300,18 @@ export default function Admin() {
     setTrips(trips.filter(trip => trip.id !== id));
   };
 
-  const getBookingStatusColor = (status) => {
+  const getInterestStatusColor = (status) => {
     return getStatusClassName('booking', status);
   };
 
-  const getBookingStatusText = (status) => {
+  const getInterestStatusText = (status) => {
     return getStatusLabel('booking', status);
   };
 
-  const updateBookingStatus = (notificationId, newStatus) => {
+  const updateInterestStatus = (notificationId, newStatus) => {
     setNotifications(notifications.map(notification => 
       notification.id === notificationId 
-        ? { ...notification, booking: { ...notification.booking, status: newStatus } }
+        ? { ...notification, booking_status: newStatus }
         : notification
     ));
   };
@@ -301,7 +336,7 @@ export default function Admin() {
   };
 
   // Stats calculation
-  const totalBookings = notifications.length;
+  const totalInterests = notifications.length;
   const confirmed = notifications.filter((n) => n.booking_status === "confirmed").length;
   const paid = notifications.filter((n) => n.payment_status === "paid").length;
   const reviewed = notifications.filter((n) => n.questionnaire_complete === true).length;
@@ -311,12 +346,16 @@ export default function Admin() {
   const filteredNotifications = notifications.filter((n) => {
     if (!search) return true;
     const s = search.toLowerCase();
+    const fullName = `${n.first_name || ''} ${n.last_name || ''}`.trim();
     return (
       (n.booking_ref || "").toLowerCase().includes(s) ||
-      (n.user?.full_name || "").toLowerCase().includes(s) ||
-      (n.user?.email || "").toLowerCase().includes(s) ||
-      (n.user?.phone || "").toLowerCase().includes(s) ||
-      (n.user?.country || "").toLowerCase().includes(s) ||
+      fullName.toLowerCase().includes(s) ||
+      (n.email || "").toLowerCase().includes(s) ||
+      (n.phone || "").toLowerCase().includes(s) ||
+      (n.country || "").toLowerCase().includes(s) ||
+      (n.departure_country || "").toLowerCase().includes(s) ||
+      (n.departure_city || "").toLowerCase().includes(s) ||
+      (n.trip_type || "").toLowerCase().includes(s) ||
       (n.trip_title || "").toLowerCase().includes(s) ||
       (n.booking_status || "").toLowerCase().includes(s) ||
       (n.payment_status || "").toLowerCase().includes(s) ||
@@ -324,17 +363,143 @@ export default function Admin() {
     );
   });
 
-  // TODO: Add API integration
-  // TODO: Replace mock data with real API calls using React Query
-  // TODO: Add pagination for large datasets
-  // TODO: Add loading states and error handling
+  // Pagination logic - always show 20 rows
+  const totalPages = Math.ceil(filteredNotifications.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedNotifications = filteredNotifications.slice(startIndex, endIndex);
+  
+  // Pad with empty rows to always show 20 rows
+  const displayNotifications = [...paginatedNotifications];
+  const remainingRows = itemsPerPage - displayNotifications.length;
+  for (let i = 0; i < remainingRows; i++) {
+    displayNotifications.push({
+      id: `empty-${i}`,
+      isEmpty: true
+    });
+  }
+
+  // Reset page when search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
+
+  // Pagination controls
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleItemsPerPageChange = (newItemsPerPage) => {
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1);
+  };
+
+  // Export functionality
+  const exportToCSV = () => {
+    const headers = [
+      'Interest Ref', 'Name', 'Email', 'Phone', 'Country', 
+      'Departure Country', 'Departure City', 'Surgery Type', 'Interest Status', 'Payment Status', 'Created At'
+    ];
+    
+    const csvData = filteredNotifications.map(notification => [
+      notification.booking_ref || `CC-${String(notification.id).padStart(4, '0')}`,
+      `${notification.first_name || ''} ${notification.last_name || ''}`.trim(),
+      notification.email || '',
+      notification.phone || '',
+      notification.country || '',
+      notification.departure_country || '',
+      notification.departure_city || '',
+      notification.trip_type || '',
+      notification.booking_status || '',
+      notification.payment_status || '',
+      notification.created_at ? new Date(notification.created_at).toLocaleDateString() : ''
+    ]);
+    
+    const csvContent = [
+      headers.join(','),
+      ...csvData.map(row => row.map(cell => `"${cell}"`).join(','))
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `interests_export_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const exportToPDF = () => {
+    // Simple PDF export using window.print (for now)
+    // In a real implementation, you'd use a library like jsPDF
+    const printContent = `
+      <html>
+        <head>
+          <title>Interests Export</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            table { border-collapse: collapse; width: 100%; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            h1 { color: #2563eb; }
+          </style>
+        </head>
+        <body>
+          <h1>Compass Connect - Interests Export</h1>
+          <p>Generated: ${new Date().toLocaleDateString()}</p>
+          <p>Total Records: ${filteredNotifications.length}</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Interest Ref</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Country</th>
+                <th>Departure Country</th>
+                <th>Departure City</th>
+                <th>Surgery Type</th>
+                <th>Interest Status</th>
+                <th>Payment Status</th>
+                <th>Created At</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filteredNotifications.map(notification => `
+                <tr>
+                  <td>${notification.booking_ref || `CC-${String(notification.id).padStart(4, '0')}`}</td>
+                  <td>${notification.first_name || ''} ${notification.last_name || ''}</td>
+                  <td>${notification.email || ''}</td>
+                  <td>${notification.phone || ''}</td>
+                  <td>${notification.country || ''}</td>
+                  <td>${notification.departure_country || ''}</td>
+                  <td>${notification.departure_city || ''}</td>
+                  <td>${notification.trip_type || ''}</td>
+                  <td>${notification.booking_status || ''}</td>
+                  <td>${notification.payment_status || ''}</td>
+                  <td>${notification.created_at ? new Date(notification.created_at).toLocaleDateString() : ''}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </body>
+      </html>
+    `;
+    
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(printContent);
+    printWindow.document.close();
+    printWindow.print();
+  };
+
   // TODO: Add real-time updates with WebSocket
   // TODO: Add advanced filtering and sorting
   // TODO: Add data validation and error boundaries
-  // TODO: Add export functionality (CSV, PDF)
   // TODO: Add audit trail for changes
   // TODO: Add user permissions and access control
-  // Todo: add kiwisaver withdrawl help
+  // TODO: Add kiwisaver withdrawal help
 
   const handleFieldChange = (notificationId, field, value) => {
     // Update editing fields state
@@ -434,7 +599,7 @@ export default function Admin() {
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
-            { label: "Total Bookings", value: totalBookings, color: TEXT_PRIMARY },
+            { label: "Total Interests", value: totalInterests, color: TEXT_PRIMARY },
             { label: "Confirmed", value: confirmed, color: COMPONENTS.STATUS_SUCCESS },
             { label: "Reviewed", value: reviewed, color: COMPONENTS.STATUS_INFO },
             { label: "Active Journeys", value: activeTrips, color: ACCENT_PRIMARY },
@@ -447,88 +612,148 @@ export default function Admin() {
         </div>
 
         {/* Tabs */}
-        <Tabs defaultValue="bookings" className="space-y-6">
+        <Tabs defaultValue="interests" className="space-y-6">
           <TabsList className="p-1 rounded-xl" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${BORDERS.TEXT_SUBTLE}` }}>
-            <TabsTrigger value="bookings" className="rounded-lg gap-2 text-xs font-sans" style={{ color: TEXT_PRIMARY }}>
-              <ClipboardList className="w-3.5 h-3.5" /> Bookings
+            <TabsTrigger value="interests" className="rounded-lg gap-2 text-xs font-sans" style={{ color: TEXT_PRIMARY }}>
+              <ClipboardList className="w-3.5 h-3.5" /> Interests
             </TabsTrigger>
             <TabsTrigger value="trips" className="rounded-lg gap-2 text-xs font-sans" style={{ color: TEXT_PRIMARY }}>
               <Plane className="w-3.5 h-3.5" /> Journeys
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="bookings">
+          <TabsContent value="interests">
             <div className="mb-4">
-              <div className="relative max-w-sm">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <Input
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search by name, email, ref..."
-                  className="pl-9 rounded-xl text-sm"
-                />
+              <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                <div className="relative max-w-lg">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Input
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search by name, email, ref..."
+                    className="pl-9 rounded-xl text-sm w-80"
+                  />
+                </div>
+                
+                <div className="flex gap-2">
+                  <Button
+                    onClick={exportToCSV}
+                    variant="outline"
+                    size="sm"
+                    className="rounded-full gap-2 text-xs"
+                    disabled={filteredNotifications.length === 0}
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    Export CSV
+                  </Button>
+                  <Button
+                    onClick={exportToPDF}
+                    variant="outline"
+                    size="sm"
+                    className="rounded-full gap-2 text-xs"
+                    disabled={filteredNotifications.length === 0}
+                  >
+                    <FileText className="w-3.5 h-3.5" />
+                    Export PDF
+                  </Button>
+                </div>
               </div>
             </div>
             
-            {/* Bookings Table */}
+            {/* Interests Table */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[1800px] border-collapse border border-gray-300 bg-white">
+                <table className="w-full min-w-[3600px] border-collapse border border-gray-300 bg-white">
                   {/* Table Header */}
                   <thead>
                     <tr className="bg-gray-100 border-b border-gray-300">
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-24">
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-48">
                         Ref
                       </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-36">
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-72">
                         Name
                       </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-48">
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-96">
                         Email
                       </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-40">
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-80">
                         Phone
                       </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-24">
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-48">
                         Country
                       </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-40">
-                        Journey
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-64">
+                        Departure Country
                       </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-20">
-                        Travelers
-                      </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-32">
-                        Pref. Date
-                      </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-32">
-                        Booking
-                      </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-32">
-                        Payment
-                      </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-20">
-                        Q-Form
-                      </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-32">
-                        Flights
-                      </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-40">
-                        Accommod.
-                      </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-32">
-                        Transfers
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-64">
+                        Departure City
                       </th>
                       <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-48">
-                        Notes
+                        Surgery Type
                       </th>
                       <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-40">
+                        Travelers
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-64">
+                        Pref. Date
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-64">
+                        Interest Status
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-64">
+                        Stage
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-64">
+                        Payment
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-40">
+                        Q-Form
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-64">
+                        Flights
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-80">
+                        Accommodation
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-80">
+                        Transfers
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-96">
+                        Notes
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-80">
                         Actions
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredNotifications.map((notification) => (
+                    {displayNotifications.map((notification) => {
+                      if (notification.isEmpty) {
+                        return (
+                          <tr key={notification.id} className="border-b border-gray-200">
+                            {/* Empty row cells */}
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                          </tr>
+                        );
+                      }
+                      
+                      return (
                       <tr key={notification.id} className="border-b border-gray-200 hover:bg-gray-50">
                         {/* Ref */}
                         <td className="border border-gray-200 px-3 py-2 w-24">
@@ -544,8 +769,12 @@ export default function Admin() {
                         <td className="border border-gray-200 px-3 py-2 w-36">
                           <Input
                             type="text"
-                            value={getFieldValue(notification, 'user.full_name') || ''}
-                            onChange={(e) => handleFieldChange(notification.id, 'user.full_name', e.target.value)}
+                            value={`${getFieldValue(notification, 'first_name') || ''} ${getFieldValue(notification, 'last_name') || ''}`.trim()}
+                            onChange={(e) => {
+                              const names = e.target.value.split(' ');
+                              handleFieldChange(notification.id, 'first_name', names[0] || '');
+                              handleFieldChange(notification.id, 'last_name', names.slice(1).join(' ') || '');
+                            }}
                             className="text-sm font-medium text-gray-900 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500"
                           />
                         </td>
@@ -554,9 +783,9 @@ export default function Admin() {
                         <td className="border border-gray-200 px-3 py-2 w-48">
                           <Input
                             type="email"
-                            value={getFieldValue(notification, 'user.email') || ''}
-                            onChange={(e) => handleFieldChange(notification.id, 'user.email', e.target.value)}
-                            className="text-sm text-gray-600 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500"
+                            value={getFieldValue(notification, 'email') || ''}
+                            onChange={(e) => handleFieldChange(notification.id, 'email', e.target.value)}
+                            className="text-sm text-gray-900 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500"
                           />
                         </td>
 
@@ -564,8 +793,8 @@ export default function Admin() {
                         <td className="border border-gray-200 px-3 py-2 w-40">
                           <Input
                             type="tel"
-                            value={getFieldValue(notification, 'user.phone') || ''}
-                            onChange={(e) => handleFieldChange(notification.id, 'user.phone', e.target.value)}
+                            value={getFieldValue(notification, 'phone') || ''}
+                            onChange={(e) => handleFieldChange(notification.id, 'phone', e.target.value)}
                             className="text-sm text-gray-900 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500"
                           />
                         </td>
@@ -574,20 +803,42 @@ export default function Admin() {
                         <td className="border border-gray-200 px-3 py-2 w-24">
                           <Input
                             type="text"
-                            value={getFieldValue(notification, 'user.country') || ''}
-                            onChange={(e) => handleFieldChange(notification.id, 'user.country', e.target.value)}
+                            value={getFieldValue(notification, 'country') || ''}
+                            onChange={(e) => handleFieldChange(notification.id, 'country', e.target.value)}
                             className="text-sm text-gray-900 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500"
                           />
                         </td>
 
-                        {/* Journey */}
-                        <td className="border border-gray-200 px-3 py-2 w-40">
+                        {/* Departure Country */}
+                        <td className="border border-gray-200 px-3 py-2 w-32">
                           <Input
                             type="text"
-                            value={getFieldValue(notification, 'trip_title') || 'Tijuana Medical Journey'}
-                            onChange={(e) => handleFieldChange(notification.id, 'trip_title', e.target.value)}
+                            value={getFieldValue(notification, 'departure_country') || ''}
+                            onChange={(e) => handleFieldChange(notification.id, 'departure_country', e.target.value)}
                             className="text-sm text-gray-900 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500"
                           />
+                        </td>
+
+                        {/* Departure City */}
+                        <td className="border border-gray-200 px-3 py-2 w-32">
+                          <Input
+                            type="text"
+                            value={getFieldValue(notification, 'departure_city') || ''}
+                            onChange={(e) => handleFieldChange(notification.id, 'departure_city', e.target.value)}
+                            className="text-sm text-gray-900 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500"
+                          />
+                        </td>
+
+                        {/* Surgery Type */}
+                        <td className="border border-gray-200 px-3 py-2 w-48">
+                          <select
+                            value={getFieldValue(notification, 'trip_type') || 'bariatric'}
+                            onChange={(e) => handleFieldChange(notification.id, 'trip_type', e.target.value)}
+                            className="text-xs px-2 py-1 rounded border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                          >
+                            <option value="bariatric">Bariatric Surgery</option>
+                            <option value="cosmetic">Cosmetic Surgery</option>
+                          </select>
                         </td>
 
                         {/* Travelers */}
@@ -610,7 +861,7 @@ export default function Admin() {
                           />
                         </td>
 
-                        {/* Booking Status */}
+                        {/* Interest Status */}
                         <td className="border border-gray-200 px-3 py-2 w-32">
                           <select
                             value={getFieldValue(notification, 'booking_status') || 'new'}
@@ -623,6 +874,20 @@ export default function Admin() {
                             <option value="waitlist">Waitlist</option>
                             <option value="cancelled">Cancelled</option>
                           </select>
+                        </td>
+
+                        {/* Stage */}
+                        <td className="border border-gray-200 px-3 py-2 w-32">
+                          <div className="text-xs font-medium text-center px-2 py-1 rounded"
+                               style={{
+                                 backgroundColor: getFieldValue(notification, 'booking_status') === 'confirmed' ? '#dcfce7' : 
+                                                getFieldValue(notification, 'payment_status') === 'paid' ? '#dbeafe' : '#fef3c7',
+                                 color: getFieldValue(notification, 'booking_status') === 'confirmed' ? '#166534' :
+                                        getFieldValue(notification, 'payment_status') === 'paid' ? '#1e40af' : '#92400e'
+                               }}>
+                            {getFieldValue(notification, 'payment_status') === 'paid' ? 'Booking' : 
+                             getFieldValue(notification, 'booking_status') === 'confirmed' ? 'Confirmed' : 'Interest'}
+                          </div>
                         </td>
 
                         {/* Payment Status */}
@@ -755,10 +1020,80 @@ export default function Admin() {
                           </div>
                         </td>
                       </tr>
-                    ))}
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
+              
+              {/* Pagination Controls */}
+              {filteredNotifications.length > itemsPerPage && (
+                <div className="flex flex-col sm:flex-row justify-between items-center mt-4 p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center gap-2 mb-4 sm:mb-0">
+                    <span className="text-sm text-gray-600">Show:</span>
+                    <select
+                      value={itemsPerPage}
+                      onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
+                      className="border border-gray-300 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value={5}>5</option>
+                      <option value={10}>10</option>
+                      <option value={25}>25</option>
+                      <option value={50}>50</option>
+                    </select>
+                    <span className="text-sm text-gray-600">
+                      entries {filteredNotifications.length > 0 && `(${startIndex + 1}-${Math.min(endIndex, filteredNotifications.length)} of ${filteredNotifications.length})`}
+                    </span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="p-2 border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    
+                    <div className="flex gap-1">
+                      {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                        let pageNum;
+                        if (totalPages <= 5) {
+                          pageNum = i + 1;
+                        } else if (currentPage <= 3) {
+                          pageNum = i + 1;
+                        } else if (currentPage >= totalPages - 2) {
+                          pageNum = totalPages - 4 + i;
+                        } else {
+                          pageNum = currentPage - 2 + i;
+                        }
+                        
+                        return (
+                          <button
+                            key={pageNum}
+                            onClick={() => handlePageChange(pageNum)}
+                            className={`px-3 py-1 border rounded text-sm ${
+                              currentPage === pageNum
+                                ? 'bg-blue-500 text-white border-blue-500'
+                                : 'border-gray-300 hover:bg-gray-100'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    
+                    <button
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className="p-2 border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </TabsContent>
 

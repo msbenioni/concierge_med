@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
 import { motion } from "framer-motion";
@@ -10,6 +10,7 @@ import WhyGroupTravel from "../components/compass-connect/WhyGroupTravel";
 import CTASection from "../components/compass-connect/CTASection";
 import TripCard from "../components/compass-connect/TripCard";
 import TripHighlights from "../components/compass-connect/TripHighlights";
+import { databaseService } from "../services/databaseService";
 import { 
   BACKGROUND_PRIMARY, 
   BACKGROUND_SECONDARY,
@@ -36,39 +37,60 @@ import {
 } from "../constants/colors";
 
 export default function Home() {
-  // Mock featured trips data (TODO: Replace with API call)
-  const featuredTrips = [
-    {
-      id: 1,
-      title: "Auckland Medical Journey",
-      departure_city: "Auckland",
-      destination: "Tijuana, Mexico",
-      departure_date: "2024-03-15",
-      return_date: "2024-03-22",
-      confirmed_count: 6,
-      min_travelers: 4,
-      price: 4000,
-      status: "available",
-      hospital_approved: true,
-      hospital_reference: "MBC-2024-0315",
-      image_url: "/mexico/medical-facility-1.jpg"
-    },
-    {
-      id: 2,
-      title: "Sydney Medical Journey",
-      departure_city: "Sydney",
-      destination: "Tijuana, Mexico",
-      departure_date: "2024-04-12",
-      return_date: "2024-04-19",
-      confirmed_count: 3,
-      min_travelers: 4,
-      price: 4000,
-      status: "available",
-      hospital_approved: true,
-      hospital_reference: "MBC-2024-0412",
-      image_url: "/mexico/medical-facility-2.jpg"
-    }
-  ];
+  const [featuredTrips, setFeaturedTrips] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadFeaturedTrips = async () => {
+      try {
+        const result = await databaseService.getFeaturedTrips();
+        if (result.success) {
+          setFeaturedTrips(result.data);
+        } else {
+          console.error('Failed to load featured trips:', result.error);
+          // Fallback to mock data if database fails
+          setFeaturedTrips([
+            {
+              id: 1,
+              title: "Auckland Medical Journey",
+              departure_city: "Auckland",
+              destination: "Tijuana, Mexico",
+              departure_date: "2024-03-15",
+              return_date: "2024-03-22",
+              confirmed_count: 6,
+              min_travelers: 4,
+              price: 4000,
+              status: "available",
+              hospital_approved: true,
+              hospital_reference: "MBC-2024-0315",
+              image_url: "/mexico/medical-facility-1.jpg"
+            },
+            {
+              id: 2,
+              title: "Sydney Medical Journey",
+              departure_city: "Sydney",
+              destination: "Tijuana, Mexico",
+              departure_date: "2024-04-12",
+              return_date: "2024-04-19",
+              confirmed_count: 3,
+              min_travelers: 4,
+              price: 4000,
+              status: "available",
+              hospital_approved: true,
+              hospital_reference: "MBC-2024-0412",
+              image_url: "/mexico/medical-facility-2.jpg"
+            }
+          ]);
+        }
+      } catch (error) {
+        console.error('Error loading featured trips:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadFeaturedTrips();
+  }, []);
 
   return (
     <div style={{ backgroundColor: BACKGROUND_PRIMARY, color: TEXT_PRIMARY }}>
