@@ -88,7 +88,7 @@ export default function WhatWeDoSection() {
           transition={{ delay: 0.4 }}
           className="mt-16 text-center"
         >
-          <div className="rounded-2xl p-8" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
+          <div className="rounded-2xl p-8" style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}`, boxShadow: COMPONENTS.CARD_SHADOW }}>
             <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
               Clear Boundaries, Complete Support
             </h3>

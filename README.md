@@ -106,7 +106,6 @@ src/
 │   │   ├── TripCard.jsx
 │   │   ├── StatusBadge.jsx
 │   │   ├── CTASection.jsx
-│   │   ├── DisclaimerBlock.jsx
 │   │   ├── WhyGroupTravel.jsx
 │   │   ├── TripHighlights.jsx
 │   │   ├── StepTimeline.jsx

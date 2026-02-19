@@ -27,7 +27,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
 import { TRIP_CONFIG, TRIP_STATUS, BOOKING_STATUS, USER_STATUS, HOSPITAL_REF_PREFIX } from "../constants";
 import { 
   BACKGROUND_PRIMARY, 
@@ -804,9 +803,6 @@ export default function Admin() {
           </TabsContent>
         </Tabs>
       </div>
-
-      {/* Disclaimer */}
-      <DisclaimerBlock />
     </div>
   );
 }

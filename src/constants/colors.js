@@ -81,18 +81,18 @@ export const COLORS = {
     OVERLAY_TEXT_LIGHT: 'linear-gradient(to top, rgba(243,239,232,0.8), rgba(243,239,232,0.4), transparent)', // Text overlays
   },
   
-  // Glass Morphism Effects - Named by purpose - Warm Stone Base
+  // Glass Morphism Effects - Named by purpose - Warm Stone Base (Darker)
   GLASS: {
-    CARD_BACKGROUND: 'rgba(243, 239, 232, 0.55)',      // Main card backgrounds (Warm Stone)
-    CARD_HOVER: 'rgba(243, 239, 232, 0.70)',           // Hover state cards
-    CARD_ACTIVE: 'rgba(243, 239, 232, 0.82)',          // Active/focused cards
+    CARD_BACKGROUND: 'rgba(44, 38, 35, 0.15)',      // Main card backgrounds (darker Espresso tint)
+    CARD_HOVER: 'rgba(44, 38, 35, 0.25)',           // Hover state cards
+    CARD_ACTIVE: 'rgba(44, 38, 35, 0.35)',          // Active/focused cards
     
     ACCENT_BACKGROUND: 'rgba(184, 146, 58, 0.1)',     // Accent glass backgrounds (Antique Gold)
     ACCENT_HOVER: 'rgba(184, 146, 58, 0.2)',          // Accent hover states
     ACCENT_ACTIVE: 'rgba(184, 146, 58, 0.3)',         // Accent active states
     
     TEXT_OVERLAY: 'rgba(243, 239, 232, 0.05)',        // Text overlay backgrounds (Warm Stone)
-    BORDER_SUBTLE: 'rgba(44, 38, 35, 0.10)',          // Subtle borders (Espresso Brown)
+    BORDER_SUBTLE: 'rgba(44, 38, 35, 0.15)',          // Subtle borders (Espresso Brown - darker)
   },
   
   // Shadow System - Named by purpose - Enhanced Gold Pop
@@ -125,7 +125,7 @@ export const COLORS = {
     TEXT_MEDIUM: 'rgba(44, 38, 35, 0.25)',            // Medium text borders
   },
   
-  // Component-Specific Colors - Named by purpose - Enhanced Gold System
+  // Component-Specific Colors - Named by purpose - Enhanced Gold System (Darker Cards)
   COMPONENTS: {
     BUTTON_PRIMARY: '#C79A3A',                         // Primary button background (richer gold)
     BUTTON_PRIMARY_TEXT: '#2C2623',                    // Primary button text (Espresso for premium contrast)
@@ -135,13 +135,13 @@ export const COLORS = {
     BUTTON_SECONDARY_TEXT: '#2C2623',                 // Secondary button text
     BUTTON_SECONDARY_HOVER: 'rgba(44, 38, 35, 0.2)',  // Secondary button hover
     
-    INPUT_BACKGROUND: 'rgba(231, 222, 211, 0.3)',     // Input field background (E7DED3)
+    INPUT_BACKGROUND: 'rgba(44, 38, 35, 0.08)',        // Input field background (darker Espresso)
     INPUT_BORDER: 'rgba(199, 154, 58, 0.3)',         // Input field border (updated gold)
     INPUT_TEXT: '#2C2623',                            // Input field text (Espresso Brown)
     INPUT_PLACEHOLDER: 'rgba(44, 38, 35, 0.5)',      // Input placeholder
     
-    CARD_BACKGROUND: 'rgba(231, 222, 211, 0.4)',     // Card background (E7DED3)
-    CARD_BORDER: 'rgba(199, 154, 58, 0.2)',           // Card border (updated gold)
+    CARD_BACKGROUND: 'rgba(44, 38, 35, 0.12)',       // Card background (darker Espresso)
+    CARD_BORDER: 'rgba(199, 154, 58, 0.25)',          // Card border (darker gold)
     CARD_SHADOW: '0 4px 6px rgba(44, 38, 35, 0.15)',  // Card shadow (Espresso Brown)
     
     NAV_BACKGROUND: 'rgba(243, 239, 232, 0.95)',     // Navigation background (Warm Stone)

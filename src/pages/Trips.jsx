@@ -4,7 +4,6 @@ import { Info, Loader2 } from "lucide-react";
 import { TRIP_CONFIG, TRIP_STATUS } from "../constants";
 import TripCard from "../components/compass-connect/TripCard";
 import CTASection from "../components/compass-connect/CTASection";
-import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
 import { TEXT_PRIMARY, ACCENT_PRIMARY, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_50 } from "../constants/colors";
 
 export default function Trips() {
@@ -96,13 +95,6 @@ export default function Trips() {
               </p>
             </div>
           )}
-        </div>
-      </section>
-
-      {/* Disclaimer */}
-      <section className="py-12 lg:py-16">
-        <div className="max-w-3xl mx-auto px-5 sm:px-8">
-          <DisclaimerBlock />
         </div>
       </section>
 

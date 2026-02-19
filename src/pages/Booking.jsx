@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, User, Plane, Settings, CheckCircle2, ExternalLink, Copy } from "lucide-react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
-import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
 import { TRIP_CONFIG, TRIP_STATUS, BOOKING_STATUS, USER_STATUS, HOSPITAL_REF_PREFIX } from "../constants";
 import { 
   BACKGROUND_PRIMARY, 
@@ -456,11 +455,6 @@ export default function Booking() {
           )}
         </form>
 
-        {step < 3 && (
-          <div className="mt-12">
-            <DisclaimerBlock />
-          </div>
-        )}
       </div>
     </div>
   );

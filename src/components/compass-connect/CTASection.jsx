@@ -28,7 +28,7 @@ export default function CTASection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="relative rounded-3xl overflow-hidden"
-          style={{ backgroundColor: BACKGROUND_SECONDARY }}
+          style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}`, boxShadow: COMPONENTS.CARD_SHADOW }}
         >
           {/* Decorative */}
           <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20 }} />

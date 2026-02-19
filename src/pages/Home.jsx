@@ -2,28 +2,32 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
 import { motion } from "framer-motion";
-import { ArrowRight, Quote, Sparkles } from "lucide-react";
+import { ArrowRight, Quote, Sparkles, CheckCircle, Shield, Users, Plane } from "lucide-react";
 import HeroSection from "../components/compass-connect/HeroSection";
 import StepTimeline from "../components/compass-connect/StepTimeline";
 import WhatWeDoSection from "../components/compass-connect/WhatWeDoSection";
 import WhyGroupTravel from "../components/compass-connect/WhyGroupTravel";
-import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
 import CTASection from "../components/compass-connect/CTASection";
 import TripCard from "../components/compass-connect/TripCard";
 import TripHighlights from "../components/compass-connect/TripHighlights";
 import { 
   BACKGROUND_PRIMARY, 
+  BACKGROUND_SECONDARY,
   TEXT_PRIMARY, 
   ACCENT_PRIMARY, 
   ACCENT_SECONDARY, 
   TEXT_PRIMARY_ALPHA_90,
   TEXT_PRIMARY_ALPHA_80,
   TEXT_PRIMARY_ALPHA_70,
+  TEXT_PRIMARY_ALPHA_60,
   TEXT_PRIMARY_ALPHA_50,
   TEXT_PRIMARY_ALPHA_20,
   BACKGROUND_PRIMARY_ALPHA_70, 
   BACKGROUND_PRIMARY_ALPHA_50, 
   ACCENT_PRIMARY_ALPHA_20, 
+  ACCENT_PRIMARY_ALPHA_10,
+  ACCENT_PRIMARY_ALPHA_30,
+  ESPRESSO_ALPHA_12,
   GRADIENTS, 
   GLASS, 
   SHADOWS,
@@ -74,40 +78,39 @@ export default function Home() {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80&auto=format&fit=crop"
-            alt="Luxury spa retreat"
+            src="/hospital_hero.png"
+            alt="Modern medical facility"
             className="w-full h-full object-cover"
-            onError={(e) => {
-              e.target.src = "https://picsum.photos/1920/1080?random=1";
-            }}
           />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.1), rgba(0,0,0,0.4))' }} />
         </div>
         
         <div className="relative z-10 text-center px-6 lg:px-12 max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
+          <div className="rounded-3xl p-8 md:p-12 lg:p-16" style={{ 
+            backgroundColor: GLASS.CARD_BACKGROUND, 
+            border: `1px solid ${GLASS.BORDER_SUBTLE}`, 
+            boxShadow: SHADOWS.BACKGROUND_STRONG,
+            backdropFilter: 'blur(20px)'
+          }}>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+            >
             <div className="flex items-center justify-center gap-2 mb-6">
-              <Sparkles className="w-5 h-5" style={{ color: ACCENT_PRIMARY }} />
-              <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em]" style={{ color: ACCENT_PRIMARY }}>
+              <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em]" style={{ color: 'white' }}>
                 Ultra-Premium Concierge
               </span>
-              <Sparkles className="w-5 h-5" style={{ color: ACCENT_PRIMARY }} />
             </div>
             
             <h1 className="font-serif text-5xl md:text-7xl mb-6 leading-tight" style={{ color: TEXT_PRIMARY }}>
               Compass Connect
             </h1>
-            <p className="font-serif text-2xl md:text-3xl mb-8 leading-relaxed" style={{ color: ACCENT_PRIMARY }}>
+            <p className="font-serif text-2xl md:text-3xl mb-6 leading-relaxed" style={{ color: ACCENT_PRIMARY }}>
               Where Healing Meets Luxury
             </p>
             <p className="text-lg mb-12 max-w-2xl mx-auto leading-relaxed" style={{ color: TEXT_PRIMARY_ALPHA_80 }}>
-              Experience the pinnacle of non-medical travel concierge services. 
-              We orchestrate every detail of your journey with the precision and care 
-              of a five-star spa retreat.
+              Non-medical concierge coordinating group travel for approved surgical patients.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -128,7 +131,7 @@ export default function Home() {
                   e.target.style.boxShadow = SHADOWS.ACCENT_MEDIUM;
                 }}
               >
-                Begin Your Journey <ArrowRight className="w-4 h-4" />
+                Start Health Questionnaire <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to={createPageUrl("Trips")}
@@ -150,11 +153,193 @@ export default function Home() {
               </Link>
             </div>
           </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Luxury Divider */}
       <div className="h-px" style={{ background: `linear-gradient(to right, transparent, ${ACCENT_PRIMARY}, transparent)` }} />
+
+      {/* How It Works Section - Process Clarity */}
+      <section className="py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="text-xs uppercase tracking-[0.2em] font-semibold mb-4 block" style={{ color: ACCENT_PRIMARY }}>
+              Simple Process
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
+              How It Works
+            </h2>
+            <p className="max-w-2xl mx-auto text-lg" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
+              From initial inquiry to successful journey, we've streamlined the process for your peace of mind.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-center"
+            >
+              <div className="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-6" style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}` }}>
+                <CheckCircle className="w-8 h-8" style={{ color: ACCENT_PRIMARY }} />
+              </div>
+              <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
+                Complete Health Questionnaire
+              </h3>
+              <p className="text-sm leading-relaxed" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
+                Start with our confidential health assessment handled directly by the medical team.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-center"
+            >
+              <div className="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-6" style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}` }}>
+                <Shield className="w-8 h-8" style={{ color: ACCENT_PRIMARY }} />
+              </div>
+              <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
+                Receive Surgical Approval
+              </h3>
+              <p className="text-sm leading-relaxed" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
+                Our partner hospital reviews your case and provides medical approval for your procedure.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="text-center"
+            >
+              <div className="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-6" style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}` }}>
+                <Plane className="w-8 h-8" style={{ color: ACCENT_PRIMARY }} />
+              </div>
+              <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
+                Book Your Group Journey
+              </h3>
+              <p className="text-sm leading-relaxed" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
+                Join your approved cohort and let us handle all travel logistics and support.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Hospital Partner Section - Trust Signals */}
+      <section className="py-24 lg:py-32" style={{ backgroundColor: BACKGROUND_SECONDARY }}>
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="text-xs uppercase tracking-[0.2em] font-semibold mb-4 block" style={{ color: ACCENT_PRIMARY }}>
+              Trusted Partnership
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
+              Internationally Accredited Surgical Excellence
+            </h2>
+            <p className="max-w-2xl mx-auto text-lg mb-8" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
+              Our partner facility is internationally accredited and staffed by board-certified surgeons who specialize exclusively in bariatric procedures, serving patients from around the world.
+            </p>
+          </motion.div>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="rounded-3xl p-6 text-center" style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}`, boxShadow: COMPONENTS.CARD_SHADOW }}>
+              <div className="text-center mb-1">
+                <img 
+                  src="/mexico_bariatric_logo.webp" 
+                  alt="Mexico Bariatric Center Logo" 
+                  className="w-64 h-64 object-contain mx-auto"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextElementSibling.style.display = 'flex';
+                  }}
+                />
+                <div className="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20, display: 'none' }}>
+                  <Shield className="w-10 h-10" style={{ color: ACCENT_PRIMARY }} />
+                </div>
+              </div>
+              <p className="text-lg mb-6" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
+                Internationally accredited surgical facility specializing in bariatric and cosmetic procedures.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div>
+                  <p className="text-2xl font-bold mb-2" style={{ color: ACCENT_PRIMARY }}>10,000+</p>
+                  <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Bariatric Surgeries Performed</p>
+                </div>
+                <div>
+                  <p className="text-2xl font-bold mb-2" style={{ color: ACCENT_PRIMARY }}>15+ Years</p>
+                  <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Specializing Exclusively in Bariatric Surgery</p>
+                </div>
+                <div>
+                  <p className="text-2xl font-bold mb-2" style={{ color: ACCENT_PRIMARY }}>99%</p>
+                  <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Patient Satisfaction Rating</p>
+                </div>
+              </div>
+
+              {/* International Accreditation Badges */}
+              <div className="mt-8 pt-6" style={{ borderTop: `1px solid ${ESPRESSO_ALPHA_12}` }}>
+                <p className="text-xs uppercase tracking-[0.15em] mb-4 font-semibold" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Recognised By:</p>
+                <div className="flex flex-wrap justify-center gap-3 text-xs items-center">
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${ACCENT_PRIMARY_ALPHA_30}`, color: TEXT_PRIMARY }}>
+                    <img 
+                      src="/ifso_logo.png" 
+                      alt="IFSO Logo" 
+                      className="w-16 h-16 object-contain"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextElementSibling.style.display = 'inline';
+                      }}
+                    />
+                    <span style={{ display: 'none' }}>🏥</span>
+                    International Federation for the Surgery of Obesity (IFSO)
+                  </div>
+                  <span className="px-3 py-1 rounded-full" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${ACCENT_PRIMARY_ALPHA_30}`, color: TEXT_PRIMARY }}>
+                    U.S. Board-Certified Surgeons
+                  </span>
+                  <span className="px-3 py-1 rounded-full" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${ACCENT_PRIMARY_ALPHA_30}`, color: TEXT_PRIMARY }}>
+                    Joint Commission Standards
+                  </span>
+                </div>
+              </div>
+
+              {/* International Trust Line */}
+              <p className="text-sm mt-6 font-medium" style={{ color: TEXT_PRIMARY_ALPHA_70, fontFamily: 'Inter, sans-serif' }}>
+                Trusted by patients across the U.S., Canada, Australia & New Zealand
+              </p>
+              <a
+                href="https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 mt-8 text-sm font-medium transition-colors"
+                style={{ color: ACCENT_PRIMARY }}
+                onMouseEnter={(e) => e.target.style.opacity = '0.8'}
+                onMouseLeave={(e) => e.target.style.opacity = '1'}
+              >
+                Visit Hospital Website →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Group Travel Section - Emotional Justification */}
+      <WhyGroupTravel />
 
       {/* Enhanced What We Do Section with Full Width Image */}
       <section className="py-32 px-6 lg:px-12 max-w-7xl mx-auto">
@@ -177,18 +362,8 @@ export default function Home() {
           </p>
         </motion.div>
 
-        {/* Full Width Image with Service Highlights */}
-        <div className="relative rounded-3xl overflow-hidden mb-16">
-          <img
-            src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1600&q=80"
-            alt="Luxury travel services"
-            className="w-full h-[700px] object-cover"
-          />
-          <div className="absolute inset-0" style={{ background: `linear-gradient(to top, ${BACKGROUND_PRIMARY}, ${BACKGROUND_PRIMARY_ALPHA_50}, transparent)` }} />
-          <div className="absolute bottom-0 left-0 right-0 p-8 pb-12">
-            <TripHighlights />
-          </div>
-        </div>
+        {/* Curated Excellence Section */}
+        <TripHighlights />
       </section>
 
       {/* Featured Journeys with Premium Design */}
@@ -306,15 +481,7 @@ export default function Home() {
             Reserve Your Journey <ArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>
-        
-        {/* Trust & Ethics */}
-        <div className="max-w-3xl mx-auto">
-          <DisclaimerBlock />
-        </div>
       </section>
-
-      <WhyGroupTravel />
-      <CTASection />
     </div>
   );
 }

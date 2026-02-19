@@ -24,7 +24,6 @@ import {
   MapPin,
 } from "lucide-react";
 import { format } from "date-fns";
-import DisclaimerBlock from "./DisclaimerBlock";
 import UserDetailsForm from "./UserDetailsForm";
 import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_20, TEXT_PRIMARY_ALPHA_50, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_80, ACCENT_PRIMARY, ACCENT_PRIMARY_ALPHA_20, ACCENT_PRIMARY_ALPHA_40, BACKGROUND_PRIMARY_ALPHA_10, COMPONENTS, GLASS, BORDERS } from "../../constants/colors";
 
@@ -515,8 +514,6 @@ export default function MultiStepBookingForm({ trips, preselectedTripId }) {
                   </div>
                 ))}
               </div>
-
-              <DisclaimerBlock compact />
             </div>
           )}
         </motion.div>

@@ -4,7 +4,6 @@ import {
   User, ClipboardCheck, FileText, Plane, Stethoscope, HeartPulse,
   ChevronRight, ExternalLink
 } from "lucide-react";
-import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
 import CTASection from "../components/compass-connect/CTASection";
 import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_50, ACCENT_PRIMARY, ACCENT_SECONDARY, ACCENT_PRIMARY_ALPHA_20, COMPONENTS, SHADOWS, GLASS, BORDERS } from "../constants/colors";
 
@@ -229,13 +228,6 @@ export default function HowItWorks() {
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Disclaimer */}
-      <section className="py-12 lg:py-16">
-        <div className="max-w-3xl mx-auto px-5 sm:px-8">
-          <DisclaimerBlock />
         </div>
       </section>
 

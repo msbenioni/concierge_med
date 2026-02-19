@@ -215,11 +215,11 @@ export default function Layout({ children, currentPageName }) {
               </a>
             </div>
 
-            {/* Legal Section */}
+            {/* Trust & Transparency Section */}
             <div>
-              <h4 className="text-xs uppercase tracking-[0.2em] mb-3 font-semibold" style={{ color: BACKGROUND_PRIMARY }}>Legal</h4>
+              <h4 className="text-xs uppercase tracking-[0.2em] mb-3 font-semibold" style={{ color: BACKGROUND_PRIMARY }}>Trust & Transparency</h4>
               <p className="text-xs leading-relaxed" style={{ color: BACKGROUND_PRIMARY_ALPHA_60 }}>
-                Compass Connect is an independent, non-medical concierge service. All medical decisions, assessments, and surgical care are provided solely by licensed hospitals and medical professionals. Compass Connect does not collect medical information, provide medical advice, or make clinical decisions.
+                We are not a medical provider. All medical advice, assessment, surgery and aftercare are provided solely by our partner hospitals and their licensed professionals. Hospital fees are paid directly to the hospital. Compass Connect provides non-medical concierge and travel coordination only.
               </p>
             </div>
           </div>

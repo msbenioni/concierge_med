@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, HelpCircle } from "lucide-react";
-import DisclaimerBlock from "../components/compass-connect/DisclaimerBlock";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
 import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, ACCENT_PRIMARY } from "../constants/colors";
@@ -162,10 +161,6 @@ export default function FAQ() {
             </div>
           </motion.div>
         ))}
-
-        <div className="mt-16">
-          <DisclaimerBlock />
-        </div>
       </div>
     </div>
   );
