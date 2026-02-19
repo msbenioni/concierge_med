@@ -385,27 +385,50 @@ export default function Admin() {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: BACKGROUND_PRIMARY }}>
-      <div className="px-4 lg:px-8 py-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: GRADIENTS.ACCENT_PRIMARY }}>
-              <Compass className="w-5 h-5" style={{ color: COMPONENTS.BUTTON_PRIMARY_TEXT }} />
-            </div>
-            <div>
-              <h1 className="font-serif text-2xl" style={{ color: TEXT_PRIMARY }}>Concierge Desk</h1>
-              <p className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Manage bookings, journeys & payments</p>
-            </div>
-          </div>
-          <Button variant="outline" size="sm" className="rounded-full gap-2 text-xs" onClick={() => window.location.reload()}>
-            <RefreshCw className="w-3.5 h-3.5" /> Refresh
-          </Button>
-        </motion.div>
+    <div>
+      {/* Hero */}
+      <section className="pt-16 pb-8 lg:pt-24 lg:pb-12">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-2xl"
+          >
+            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>Management Portal</span>
+            <h1 className="font-serif text-4xl md:text-5xl mb-4" style={{ color: TEXT_PRIMARY }}>
+              Concierge Desk
+            </h1>
+            <p className="text-lg" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
+              Manage bookings, journeys & payments for your medical travel concierge service.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="py-12 lg:py-20">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <div className="px-4 lg:px-8 py-6">
+            {/* Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: GRADIENTS.ACCENT_PRIMARY }}>
+                  <Compass className="w-5 h-5" style={{ color: COMPONENTS.BUTTON_PRIMARY_TEXT }} />
+                </div>
+                <div>
+                  <h1 className="font-serif text-2xl" style={{ color: TEXT_PRIMARY }}>Dashboard</h1>
+                  <p className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Manage bookings, journeys & payments</p>
+                </div>
+              </div>
+              <Button variant="outline" size="sm" className="rounded-full gap-2 text-xs" onClick={() => window.location.reload()}>
+                <RefreshCw className="w-3.5 h-3.5" /> Refresh
+              </Button>
+            </motion.div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -830,6 +853,8 @@ export default function Admin() {
           </TabsContent>
         </Tabs>
       </div>
+      </div>
+    </section>
     </div>
   );
 }

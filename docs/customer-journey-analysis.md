@@ -30,7 +30,8 @@ This is your real backend journey:
 | 2     | User → Hospital | Complete Health Questionnaire      |
 | 3     | Hospital → User | Medical assessment + surgery quote |
 | 4     | User → You      | Return with hospital reference     |
-| 5     | You             | Organise flights + group travel    |
+| 5     | You             | Organise group flights only        |
+| 5a    | Hospital        | Organise accommodation & transfers |
 | 6     | Group Travel    | Surgery trip                       |
 
 This is good. Clean. Ethical. Legally safe.

@@ -144,22 +144,20 @@ export default function Booking() {
   };
 
   return (
-    <div style={{ backgroundColor: BACKGROUND_PRIMARY, color: TEXT_PRIMARY }}>
-      {/* Top padding section */}
-      <section className="py-16 px-6 lg:px-12">
-        <div className="max-w-3xl mx-auto">
-          {/* Header */}
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="mb-2">
-            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
-              Medical Journey Interest
-            </span>
-            <h1 className="font-serif text-4xl md:text-5xl mb-2" style={{ color: TEXT_PRIMARY }}>
-              Express Your Interest
-            </h1>
-            <p className="text-lg mb-0" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
-              Complete the form below to express interest in our exclusive concierge services. 
-            </p>
-          </motion.div>
+    <div className="pt-28 pb-20">
+      <div className="max-w-3xl mx-auto px-6 lg:px-12">
+        {/* Header */}
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mb-16">
+          <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
+            Medical Journey Interest
+          </span>
+          <h1 className="font-serif text-4xl md:text-5xl mb-4" style={{ color: TEXT_PRIMARY }}>
+            Express Your Interest
+          </h1>
+          <p className="text-lg" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
+            Complete the form below to express interest in our exclusive concierge services.
+          </p>
+        </motion.div>
 
           {/* What Happens After You Submit */}
           <motion.div
@@ -207,8 +205,6 @@ export default function Booking() {
               </div>
             </div>
           </motion.div>
-        </div>
-      </section>
 
       {/* Main booking form */}
       <section className="pt-2 pb-32 px-6 lg:px-12">
@@ -265,26 +261,26 @@ export default function Booking() {
 
                 <div style={{ borderTop: `1px solid ${BORDERS.TEXT_SUBTLE}` }} className="pt-8">
                   <h2 className="font-serif text-2xl mb-6" style={{ color: TEXT_PRIMARY }}>Departure Location</h2>
-                  <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Departure Country *</Label>
                       <Select value={formData.departure_country} onValueChange={(v) => updateFormData("departure_country", v)}>
                         <SelectTrigger className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
                           <SelectValue placeholder="Select country" />
                         </SelectTrigger>
-                        <SelectContent style={{ backgroundColor: BACKGROUND_PRIMARY, borderColor: ACCENT_PRIMARY_ALPHA_20, border: '1px solid' }}>
-                          <SelectItem value="new_zealand" style={{ color: TEXT_PRIMARY }}>New Zealand</SelectItem>
-                          <SelectItem value="australia" style={{ color: TEXT_PRIMARY }}>Australia</SelectItem>
-                          <SelectItem value="other" style={{ color: TEXT_PRIMARY }}>Other</SelectItem>
+                        <SelectContent style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
+                          <SelectItem value="new-zealand">New Zealand</SelectItem>
+                          <SelectItem value="australia">Australia</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
                         </SelectContent>
                       </Select>
+                      {formData.departure_country === 'other' && (
+                        <div className="mt-4">
+                          <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Specify Country *</Label>
+                          <Input value={formData.other_country} onChange={(e) => updateFormData("other_country", e.target.value)} placeholder="Enter country name" className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
+                        </div>
+                      )}
                     </div>
-                    {formData.departure_country === 'other' && (
-                      <div>
-                        <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Specify Country *</Label>
-                        <Input value={formData.other_country} onChange={(e) => updateFormData("other_country", e.target.value)} placeholder="Enter country name" className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
-                      </div>
-                    )}
                     <div>
                       <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
                         {formData.departure_country === 'other' ? 'City *' : 'Departure City *'}
@@ -467,9 +463,9 @@ export default function Booking() {
           )}
           </AnimatePresence>
         </form>
-
         </div>
       </section>
+      </div>
     </div>
   );
 }

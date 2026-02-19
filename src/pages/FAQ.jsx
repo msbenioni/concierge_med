@@ -7,15 +7,32 @@ import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, TEXT_PRIMARY_ALPHA_70, ACCENT_PRIM
 
 const FAQS = [
   {
+    category: "Journey Process",
+    questions: [
+      {
+        q: "What happens after I submit my Expression of Interest?",
+        a: "After submitting your EOI, you'll receive the hospital health questionnaire link. Complete the medical assessment, receive your quote with hospital reference, then we coordinate your travel group and logistics. The entire process ensures medical approval before any travel arrangements."
+      },
+      {
+        q: "How long does the medical assessment take?",
+        a: "The hospital health questionnaire is typically reviewed within 2-5 business days. You'll receive your medical approval and quote directly from the hospital with a reference number."
+      },
+      {
+        q: "When do travel groups depart?",
+        a: "Travel groups depart based on predefined dates (e.g., March 15, April 12, May 10). We coordinate groups to ensure minimum 4 travelers for each departure. Your travel dates will be confirmed after medical approval."
+      },
+    ],
+  },
+  {
     category: "About Us",
     questions: [
       {
         q: "What exactly does Compass Connect do?",
-        a: "Compass Connect is a non-medical travel concierge service. We coordinate group travel logistics for patients traveling overseas for surgery. This includes flights coordination, accommodation, airport transfers, on-the-ground concierge support, and emotional companionship throughout your journey. We do not provide any medical care, advice, or treatment — that is handled entirely by the partner hospital or clinic."
+        a: "Compass Connect is a non-medical travel concierge service. We coordinate group flights and provide on-the-ground concierge support for patients traveling overseas for surgery. This includes flights coordination, emotional companionship, and dietary/mobility assistance during travel. We do NOT arrange accommodation, transfers, or provide any medical care — those are handled entirely by the partner hospital."
       },
       {
         q: "What is a non-medical concierge?",
-        a: "A non-medical concierge focuses exclusively on travel and lifestyle logistics. We arrange your transport, accommodation, transfers, and provide emotional support. We never give medical advice, make medical decisions, or assist with procedures. All medical matters are between you and the partner hospital/clinic."
+        a: "A non-medical concierge focuses exclusively on flights coordination and on-the-ground support. We arrange group flights, provide emotional companionship, and assist with dietary/mobility needs during travel. We never give medical advice, arrange accommodation, or handle transfers — those are managed by the partner hospital."
       },
       {
         q: "Do you provide medical advice or recommendations?",
@@ -45,7 +62,7 @@ const FAQS = [
     questions: [
       {
         q: "What does the Compass Connect fee cover?",
-        a: "Our concierge/travel fee covers: flights coordination, accommodation logistics, airport transfers, on-the-ground concierge support, emotional companionship, and dietary/mobility coordination. It does NOT cover any medical costs, procedures, or hospital fees."
+        a: "Our concierge fee covers: flights coordination, on-the-ground concierge support, emotional companionship, and dietary/mobility assistance during travel. We do NOT cover accommodation, transfers, or any medical costs, procedures, or hospital fees - these are handled directly by the hospital."
       },
       {
         q: "How do I pay the hospital?",
@@ -53,7 +70,7 @@ const FAQS = [
       },
       {
         q: "How do I pay Compass Connect?",
-        a: "After your booking is confirmed and the travel group is viable (minimum 4), we'll send you a secure Stripe payment link for the concierge and travel services fee. Payment is secure and processed through Stripe."
+        a: "After you receive medical approval and a hospital reference number, we'll coordinate your travel group. Once the group reaches the minimum 4 travelers, we'll send you a secure Stripe payment link for the concierge and travel services fee. Payment is only required after medical approval is confirmed."
       },
       {
         q: "What is your refund policy?",
@@ -65,8 +82,16 @@ const FAQS = [
     category: "Medical & Safety",
     questions: [
       {
-        q: "What is the partner clinic form?",
-        a: "The partner clinic form (questionnaire) is the hospital's own medical intake form. We simply provide you with the link to complete it directly with the hospital. We do not process, review, or store any medical information from this form."
+        q: "What is the Expression of Interest process?",
+        a: "The Expression of Interest (EOI) is our streamlined 4-step process: 1) Submit your interest, 2) Complete the hospital's health questionnaire, 3) Receive your quote with hospital reference, 4) We coordinate your travel logistics. This ensures medical approval before any travel arrangements are made."
+      },
+      {
+        q: "What is the hospital health questionnaire?",
+        a: "The hospital health questionnaire is the partner hospital's own medical intake form. We provide you with the secure link to complete it directly with the hospital. We do not process, review, or store any medical information from this form."
+      },
+      {
+        q: "How do I get a hospital reference number?",
+        a: "After completing the hospital health questionnaire and receiving medical approval, the hospital will provide you with a reference number (e.g., MBC-2024-0315). This reference is used to coordinate your travel arrangements with our concierge service."
       },
       {
         q: "Is it safe to travel for surgery?",
