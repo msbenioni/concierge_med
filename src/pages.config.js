@@ -51,6 +51,7 @@ import Home from './pages/Home';
 import HowItWorks from './pages/HowItWorks';
 import Trips from './pages/Trips';
 import FAQ from './pages/FAQ';
+import About from './pages/About';
 import Booking from './pages/Booking';
 import Admin from './pages/Admin';
 import __Layout from './Layout.jsx';
@@ -61,6 +62,7 @@ export const PAGES = {
     "HowItWorks": HowItWorks,
     "Trips": Trips,
     "FAQ": FAQ,
+    "About": About,
     "Booking": Booking,
     "Admin": Admin,
 }

@@ -30,6 +30,7 @@ import {
 } from "./constants/colors";
 
 const NAV_ITEMS = [
+  { label: "About", page: "About" },
   { label: "How It Works", page: "HowItWorks" },
   { label: "Travel Groups", page: "Trips" },
   { label: "FAQ", page: "FAQ" },
