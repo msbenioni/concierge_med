@@ -37,17 +37,17 @@ export default function CTASection() {
 
           <div className="relative z-10 p-10 sm:p-14 lg:p-20 text-center">
             <span className="text-xs uppercase tracking-[0.2em] font-semibold" style={{ color: ACCENT_PRIMARY }}>
-              Begin Your Journey
+              Your Medical Journey Awaits
             </span>
             <h2
               className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-4 mb-6"
               style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}
             >
-              Ready to take the{" "}
-              <span className="italic" style={{ color: ACCENT_PRIMARY }}>first step?</span>
+              Begin Your{" "}
+              <span className="italic" style={{ color: ACCENT_PRIMARY }}>Expression of Interest</span>
             </h2>
             <p className="max-w-lg mx-auto mb-10 text-lg" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_60 }}>
-              Start with the hospital health questionnaire. It's free, confidential, and handled directly by the medical team.
+              Take the first step with our secure health questionnaire. Your medical assessment is handled directly by accredited hospital professionals.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -55,20 +55,20 @@ export default function CTASection() {
                 to={createPageUrl("Booking")}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold text-sm transition-all duration-300 shadow-xl"
                 style={{ 
-                  backgroundColor: COMPONENTS.STATUS_WARNING, 
-                  color: TEXT_PRIMARY_ALPHA_50,
+                  background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})`, 
+                  color: COMPONENTS.BUTTON_PRIMARY_TEXT,
                   boxShadow: SHADOWS.ACCENT_MEDIUM
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = ACCENT_SECONDARY;
-                  e.target.style.boxShadow = SHADOWS.ACCENT_STRONG;
+                  e.target.style.opacity = '0.9';
+                  e.target.style.transform = 'translateY(-2px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = COMPONENTS.STATUS_WARNING;
-                  e.target.style.boxShadow = SHADOWS.ACCENT_MEDIUM;
+                  e.target.style.opacity = '1';
+                  e.target.style.transform = 'translateY(0)';
                 }}
               >
-                Start Health Questionnaire
+                Express Interest
                 <ChevronRight className="w-4 h-4" />
               </Link>
               <Link
@@ -86,12 +86,12 @@ export default function CTASection() {
                   e.target.style.backgroundColor = COMPONENTS.BUTTON_SECONDARY;
                 }}
               >
-                View Travel Groups
+                View Upcoming Group Trips
               </Link>
             </div>
 
             <p className="text-xs mt-8" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_25 }}>
-              Non-medical concierge service • All surgery by licensed professionals
+              Personalised Medical Travel Concierge • All clinical care by accredited hospitals
             </p>
           </div>
         </motion.div>

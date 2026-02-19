@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { createPageUrl } from "./utils";
 import { Menu, X, Globe, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import ScrollToTopButton from "./components/compass-connect/ScrollToTopButton";
 import { 
   BACKGROUND_PRIMARY, 
   BACKGROUND_DEEP,
@@ -199,20 +200,9 @@ export default function Layout({ children, currentPageName }) {
             {/* Hospital Partner Section */}
             <div>
               <h4 className="text-xs uppercase tracking-[0.2em] mb-3 font-semibold" style={{ color: BACKGROUND_PRIMARY }}>Hospital Partner</h4>
-              <p className="text-sm leading-relaxed mb-2" style={{ color: BACKGROUND_PRIMARY_ALPHA_70 }}>
-                All medical assessment and surgical care is provided by our accredited partner hospitals.
+              <p className="text-sm leading-relaxed" style={{ color: BACKGROUND_PRIMARY_ALPHA_70 }}>
+                All medical assessment and surgical care is provided by our accredited partner hospitals. Complete our expression of interest form to begin the process.
               </p>
-              <a
-                href="https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm transition-colors font-medium"
-                style={{ color: ACCENT_SECONDARY }}
-                onMouseEnter={(e) => e.target.style.opacity = '0.8'}
-                onMouseLeave={(e) => e.target.style.opacity = '1'}
-              >
-                Visit Hospital Website →
-              </a>
             </div>
 
             {/* Trust & Transparency Section */}
@@ -232,6 +222,7 @@ export default function Layout({ children, currentPageName }) {
           </div>
         </div>
       </footer>
+      <ScrollToTopButton />
     </div>
   );
 }

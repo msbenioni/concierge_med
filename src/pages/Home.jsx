@@ -51,8 +51,7 @@ export default function Home() {
       status: "available",
       hospital_approved: true,
       hospital_reference: "MBC-2024-0315",
-      inclusions: ["Flights", "Accommodation", "Transfers", "Concierge Support", "Meals", "Insurance"],
-      image_url: "https://images.unsplash.com/photo-1571896349842-33c89424de90?w=800&q=80"
+      image_url: "/mexico/medical-facility-1.jpg"
     },
     {
       id: 2,
@@ -67,8 +66,7 @@ export default function Home() {
       status: "available",
       hospital_approved: true,
       hospital_reference: "MBC-2024-0412",
-      inclusions: ["Flights", "Accommodation", "Transfers", "Concierge Support", "Meals"],
-      image_url: "https://images.unsplash.com/photo-1571003123894-1f0e994e8752?w=800&q=80"
+      image_url: "/mexico/medical-facility-2.jpg"
     }
   ];
 
@@ -99,7 +97,7 @@ export default function Home() {
             >
             <div className="flex items-center justify-center gap-2 mb-6">
               <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em]" style={{ color: 'white' }}>
-                Ultra-Premium Concierge
+                Personalised Medical Travel Concierge
               </span>
             </div>
             
@@ -107,10 +105,10 @@ export default function Home() {
               Compass Connect
             </h1>
             <p className="font-serif text-2xl md:text-3xl mb-6 leading-relaxed" style={{ color: ACCENT_PRIMARY }}>
-              Where Healing Meets Luxury
+              Your Concierge Guide to Trusted Surgical Care Abroad
             </p>
             <p className="text-lg mb-12 max-w-2xl mx-auto leading-relaxed" style={{ color: TEXT_PRIMARY_ALPHA_80 }}>
-              Non-medical concierge coordinating group travel for approved surgical patients.
+              We coordinate travel logistics for medically approved patients while accredited hospitals provide all clinical care.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -131,7 +129,7 @@ export default function Home() {
                   e.target.style.boxShadow = SHADOWS.ACCENT_MEDIUM;
                 }}
               >
-                Start Health Questionnaire <ArrowRight className="w-4 h-4" />
+                Express Interest <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to={createPageUrl("Trips")}
@@ -149,7 +147,7 @@ export default function Home() {
                   e.target.style.color = TEXT_PRIMARY;
                 }}
               >
-                View Journeys
+                View Upcoming Group Trips
               </Link>
             </div>
           </motion.div>
@@ -170,15 +168,136 @@ export default function Home() {
             className="text-center mb-16"
           >
             <span className="text-xs uppercase tracking-[0.2em] font-semibold mb-4 block" style={{ color: ACCENT_PRIMARY }}>
-              Simple Process
+              Your Journey, Clearly Defined
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
               How It Works
             </h2>
-            <p className="max-w-2xl mx-auto text-lg" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
-              From initial inquiry to successful journey, we've streamlined the process for your peace of mind.
+            <p className="max-w-3xl mx-auto text-lg mb-8" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
+              A seamless, two-phase journey. Medical care handled by accredited professionals. 
+              Travel coordination handled by Compass Connect.
             </p>
           </motion.div>
+
+          {/* 5-Step Journey Overview */}
+          <div className="mb-20">
+            <div className="relative">
+              {/* Connection Line */}
+              <div 
+                className="absolute top-1/2 left-0 right-0 h-0.5 -translate-y-1/2 hidden lg:block"
+                style={{ 
+                  background: `linear-gradient(to right, ${ACCENT_PRIMARY} 20%, ${ACCENT_PRIMARY_ALPHA_20} 20%, ${ACCENT_PRIMARY_ALPHA_20} 80%, ${ACCENT_PRIMARY} 80%)`
+                }}
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+                {[
+                  { number: "1", title: "Express Interest", desc: "Submit your details to begin" },
+                  { number: "2", title: "Complete Assessment", desc: "Secure hospital questionnaire" },
+                  { number: "3", title: "Receive Quote & Return", desc: "Get pricing with reference number" },
+                  { number: "4", title: "We Organise Travel", desc: "Premium concierge service" }
+                ].map((step, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="text-center"
+                  >
+                    {/* Step Number */}
+                    <div 
+                      className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-lg font-bold"
+                      style={{ 
+                        backgroundColor: index === 0 || index === 3 ? ACCENT_PRIMARY : ACCENT_PRIMARY_ALPHA_20,
+                        color: index === 0 || index === 3 ? COMPONENTS.BUTTON_PRIMARY_TEXT : TEXT_PRIMARY_ALPHA_50
+                      }}
+                    >
+                      {step.number}
+                    </div>
+
+                    {/* Step Content */}
+                    <h3 
+                      className="font-semibold mb-2 text-sm"
+                      style={{ color: TEXT_PRIMARY }}
+                    >
+                      {step.title}
+                    </h3>
+                    <p 
+                      className="text-xs leading-relaxed"
+                      style={{ color: TEXT_PRIMARY_ALPHA_50 }}
+                    >
+                      {step.desc}
+                    </p>
+
+                    {/* Arrow for mobile */}
+                    {index < 3 && (
+                      <div className="lg:hidden flex justify-center mt-4">
+                        <div className="w-4 h-4 rounded-full" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20 }} />
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Phase Labels */}
+            <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="text-center p-6 rounded-2xl"
+                style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10 }}
+              >
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <div 
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: ACCENT_PRIMARY }}
+                  />
+                  <span 
+                    className="text-sm font-semibold uppercase tracking-wider"
+                    style={{ color: ACCENT_PRIMARY }}
+                  >
+                    Compass Connect
+                  </span>
+                </div>
+                <p 
+                  className="text-sm"
+                  style={{ color: TEXT_PRIMARY_ALPHA_70 }}
+                >
+                  Steps 1 & 4: Interest submission & travel coordination
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="text-center p-6 rounded-2xl"
+                style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10 }}
+              >
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <div 
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: ACCENT_PRIMARY }}
+                  />
+                  <span 
+                    className="text-sm font-semibold uppercase tracking-wider"
+                    style={{ color: ACCENT_PRIMARY }}
+                  >
+                    Hospital & User
+                  </span>
+                </div>
+                <p 
+                  className="text-sm"
+                  style={{ color: TEXT_PRIMARY_ALPHA_70 }}
+                >
+                  Steps 2 & 3: Assessment, quote & return flow
+                </p>
+              </motion.div>
+            </div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <motion.div
@@ -192,10 +311,10 @@ export default function Home() {
                 <CheckCircle className="w-8 h-8" style={{ color: ACCENT_PRIMARY }} />
               </div>
               <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
-                Complete Health Questionnaire
+                Express Interest
               </h3>
               <p className="text-sm leading-relaxed" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
-                Start with our confidential health assessment handled directly by the medical team.
+                Start by expressing your interest in our medical journey services.
               </p>
             </motion.div>
 
@@ -323,7 +442,7 @@ export default function Home() {
                 Trusted by patients across the U.S., Canada, Australia & New Zealand
               </p>
               <a
-                href="https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120"
+                href={import.meta.env.REACT_APP_PARTNER_LINK_MBC || 'https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 mt-8 text-sm font-medium transition-colors"
@@ -389,7 +508,7 @@ export default function Home() {
                 onMouseEnter={(e) => e.target.style.gap = '0.75rem'}
                 onMouseLeave={(e) => e.target.style.gap = '0.5rem'}
               >
-                View all journeys <ArrowRight className="w-4 h-4" />
+                View upcoming group travel <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </motion.div>
@@ -478,7 +597,7 @@ export default function Home() {
               e.target.style.boxShadow = SHADOWS.ACCENT_MEDIUM;
             }}
           >
-            Reserve Your Journey <ArrowRight className="w-5 h-5" />
+            Express Interest <ArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>
       </section>

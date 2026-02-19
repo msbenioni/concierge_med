@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, User, Plane, Settings, CheckCircle2, ExternalLink, Copy } from "lucide-react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
+import LoadingSpinner from "../components/compass-connect/LoadingSpinner";
 import { TRIP_CONFIG, TRIP_STATUS, BOOKING_STATUS, USER_STATUS, HOSPITAL_REF_PREFIX } from "../constants";
 import { 
   BACKGROUND_PRIMARY, 
@@ -158,6 +159,53 @@ export default function Booking() {
             <p className="text-lg mb-0" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
               Complete the form below to express interest in our exclusive concierge services. 
             </p>
+          </motion.div>
+
+          {/* What Happens After You Submit */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="mb-8 p-6 rounded-2xl"
+            style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}
+          >
+            <h3 className="font-semibold text-lg mb-3" style={{ color: TEXT_PRIMARY }}>
+              What Happens After You Submit
+            </h3>
+            <div className="space-y-2">
+              <div className="flex items-start gap-3">
+                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: ACCENT_PRIMARY }}>
+                  <span className="text-xs font-bold text-white">1</span>
+                </div>
+                <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
+                  You'll receive a confirmation email with your interest reference number
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: ACCENT_PRIMARY }}>
+                  <span className="text-xs font-bold text-white">2</span>
+                </div>
+                <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
+                  You'll complete the hospital's secure health questionnaire
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: ACCENT_PRIMARY }}>
+                  <span className="text-xs font-bold text-white">3</span>
+                </div>
+                <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
+                  The hospital reviews your medical suitability and sends you a quote
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: ACCENT_PRIMARY }}>
+                  <span className="text-xs font-bold text-white">4</span>
+                </div>
+                <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
+                  Once approved, you return to us with your hospital reference to finalize travel arrangements
+                </p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -359,7 +407,7 @@ export default function Booking() {
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Button
                       type="button"
-                      onClick={() => window.open(process.env.REACT_APP_PARTNER_LINK_MBC || 'https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120', '_blank')}
+                      onClick={() => window.open(import.meta.env.REACT_APP_PARTNER_LINK_MBC || 'https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120', '_blank')}
                       className="rounded-full px-8 gap-2 font-semibold shadow-lg flex-1"
                       style={{ 
                         background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})`, 
@@ -404,7 +452,16 @@ export default function Booking() {
                 onMouseEnter={(e) => e.target.style.opacity = '0.9'}
                 onMouseLeave={(e) => e.target.style.opacity = '1'}
               >
-                {submitting ? "Submitting..." : "Submit Interest"} <ArrowRight className="w-4 h-4" />
+                {submitting ? (
+                  <>
+                    <LoadingSpinner size="w-4 h-4" />
+                    <span className="ml-2">Submitting...</span>
+                  </>
+                ) : (
+                  <>
+                    Submit Interest <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
               </Button>
             </div>
           )}

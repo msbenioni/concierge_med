@@ -43,61 +43,56 @@ export default function TripCard({ trip, index = 0, featured = false }) {
         {/* Image */}
         <div className={`relative overflow-hidden ${featured ? "md:w-2/5 h-64 md:h-auto" : "h-56"}`}>
           <img
-            src={trip.image_url || (() => {
-              // Extract country from destination (default to Mexico)
-              const destination = trip.destination || 'Tijuana, Mexico';
-              const country = destination.split(',').pop().trim().toLowerCase();
+            src={(() => {
+              // Use trip image_url if provided, otherwise use destination-based fallback
+              const imageSrc = trip.image_url || (() => {
+                // Extract country from destination (default to Mexico)
+                const country = trip.destination?.toLowerCase().includes('mexico') ? 'mexico' : 
+                               trip.destination?.toLowerCase().includes('tijuana') ? 'mexico' : 'mexico';
+                
+                const destinationImages = {
+                  'mexico': [
+                    "/mexico/arquitectura.jpeg",     // Mexico architecture
+                    "/mexico/flags.jpeg",             // Mexican flags
+                    "/mexico/la_luchadora_mexicana.jpeg", // Mexican culture
+                    "/mexico/mexico_city.jpeg",       // Mexico City
+                    "/mexico/mexico_variety.jpeg",    // Mexico variety
+                    "/mexico/mexico_villa.jpeg",      // Mexico villa/resort
+                    "/mexico/san_miguel.jpeg",        // San Miguel de Allende
+                    "/mexico/viva_mexico.jpeg"        // Viva Mexico celebration
+                  ]
+                };
+                
+                // Get images for the destination, default to Mexico if not found
+                const images = destinationImages[country] || destinationImages['mexico'];
+                
+                // Rotate based on trip ID to ensure variety
+                const imageIndex = (trip.id - 1) % images.length;
+                return images[imageIndex];
+              })();
               
-              // Destination-based image rotations
-              const destinationImages = {
-                'mexico': [
-                  "/mexico/arquitectura.jpeg",     // Mexico architecture
-                  "/mexico/flags.jpeg",             // Mexican flags
-                  "/mexico/la_luchadora_mexicana.jpeg", // Mexican culture
-                  "/mexico/mexico_city.jpeg",       // Mexico City
-                  "/mexico/mexico_variety.jpeg",    // Mexico variety
-                  "/mexico/mexico_villa.jpeg",      // Mexico villa/resort
-                  "/mexico/san_miguel.jpeg",        // San Miguel de Allende
-                  "/mexico/viva_mexico.jpeg"        // Viva Mexico celebration
-                ],
-                'usa': [
-                  "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80&auto=format&fit=crop", // New York
-                  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop", // California
-                  "https://images.unsplash.com/photo-1571003123894-1f0e994e8752?w=600&q=80&auto=format&fit=crop", // Miami
-                  "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80&auto=format&fit=crop"  // USA landscape
-                ],
-                'canada': [
-                  "https://images.unsplash.com/photo-1532274402911-5a369e4c4bb5?w=600&q=80&auto=format&fit=crop", // Toronto
-                  "https://images.unsplash.com/photo-1517420843989-8a592b1f2d7b?w=600&q=80&auto=format&fit=crop", // Vancouver
-                  "https://images.unsplash.com/photo-1534231456194-b85fd531c7f0?w=600&q=80&auto=format&fit=crop"  // Canada nature
-                ],
-                'australia': [
-                  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop", // Sydney
-                  "https://images.unsplash.com/photo-1529258873992-84c290bffaf0?w=600&q=80&auto=format&fit=crop", // Melbourne
-                  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop"  // Australia coast
-                ],
-                'new zealand': [
-                  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop", // Auckland
-                  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop", // NZ landscape
-                  "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=600&q=80&auto=format&fit=crop"  // New Zealand mountains
-                ]
-              };
-              
-              // Get images for the destination, default to Mexico if not found
-              const images = destinationImages[country] || destinationImages['mexico'];
-              
-              // Rotate based on trip ID to ensure variety
-              const imageIndex = (trip.id - 1) % images.length;
-              return images[imageIndex];
+              return imageSrc;
             })()}
             alt={trip.title || `${trip.departure_city} to ${trip.destination}`}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             onError={(e) => {
-              e.target.src = `https://picsum.photos/600/400?random=${trip.id || 1}`;
+              // Fallback to random image from public/mexico folder
+              const fallbackImages = [
+                "/mexico/arquitectura.jpeg",
+                "/mexico/flags.jpeg", 
+                "/mexico/la_luchadora_mexicana.jpeg",
+                "/mexico/mexico_city.jpeg",
+                "/mexico/mexico_variety.jpeg",
+                "/mexico/mexico_villa.jpeg",
+                "/mexico/san_miguel.jpeg",
+                "/mexico/viva_mexico.jpeg"
+              ];
+              const randomIndex = Math.floor(Math.random() * fallbackImages.length);
+              e.target.src = fallbackImages[randomIndex];
             }}
           />
           <div className="absolute inset-0" style={{ background: `linear-gradient(to top, ${BACKGROUND_PRIMARY_ALPHA_50}, transparent)` }} />
-          <div className="absolute top-4 left-4">
+          <div className="absolute bottom-4 right-4">
             <StatusBadge status={trip.status} />
           </div>
           {featured && (
@@ -125,7 +120,7 @@ export default function TripCard({ trip, index = 0, featured = false }) {
             onMouseEnter={(e) => e.target.style.color = ACCENT_PRIMARY}
             onMouseLeave={(e) => e.target.style.color = TEXT_PRIMARY}
           >
-            {trip.title || `${trip.departure_city} Medical Journey`}
+            Departing<br />{trip.departure_city}
           </h3>
 
           <div className="space-y-3 mb-6">
@@ -180,7 +175,7 @@ export default function TripCard({ trip, index = 0, featured = false }) {
           )}
 
           <Link
-            to={createPageUrl(`Booking?trip=${trip.id}`)}
+            to={createPageUrl("Booking")}
             className="inline-flex items-center gap-3 px-6 py-3 rounded-full text-sm font-sans font-semibold transition-all duration-300 shadow-lg group/btn"
             style={{ 
               background: GRADIENTS.ACCENT_PRIMARY, 
@@ -196,7 +191,7 @@ export default function TripCard({ trip, index = 0, featured = false }) {
               e.target.style.boxShadow = SHADOWS.ACCENT_MEDIUM;
             }}
           >
-            Reserve
+            Begin Medical Assessment
             <ArrowRight 
               className="w-4 h-4 transition-transform duration-300" 
               style={{ transform: 'translateX(0)' }}
@@ -204,6 +199,10 @@ export default function TripCard({ trip, index = 0, featured = false }) {
               onMouseLeave={(e) => e.target.style.transform = 'translateX(0)'}
             />
           </Link>
+          
+          <p className="text-xs mt-3 text-center" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
+            Available to medically approved patients
+          </p>
         </div>
       </div>
     </motion.div>

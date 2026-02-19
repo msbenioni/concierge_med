@@ -79,7 +79,7 @@ export default function HeroSection() {
                   e.target.style.boxShadow = SHADOWS.ACCENT_MEDIUM;
                 }}
               >
-                Start Hospital Health Questionnaire
+                Express Interest
                 <ChevronRight className="w-4 h-4" />
               </Link>
               <Link

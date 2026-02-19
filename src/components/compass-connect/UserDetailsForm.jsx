@@ -4,6 +4,7 @@ import { User, Mail, Phone, MapPin, Globe, AlertCircle, CheckCircle } from "luci
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import LoadingSpinner from "./LoadingSpinner";
 import {
   Select,
   SelectContent,
@@ -238,13 +239,12 @@ export default function UserDetailsForm({ onSubmit, isLoading }) {
         >
           {isLoading ? (
             <>
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <LoadingSpinner size="w-4 h-4" />
               Processing...
             </>
           ) : (
             <>
-              Access Health Questionnaire
-              <MapPin className="w-4 h-4" />
+              Submit Details <CheckCircle className="w-4 h-4" />
             </>
           )}
         </Button>

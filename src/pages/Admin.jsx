@@ -28,6 +28,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TRIP_CONFIG, TRIP_STATUS, BOOKING_STATUS, USER_STATUS, HOSPITAL_REF_PREFIX } from "../constants";
+import { mockTrips, mockNotifications } from "../data/mockData";
+import { getStatusClassName, getStatusLabel } from "../constants/statusConfig";
 import { 
   BACKGROUND_PRIMARY, 
   TEXT_PRIMARY, 
@@ -52,120 +54,158 @@ export default function Admin() {
   const [notifications, setNotifications] = useState([]);
   const [editingFields, setEditingFields] = useState({});
   const [search, setSearch] = useState("");
+  const [isLoadingTrips, setIsLoadingTrips] = useState(false);
+  const [isLoadingNotifications, setIsLoadingNotifications] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Initialize with mock data
+  // Initialize with mock data (simulate API calls)
   useEffect(() => {
-    const mockTrips = [
-      {
-        id: 1,
-        departure_city: "Auckland",
-        destination: TRIP_CONFIG.DESTINATION,
-        departure_date: "2024-03-15",
-        return_date: "2024-03-22",
-        confirmed_count: 6,
-        min_travelers: TRIP_CONFIG.MIN_TRAVELERS,
-        price: TRIP_CONFIG.DEFAULT_PRICE,
-        status: TRIP_STATUS.AVAILABLE,
-        hospital_approved: true,
-        hospital_reference: `${HOSPITAL_REF_PREFIX}-2024-0315`
-      },
-      {
-        id: 2,
-        departure_city: "Sydney",
-        destination: TRIP_CONFIG.DESTINATION, 
-        departure_date: "2024-04-12",
-        return_date: "2024-04-19",
-        confirmed_count: 3,
-        min_travelers: TRIP_CONFIG.MIN_TRAVELERS,
-        price: TRIP_CONFIG.DEFAULT_PRICE,
-        status: TRIP_STATUS.AVAILABLE,
-        hospital_approved: true,
-        hospital_reference: `${HOSPITAL_REF_PREFIX}-2024-0412`
-      },
-      {
-        id: 3,
-        departure_city: "Melbourne",
-        destination: TRIP_CONFIG.DESTINATION,
-        departure_date: "2024-05-10",
-        return_date: "2024-05-17",
-        confirmed_count: 9,
-        min_travelers: TRIP_CONFIG.MIN_TRAVELERS,
-        price: TRIP_CONFIG.DEFAULT_PRICE,
-        status: TRIP_STATUS.WAITLIST,
-        hospital_approved: true,
-        hospital_reference: `${HOSPITAL_REF_PREFIX}-2024-0510`
+    const loadData = async () => {
+      setIsLoadingTrips(true);
+      setIsLoadingNotifications(true);
+      setError(null);
+      
+      try {
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 800));
+        
+        setTrips(mockTrips);
+        setNotifications(mockNotifications);
+      } catch (err) {
+        setError("Failed to load data. Please try again.");
+        console.error("Error loading admin data:", err);
+      } finally {
+        setIsLoadingTrips(false);
+        setIsLoadingNotifications(false);
       }
-    ];
-    
-    const mockNotifications = [
-      {
-        id: 1,
-        booking_ref: "CC-0001",
-        user: {
-          full_name: "Sarah Johnson",
-          email: "sarah.j@email.com",
-          phone: "+64 21 123 4567",
-          country: "New Zealand"
-        },
-        trip_title: "Tijuana Medical Journey",
-        travelers_count: 1,
-        preferred_date: "2024-03-15",
-        booking_status: "confirmed",
-        payment_status: "paid",
-        questionnaire_complete: true,
-        flight_status: "confirmed",
-        accommodation_status: "confirmed",
-        transfers_status: "confirmed",
-        notes: "Wheelchair assistance required",
-        payment_link_url: "https://payment.stripe.com/pay/cc-0001"
-      },
-      {
-        id: 2,
-        booking_ref: "CC-0002",
-        user: {
-          full_name: "Michael Chen",
-          email: "m.chen@email.com",
-          phone: "+61 2 9876 5432",
-          country: "Australia"
-        },
-        trip_title: "Tijuana Medical Journey",
-        travelers_count: 2,
-        preferred_date: "2024-04-12",
-        booking_status: "pending",
-        payment_status: "link_sent",
-        questionnaire_complete: true,
-        flight_status: "in_progress",
-        accommodation_status: "in_progress",
-        transfers_status: "not_started",
-        notes: "Vegetarian meals required",
-        payment_link_url: "https://payment.stripe.com/pay/cc-0002"
-      },
-      {
-        id: 3,
-        booking_ref: "CC-0003",
-        user: {
-          full_name: "Emma Wilson",
-          email: "emma.w@email.com",
-          phone: "+64 9 456 7890",
-          country: "New Zealand"
-        },
-        trip_title: "Tijuana Medical Journey",
-        travelers_count: 1,
-        preferred_date: "2024-05-10",
-        booking_status: "new",
-        payment_status: "unpaid",
-        questionnaire_complete: false,
-        flight_status: "not_started",
-        accommodation_status: "not_started",
-        transfers_status: "not_started",
-        notes: "Allergic to nuts",
-        payment_link_url: ""
-      }
-    ];
-    
-    setTrips(mockTrips);
-    setNotifications(mockNotifications);
+    };
+
+    loadData();
   }, []);
+
+  // Form validation functions
+  const validateTripForm = (trip) => {
+    const errors = {};
+    
+    if (!trip.departure_city.trim()) {
+      errors.departure_city = "Departure city is required";
+    }
+    
+    if (!trip.departure_date) {
+      errors.departure_date = "Departure date is required";
+    }
+    
+    if (!trip.return_date) {
+      errors.return_date = "Return date is required";
+    }
+    
+    if (new Date(trip.return_date) <= new Date(trip.departure_date)) {
+      errors.return_date = "Return date must be after departure date";
+    }
+    
+    if (!trip.hospital_reference.trim()) {
+      errors.hospital_reference = "Hospital reference is required";
+    }
+    
+    return errors;
+  };
+
+  const validateNotificationField = (field, value) => {
+    const errors = {};
+    
+    switch (field) {
+      case 'full_name':
+        if (!value.trim()) errors.full_name = "Name is required";
+        else if (value.length < 2) errors.full_name = "Name must be at least 2 characters";
+        break;
+      case 'email':
+        if (!value.trim()) errors.email = "Email is required";
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) errors.email = "Invalid email format";
+        break;
+      case 'phone':
+        if (!value.trim()) errors.phone = "Phone is required";
+        else if (!/^[\d\s\-\+\(\)]+$/.test(value)) errors.phone = "Invalid phone format";
+        break;
+      case 'country':
+        if (!value.trim()) errors.country = "Country is required";
+        break;
+      default:
+        break;
+    }
+    
+    return errors;
+  };
+
+  // CSV Export Functions
+  const exportToCSV = (data, filename) => {
+    const headers = Object.keys(data[0] || {});
+    const csvHeaders = headers.join(',');
+    const csvRows = data.map(row => 
+      headers.map(header => {
+        const value = row[header];
+        // Handle nested objects and arrays
+        if (typeof value === 'object' && value !== null) {
+          if (Array.isArray(value)) {
+            return `"${value.join('; ')}"`;
+          } else {
+            return `"${JSON.stringify(value).replace(/"/g, '""')}"`;
+          }
+        }
+        return `"${value}"`;
+      }).join(',')
+    );
+    
+    const csvContent = [csvHeaders, ...csvRows].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const exportTrips = () => {
+    const tripsData = trips.map(trip => ({
+      id: trip.id,
+      departure_city: trip.departure_city,
+      destination: trip.destination,
+      departure_date: trip.departure_date,
+      return_date: trip.return_date,
+      confirmed_count: trip.confirmed_count,
+      min_travelers: trip.min_travelers,
+      price: trip.price,
+      status: trip.status,
+      hospital_approved: trip.hospital_approved,
+      hospital_reference: trip.hospital_reference
+    }));
+    
+    exportToCSV(tripsData, 'trips.csv');
+  };
+
+  const exportNotifications = () => {
+    const notificationsData = notifications.map(notification => ({
+      id: notification.id,
+      booking_ref: notification.booking_ref,
+      full_name: notification.user?.full_name || '',
+      email: notification.user?.email || '',
+      phone: notification.user?.phone || '',
+      country: notification.user?.country || '',
+      trip_title: notification.trip_title,
+      travelers_count: notification.travelers_count,
+      preferred_date: notification.preferred_date,
+      booking_status: notification.booking_status,
+      payment_status: notification.payment_status,
+      questionnaire_complete: notification.questionnaire_complete,
+      flight_status: notification.flight_status,
+      accommodation_status: notification.accommodation_status,
+      transfers_status: notification.transfers_status,
+      notes: notification.notes || '',
+      payment_link_url: notification.payment_link_url || ''
+    }));
+    
+    exportToCSV(notificationsData, 'notifications.csv');
+  };
 
   const [newTrip, setNewTrip] = useState({
     departure_city: "",
@@ -173,32 +213,39 @@ export default function Admin() {
     departure_date: "",
     return_date: "",
     min_travelers: TRIP_CONFIG.MIN_TRAVELERS,
-    price: TRIP_CONFIG.DEFAULT_PRICE,
+    price: TRIP_CONFIG.DEFAULT_PRICE || 4000,
     hospital_reference: "",
     hospital_approved: false
   });
 
   const handleAddTrip = () => {
-    if (newTrip.departure_city && newTrip.departure_date && newTrip.return_date && newTrip.hospital_reference) {
-      const trip = {
-        ...newTrip,
-        id: Date.now(),
-        confirmed_count: 0,
-        status: TRIP_STATUS.AVAILABLE
-      };
-      setTrips([...trips, trip]);
-      setNewTrip({
-        departure_city: "",
-        destination: TRIP_CONFIG.DESTINATION,
-        departure_date: "",
-        return_date: "",
-        min_travelers: TRIP_CONFIG.MIN_TRAVELERS,
-        price: TRIP_CONFIG.DEFAULT_PRICE,
-        hospital_reference: "",
-        hospital_approved: false
-      });
-      setShowAddForm(false);
+    const errors = validateTripForm(newTrip);
+    
+    if (Object.keys(errors).length > 0) {
+      // Show validation errors (you could add toast notifications here)
+      console.error("Validation errors:", errors);
+      return;
     }
+    
+    const trip = {
+      ...newTrip,
+      id: Date.now(),
+      confirmed_count: 0,
+      status: TRIP_STATUS.AVAILABLE
+    };
+    
+    setTrips([...trips, trip]);
+    setNewTrip({
+      departure_city: "",
+      destination: TRIP_CONFIG.DESTINATION,
+      departure_date: "",
+      return_date: "",
+      min_travelers: TRIP_CONFIG.MIN_TRAVELERS,
+      price: TRIP_CONFIG.DEFAULT_PRICE || 4000,
+      hospital_reference: "",
+      hospital_approved: false
+    });
+    setShowAddForm(false);
   };
 
   const handleEditTrip = (trip) => {
@@ -219,21 +266,11 @@ export default function Admin() {
   };
 
   const getBookingStatusColor = (status) => {
-    switch (status) {
-      case BOOKING_STATUS.CONFIRMED: return "text-green-600 bg-green-50";
-      case BOOKING_STATUS.PENDING: return "text-yellow-600 bg-yellow-50";
-      case BOOKING_STATUS.TO_BE_REQUESTED: return "text-gray-600 bg-gray-50";
-      default: return "text-gray-600 bg-gray-50";
-    }
+    return getStatusClassName('booking', status);
   };
 
   const getBookingStatusText = (status) => {
-    switch (status) {
-      case BOOKING_STATUS.CONFIRMED: return "Confirmed";
-      case BOOKING_STATUS.PENDING: return "Pending";
-      case BOOKING_STATUS.TO_BE_REQUESTED: return "To Be Requested";
-      default: return "Unknown";
-    }
+    return getStatusLabel('booking', status);
   };
 
   const updateBookingStatus = (notificationId, newStatus) => {
@@ -340,21 +377,11 @@ export default function Admin() {
   };
 
   const getStatusColor = (status) => {
-    switch (status) {
-      case TRIP_STATUS.AVAILABLE: return "text-green-600 bg-green-50";
-      case TRIP_STATUS.WAITLIST: return "text-yellow-600 bg-yellow-50";
-      case TRIP_STATUS.CLOSED: return "text-red-600 bg-red-50";
-      default: return "text-gray-600 bg-gray-50";
-    }
+    return getStatusClassName('trip', status);
   };
 
   const getStatusText = (status) => {
-    switch (status) {
-      case TRIP_STATUS.AVAILABLE: return "Available";
-      case TRIP_STATUS.WAITLIST: return "Waitlist";
-      case TRIP_STATUS.CLOSED: return "Closed";
-      default: return "Unknown";
-    }
+    return getStatusLabel('trip', status);
   };
 
   return (
@@ -773,7 +800,7 @@ export default function Admin() {
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-xs text-gray-500">Price</span>
-                        <p className="text-sm font-medium text-gray-900">{trip.price.toLocaleString()}</p>
+                        <p className="text-sm font-medium text-gray-900">{trip.price ? trip.price.toLocaleString() : 'N/A'}</p>
                       </div>
                     </div>
 
