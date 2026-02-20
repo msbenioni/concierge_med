@@ -10,12 +10,13 @@ import {
   Image,
   Paperclip,
   ExternalLink,
-  AlertCircle
+  AlertCircle,
+  X
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast, TOAST_CONFIG } from '@/components/ui/use-toast';
 import { databaseService } from '@/services/databaseService';
 import { formatDate, DATE_FORMATS } from '@/utils/dateFormats';
 import { 
@@ -53,6 +54,8 @@ export default function DocumentList({ interestId, patientInfo, onDocumentDelete
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [documentToDelete, setDocumentToDelete] = useState(null);
 
   useEffect(() => {
     loadDocuments();
@@ -94,6 +97,7 @@ export default function DocumentList({ interestId, patientInfo, onDocumentDelete
       toast({
         title: "Download Started",
         description: "Document download has been initiated",
+        duration: TOAST_CONFIG.DURATION.NORMAL,
       });
     } catch (error) {
       console.error('Download error:', error);
@@ -101,6 +105,7 @@ export default function DocumentList({ interestId, patientInfo, onDocumentDelete
         title: "Download Failed",
         description: "Failed to download document",
         variant: "destructive",
+        duration: TOAST_CONFIG.DURATION.NORMAL,
       });
     }
   };
@@ -111,26 +116,34 @@ export default function DocumentList({ interestId, patientInfo, onDocumentDelete
   };
 
   const handleDelete = async (documentId) => {
-    if (!confirm('Are you sure you want to delete this document? This action cannot be undone.')) {
-      return;
-    }
+    // Show custom confirmation modal
+    setDocumentToDelete(documentId);
+    setDeleteConfirmOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!documentToDelete) return;
+
+    setLoading(true); // Use shared loading state
 
     try {
-      const result = await databaseService.deleteDocument(documentId);
+      const result = await databaseService.deleteDocument(documentToDelete);
       
       if (result.success) {
-        setDocuments(prev => prev.filter(doc => doc.id !== documentId));
+        setDocuments(prev => prev.filter(doc => doc.id !== documentToDelete));
         onDocumentDeleted && onDocumentDeleted();
         
         toast({
           title: "Document Deleted",
           description: "Document has been removed successfully",
+          duration: TOAST_CONFIG.DURATION.NORMAL,
         });
       } else {
         toast({
           title: "Delete Failed",
           description: result.error || "Failed to delete document",
           variant: "destructive",
+          duration: TOAST_CONFIG.DURATION.NORMAL,
         });
       }
     } catch (error) {
@@ -139,7 +152,12 @@ export default function DocumentList({ interestId, patientInfo, onDocumentDelete
         title: "Delete Failed",
         description: "An unexpected error occurred",
         variant: "destructive",
+        duration: TOAST_CONFIG.DURATION.NORMAL,
       });
+    } finally {
+      setLoading(false);
+      setDeleteConfirmOpen(false);
+      setDocumentToDelete(null);
     }
   };
 
@@ -300,6 +318,84 @@ export default function DocumentList({ interestId, patientInfo, onDocumentDelete
       <div className="text-xs text-gray-500 pt-2 border-t border-gray-200">
         {documents.length} document{documents.length !== 1 ? 's' : ''} uploaded
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirmOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={() => setDeleteConfirmOpen(false)}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6"
+            style={{ backgroundColor: '#F3EFE8', border: `1px solid ${BORDERS.TEXT_SUBTLE}` }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-red-100">
+                  <Trash2 className="w-5 h-5 text-red-600" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold" style={{ color: COMPONENTS.TEXT_PRIMARY }}>
+                    Delete Document
+                  </h3>
+                  <p className="text-sm" style={{ color: COMPONENTS.TEXT_MUTED }}>
+                    This action cannot be undone
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDeleteConfirmOpen(false);
+                }}
+                className="rounded-full"
+                title="Close"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+
+            <div className="mb-6">
+              <p className="text-sm" style={{ color: COMPONENTS.TEXT_PRIMARY }}>
+                Are you sure you want to delete this document? This action cannot be undone and the document will be permanently removed.
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                onClick={() => setDeleteConfirmOpen(false)}
+                className="flex-1 rounded-xl"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={confirmDelete}
+                disabled={loading}
+                className="flex-1 rounded-xl bg-red-600 hover:bg-red-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                    Deleting...
+                  </>
+                ) : (
+                  'Delete Document'
+                )}
+              </Button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 }

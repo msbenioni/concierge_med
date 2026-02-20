@@ -15,13 +15,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast, TOAST_CONFIG } from '@/components/ui/use-toast';
 import { databaseService } from '@/services/databaseService';
 import { 
   COMPONENTS, 
   COLORS, 
-  GLASS, 
-  BORDERS 
+  BORDERS,
+  BACKGROUND_SUBTLE_LIGHT,
+  BACKGROUND_DIALOG
 } from '@/constants/colors';
 
 const DOCUMENT_TYPES = {
@@ -157,6 +158,7 @@ export default function DocumentUpload({ interestId, onUploadSuccess, onClose })
         toast({
           title: "Document Uploaded",
           description: "Document has been uploaded successfully!",
+          duration: TOAST_CONFIG.DURATION.NORMAL,
         });
         
         onUploadSuccess && onUploadSuccess(result.data);
@@ -174,6 +176,7 @@ export default function DocumentUpload({ interestId, onUploadSuccess, onClose })
           title: "Upload Failed",
           description: result.error || "Failed to upload document",
           variant: "destructive",
+          duration: TOAST_CONFIG.DURATION.NORMAL,
         });
       }
     } catch (error) {
@@ -182,6 +185,7 @@ export default function DocumentUpload({ interestId, onUploadSuccess, onClose })
         title: "Upload Failed",
         description: "An unexpected error occurred",
         variant: "destructive",
+        duration: TOAST_CONFIG.DURATION.NORMAL,
       });
     } finally {
       setIsUploading(false);
@@ -200,7 +204,7 @@ export default function DocumentUpload({ interestId, onUploadSuccess, onClose })
     >
       <motion.div
         className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
-        style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${BORDERS.TEXT_SUBTLE}` }}
+        style={{ backgroundColor: BACKGROUND_DIALOG, border: `1px solid ${BORDERS.TEXT_SUBTLE}` }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-6">
@@ -230,11 +234,11 @@ export default function DocumentUpload({ interestId, onUploadSuccess, onClose })
             <div>
               <Label className="text-sm font-medium mb-2 block">Select File</Label>
               <div
-                className={`relative border-2 border-dashed rounded-xl p-6 text-center transition-colors cursor-pointer
-                  ${dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'}
-                  ${errors.file ? 'border-red-500 bg-red-50' : ''}
-                  ${selectedFile ? 'border-green-500 bg-green-50' : ''}
-                `}
+                className="relative border-2 border-dashed rounded-xl p-6 text-center transition-colors cursor-pointer"
+                style={{
+                  borderColor: dragActive ? COLORS.ACCENT_PRIMARY : selectedFile ? '#10b981' : errors.file ? '#ef4444' : BORDERS.TEXT_SUBTLE,
+                  backgroundColor: dragActive ? COLORS.ACCENT_PRIMARY_ALPHA_10 : selectedFile ? 'rgba(16, 185, 129, 0.1)' : errors.file ? 'rgba(239, 68, 68, 0.1)' : BACKGROUND_SUBTLE_LIGHT
+                }}
                 onDragEnter={handleDrag}
                 onDragLeave={handleDrag}
                 onDragOver={handleDrag}

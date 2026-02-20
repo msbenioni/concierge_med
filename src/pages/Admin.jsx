@@ -32,7 +32,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast, TOAST_CONFIG } from "@/components/ui/use-toast";
 import CompanionModal from "../components/CompanionModal";
 import DocumentUpload from "../components/DocumentUpload";
 import DocumentList from "../components/DocumentList";
@@ -421,6 +421,8 @@ export default function Admin() {
   const handleAddDocument = (interestId) => {
     setSelectedDocumentInterestId(interestId);
     setShowDocumentModal(true);
+    // Close the document list modal if it's open
+    setShowDocumentList(false);
   };
 
   const handleViewDocuments = (interestId) => {
@@ -1324,7 +1326,7 @@ export default function Admin() {
                                             toast({
                                               title: "Booking Deleted",
                                               description: "The booking has been deleted successfully.",
-                                              duration: 3000, // Auto-dismiss after 3 seconds
+                                              duration: TOAST_CONFIG.DURATION.NORMAL,
                                             });
                                           } else {
                                             // Show error toast
@@ -1333,7 +1335,7 @@ export default function Admin() {
                                               title: "Delete Failed",
                                               description: `Failed to delete booking: ${deleteResult.error}`,
                                               variant: "destructive",
-                                              duration: 5000,
+                                              duration: TOAST_CONFIG.DURATION.NORMAL,
                                             });
                                           }
                                         } catch (error) {
@@ -1342,7 +1344,7 @@ export default function Admin() {
                                             title: "Delete Failed",
                                             description: `An error occurred: ${error.message}`,
                                             variant: "destructive",
-                                            duration: 5000,
+                                            duration: TOAST_CONFIG.DURATION.NORMAL,
                                           });
                                         }
                                       }}
@@ -1351,7 +1353,7 @@ export default function Admin() {
                                       Delete
                                     </Button>
                                   ),
-                                  duration: 10000, // Confirmation toast stays for 10 seconds
+                                  duration: TOAST_CONFIG.DURATION.NORMAL, // Confirmation toast uses standard duration
                                 });
                               }}
                             >

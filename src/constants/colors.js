@@ -7,6 +7,8 @@ export const COLORS = {
   BACKGROUND_SECONDARY: '#EEE7DE',    // Warm Stone (slightly deeper - section alt)
   BACKGROUND_TERTIARY: '#E7DED3',     // Soft panel base (replaces full taupe)
   BACKGROUND_INSET: '#D8CFC4',        // Soft Taupe (inset blocks only)
+  BACKGROUND_SUBTLE_LIGHT: 'rgba(243, 239, 232, 0.5)', // For subtle background elements like upload areas
+  BACKGROUND_DIALOG: '#F3EFE8',      // Dialog/modal containers (same as primary but explicitly named)
   BACKGROUND_DEEP: '#2C2623',         // Espresso (rare: footer/testimonial/CTA)
   
   // Text Colors - Named by purpose - New Palette
@@ -167,6 +169,8 @@ export const {
   BACKGROUND_SECONDARY,
   BACKGROUND_TERTIARY,
   BACKGROUND_INSET,
+  BACKGROUND_SUBTLE_LIGHT,
+  BACKGROUND_DIALOG,
   BACKGROUND_DEEP,
   TEXT_PRIMARY,
   TEXT_SECONDARY,

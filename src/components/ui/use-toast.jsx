@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 const TOAST_LIMIT = 20;
-const TOAST_REMOVE_DELAY = 5000;
+const TOAST_REMOVE_DELAY = 350; // Quick removal after animation (300ms + buffer)
 
 const actionTypes = {
   ADD_TOAST: "ADD_TOAST",
@@ -19,10 +19,18 @@ function genId() {
 }
 
 const toastTimeouts = new Map();
+const dismissTimeouts = new Map();
 
 const addToRemoveQueue = (toastId) => {
   if (toastTimeouts.has(toastId)) {
     return;
+  }
+
+  // Clear auto-dismiss timer if toast is manually dismissed
+  const dismissT = dismissTimeouts.get(toastId);
+  if (dismissT) {
+    clearTimeout(dismissT);
+    dismissTimeouts.delete(toastId);
   }
 
   const timeout = setTimeout(() => {
@@ -131,12 +139,34 @@ function toast({ ...props }) {
     },
   });
 
+  // AUTO-DISMISS after duration (default 3000ms)
+  const duration =
+    typeof props.duration === "number"
+      ? props.duration
+      : TOAST_CONFIG.DEFAULT_DURATION;
+
+  if (duration !== Infinity) {
+    const t = window.setTimeout(() => {
+      dismiss();
+      dismissTimeouts.delete(id);
+    }, duration);
+    dismissTimeouts.set(id, t);
+  }
+
   return {
     id,
     dismiss,
     update,
   };
 }
+
+// Toast configuration constants for consistent behavior across the app
+export const TOAST_CONFIG = {
+  DURATION: {
+    NORMAL: 3000,    // 3 seconds - for auto-dismiss behavior
+  },
+  DEFAULT_DURATION: 3000, // 3 seconds default for auto-dismiss
+};
 
 function useToast() {
   const [state, setState] = useState(memoryState);
@@ -149,12 +179,13 @@ function useToast() {
         listeners.splice(index, 1);
       }
     };
-  }, [state]);
+  }, []); // Empty dependency array to prevent infinite loops
 
   return {
     ...state,
     toast,
     dismiss: (toastId) => dispatch({ type: actionTypes.DISMISS_TOAST, toastId }),
+    remove: (toastId) => dispatch({ type: actionTypes.REMOVE_TOAST, toastId }),
   };
 }
 
