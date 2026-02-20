@@ -1,4 +1,26 @@
-const { databaseService } = require('../shared/databaseService');
+// Database service functions for Netlify functions
+const databaseService = {
+  async updateInterestQuestionnaireClicked(bookingRef) {
+    try {
+      const { createClient } = require('@supabase/supabase-js');
+      const supabaseUrl = process.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY;
+      const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+      const { data, error } = await supabase
+        .from('interests')
+        .update({ q_form_clicked: true })
+        .eq('booking_ref', bookingRef)
+        .select();
+
+      if (error) throw error;
+      return { success: true, data };
+    } catch (error) {
+      console.error('Error updating q-form clicked status:', error);
+      return { success: false, error: error.message };
+    }
+  }
+};
 
 exports.handler = async (event, context) => {
   // Only allow POST requests
