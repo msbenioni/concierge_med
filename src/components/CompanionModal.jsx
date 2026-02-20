@@ -14,8 +14,7 @@ import {
 
 export default function CompanionModal({ isOpen, onClose, onSubmit, interestData }) {
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
+    full_name: "",
     email: "",
     phone: "",
   });
@@ -25,12 +24,8 @@ export default function CompanionModal({ isOpen, onClose, onSubmit, interestData
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.first_name.trim()) {
-      newErrors.first_name = "First name is required";
-    }
-    
-    if (!formData.last_name.trim()) {
-      newErrors.last_name = "Last name is required";
+    if (!formData.full_name.trim()) {
+      newErrors.full_name = "Full name is required";
     }
     
     if (!formData.email.trim()) {
@@ -63,8 +58,7 @@ export default function CompanionModal({ isOpen, onClose, onSubmit, interestData
       
       // Reset form
       setFormData({
-        first_name: "",
-        last_name: "",
+        full_name: "",
         email: "",
         phone: "",
       });
@@ -112,7 +106,7 @@ export default function CompanionModal({ isOpen, onClose, onSubmit, interestData
               Add Companion
             </h3>
             <p className="text-sm mt-1" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
-              Enter companion details for {interestData?.first_name} {interestData?.last_name}
+              Enter companion details for {interestData?.full_name || 'this traveler'}
             </p>
           </div>
           <Button
@@ -127,51 +121,27 @@ export default function CompanionModal({ isOpen, onClose, onSubmit, interestData
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          {/* First Name */}
+          {/* Full Name */}
           <div>
             <Label className="text-sm font-medium" style={{ color: TEXT_PRIMARY }}>
-              First Name
+              Full Name
             </Label>
             <div className="relative mt-1.5">
               <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
-                value={formData.first_name}
-                onChange={(e) => handleInputChange('first_name', e.target.value)}
-                placeholder="Enter first name"
+                value={formData.full_name}
+                onChange={(e) => handleInputChange('full_name', e.target.value)}
+                placeholder="Enter full name"
                 className="pl-9"
                 style={{ 
                   backgroundColor: COMPONENTS.INPUT_BACKGROUND,
-                  borderColor: errors.first_name ? '#ef4444' : COMPONENTS.INPUT_BORDER,
+                  borderColor: errors.full_name ? '#ef4444' : COMPONENTS.INPUT_BORDER,
                   color: COMPONENTS.INPUT_TEXT
                 }}
               />
             </div>
-            {errors.first_name && (
-              <p className="text-xs text-red-500 mt-1">{errors.first_name}</p>
-            )}
-          </div>
-
-          {/* Last Name */}
-          <div>
-            <Label className="text-sm font-medium" style={{ color: TEXT_PRIMARY }}>
-              Last Name
-            </Label>
-            <div className="relative mt-1.5">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <Input
-                value={formData.last_name}
-                onChange={(e) => handleInputChange('last_name', e.target.value)}
-                placeholder="Enter last name"
-                className="pl-9"
-                style={{ 
-                  backgroundColor: COMPONENTS.INPUT_BACKGROUND,
-                  borderColor: errors.last_name ? '#ef4444' : COMPONENTS.INPUT_BORDER,
-                  color: COMPONENTS.INPUT_TEXT
-                }}
-              />
-            </div>
-            {errors.last_name && (
-              <p className="text-xs text-red-500 mt-1">{errors.last_name}</p>
+            {errors.full_name && (
+              <p className="text-xs text-red-500 mt-1">{errors.full_name}</p>
             )}
           </div>
 

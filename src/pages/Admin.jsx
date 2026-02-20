@@ -360,7 +360,7 @@ export default function Admin() {
   const filteredNotifications = notifications.filter((n) => {
     if (!search) return true;
     const s = search.toLowerCase();
-    const fullName = `${n.first_name || ''} ${n.last_name || ''}`.trim();
+    const fullName = n.full_name || '';
     return (
       (n.booking_ref || "").toLowerCase().includes(s) ||
       fullName.toLowerCase().includes(s) ||
@@ -481,7 +481,7 @@ export default function Admin() {
       const companion = companions[notification.id];
       return [
         notification.booking_ref || `CC-${String(notification.id).padStart(4, '0')}`,
-        `${notification.first_name || ''} ${notification.last_name || ''}`.trim(),
+        notification.full_name || '',
         notification.email || '',
         notification.phone || '',
         notification.country || '',
@@ -490,7 +490,7 @@ export default function Admin() {
         notification.trip_type || '',
         notification.booking_status || '',
         notification.payment_status || '',
-        companion ? `${companion.first_name} ${companion.last_name}` : '',
+        companion ? companion.full_name || '' : '',
         companion ? companion.email : '',
         companion ? `$${companion.companion_cost}` : '',
         companion ? companion.payment_status : '',
@@ -559,7 +559,7 @@ export default function Admin() {
                 return `
                 <tr>
                   <td>${notification.booking_ref || `CC-${String(notification.id).padStart(4, '0')}`}</td>
-                  <td>${notification.first_name || ''} ${notification.last_name || ''}</td>
+                  <td>${notification.full_name || ''}</td>
                   <td>${notification.email || ''}</td>
                   <td>${notification.phone || ''}</td>
                   <td>${notification.country || ''}</td>
@@ -568,7 +568,7 @@ export default function Admin() {
                   <td>${notification.trip_type || ''}</td>
                   <td>${notification.booking_status || ''}</td>
                   <td>${notification.payment_status || ''}</td>
-                  <td>${companion ? `${companion.first_name} ${companion.last_name}` : ''}</td>
+                  <td>${companion ? companion.full_name || '' : ''}</td>
                   <td>${companion ? companion.email : ''}</td>
                   <td>${companion ? `$${companion.companion_cost}` : ''}</td>
                   <td>${companion ? companion.payment_status : ''}</td>
@@ -757,10 +757,13 @@ export default function Admin() {
             {/* Interests Table */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[3600px] border-collapse border border-gray-300 bg-white">
+                <table className="w-full min-w-[4000px] border-collapse border border-gray-300 bg-white">
                   {/* Table Header */}
                   <thead>
                     <tr className="bg-gray-100 border-b border-gray-300">
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-32">
+                        Created At
+                      </th>
                       <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-48">
                         Ref
                       </th>
@@ -812,7 +815,7 @@ export default function Admin() {
                       <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-80">
                         Transfers
                       </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-64">
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider" style={{ width: '512px', minWidth: '512px' }}>
                         Notes
                       </th>
                       <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-48">
@@ -858,16 +861,16 @@ export default function Admin() {
                             <td className="border border-gray-200 px-3 py-2"></td>
                             <td className="border border-gray-200 px-3 py-2"></td>
                             <td className="border border-gray-200 px-3 py-2"></td>
-                            <td className="border border-gray-200 px-3 py-2"></td>
-                            <td className="border border-gray-200 px-3 py-2"></td>
-                            <td className="border border-gray-200 px-3 py-2"></td>
-                            <td className="border border-gray-200 px-3 py-2"></td>
                           </tr>
                         );
                       }
                       
                       return (
                       <tr key={notification.id} className="border-b border-gray-200 hover:bg-gray-50">
+                        {/* Created At */}
+                        <td className="border border-gray-200 px-3 py-2 w-32 text-xs text-gray-600">
+                          {notification.created_at ? new Date(notification.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' }) : ''}
+                        </td>
                         {/* Ref */}
                         <td className="border border-gray-200 px-3 py-2 w-24">
                           <Input
@@ -882,12 +885,8 @@ export default function Admin() {
                         <td className="border border-gray-200 px-3 py-2 w-36">
                           <Input
                             type="text"
-                            value={`${getFieldValue(notification, 'first_name') || ''} ${getFieldValue(notification, 'last_name') || ''}`.trim()}
-                            onChange={(e) => {
-                              const names = e.target.value.split(' ');
-                              handleFieldChange(notification.id, 'first_name', names[0] || '');
-                              handleFieldChange(notification.id, 'last_name', names.slice(1).join(' ') || '');
-                            }}
+                            value={getFieldValue(notification, 'full_name') || ''}
+                            onChange={(e) => handleFieldChange(notification.id, 'full_name', e.target.value)}
                             className="text-sm font-medium text-gray-900 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500"
                           />
                         </td>
@@ -1069,13 +1068,20 @@ export default function Admin() {
                         </td>
 
                         {/* Notes */}
-                        <td className="border border-gray-200 px-3 py-2 w-48">
-                          <Input
-                            type="text"
+                        <td className="border border-gray-200 px-3 py-2" style={{ width: '512px', minWidth: '512px' }}>
+                          <textarea
                             value={getFieldValue(notification, 'notes') || ''}
                             onChange={(e) => handleFieldChange(notification.id, 'notes', e.target.value)}
                             placeholder="Add notes..."
-                            className="text-sm text-gray-600 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500"
+                            className="text-sm text-gray-600 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500 resize-none w-full"
+                            style={{ 
+                              minHeight: '24px',
+                              maxHeight: '60px',
+                              overflow: 'auto',
+                              whiteSpace: 'pre-wrap',
+                              wordWrap: 'break-word',
+                              width: '100%'
+                            }}
                           />
                         </td>
 
@@ -1084,7 +1090,7 @@ export default function Admin() {
                           {companions[notification.id] ? (
                             <div className="text-sm">
                               <div className="font-medium text-gray-900">
-                                {companions[notification.id].first_name} {companions[notification.id].last_name}
+                                {companions[notification.id].full_name}
                               </div>
                               <div className="text-xs text-gray-500">
                                 {companions[notification.id].email}

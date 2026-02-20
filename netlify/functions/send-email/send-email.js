@@ -82,8 +82,8 @@ exports.handler = async (event, context) => {
             
             <div style="space-y: 20px;">
               <!-- Step 1 -->
-              <div style="display: flex; align-items: flex-start; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid rgba(199, 154, 58, 0.2);">
-                <div style="width: 32px; height: 32px; min-width: 32px; border-radius: 50%; background: #C79A3A; color: #F3EFE8; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; font-size: 16px; line-height: 1;">✓</div>
+              <div style="display: flex; align-items: flex-start; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid rgba(199, 154, 58, 0.2);">
+                <div style="width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background: #C79A3A; color: #F3EFE8; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; font-size: 14px; line-height: 1;">✓</div>
                 <div style="flex: 1;">
                   <h4 style="color: #2C2623; font-size: 16px; font-weight: 600; margin: 0 0 8px 0;">Interest Registered - Complete</h4>
                   <p style="color: #4A4541; margin: 0; font-size: 14px; line-height: 1.5;">Your interest has been successfully registered and saved to our database. This completes your registration with Compass Connect.</p>
@@ -91,8 +91,8 @@ exports.handler = async (event, context) => {
               </div>
               
               <!-- Step 2 -->
-              <div style="display: flex; align-items: flex-start; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid rgba(199, 154, 58, 0.2);">
-                <div style="width: 32px; height: 32px; min-width: 32px; border-radius: 50%; background: #F3E3B8; color: #8C651E; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; font-size: 16px; line-height: 1; border: 2px solid #C79A3A;">2</div>
+              <div style="display: flex; align-items: flex-start; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid rgba(199, 154, 58, 0.2);">
+                <div style="width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background: #F3E3B8; color: #8C651E; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; font-size: 14px; line-height: 1; border: 2px solid #C79A3A;">2</div>
                 <div style="flex: 1;">
                   <h4 style="color: #2C2623; font-size: 16px; font-weight: 600; margin: 0 0 8px;">Health Questionnaire - Your Next Step</h4>
                   <p style="color: #4A4541; margin: 0 0 16px; font-size: 14px; line-height: 1.5;">Click below to complete the hospital's health questionnaire for your surgery quote.</p>
@@ -106,8 +106,8 @@ exports.handler = async (event, context) => {
               </div>
               
               <!-- Step 3 -->
-              <div style="display: flex; align-items: flex-start; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid rgba(199, 154, 58, 0.2);">
-                <div style="width: 32px; height: 32px; min-width: 32px; border-radius: 50%; background: #6F7B6B; color: #F3EFE8; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; font-size: 16px; line-height: 1;">3</div>
+              <div style="display: flex; align-items: flex-start; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid rgba(199, 154, 58, 0.2);">
+                <div style="width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background: #6F7B6B; color: #F3EFE8; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; font-size: 14px; line-height: 1;">3</div>
                 <div style="flex: 1;">
                   <h4 style="color: #2C2623; font-size: 16px; font-weight: 600; margin: 0 0 8px;">Receive Hospital Quote</h4>
                   <p style="color: #4A4541; margin: 0; font-size: 14px; line-height: 1.5;">The hospital will send your personalized surgery quote directly to you (typically within 2-3 business days).</p>
@@ -115,8 +115,8 @@ exports.handler = async (event, context) => {
               </div>
               
               <!-- Step 4 -->
-              <div style="display: flex; align-items: flex-start; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid rgba(199, 154, 58, 0.2);">
-                <div style="width: 32px; height: 32px; min-width: 32px; border-radius: 50%; background: #6F7B6B; color: #F3EFE8; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; font-size: 16px; line-height: 1;">4</div>
+              <div style="display: flex; align-items: flex-start; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid rgba(199, 154, 58, 0.2);">
+                <div style="width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background: #6F7B6B; color: #F3EFE8; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; font-size: 14px; line-height: 1;">4</div>
                 <div style="flex: 1;">
                   <h4 style="color: #2C2623; font-size: 16px; font-weight: 600; margin: 0 0 8px;">Organize Travel with Compass Connect</h4>
                   <p style="color: #4A4541; margin: 0 0 16px; font-size: 14px; line-height: 1.5;">Once you have your quote, return to organize your travel arrangements.</p>

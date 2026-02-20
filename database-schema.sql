@@ -26,8 +26,7 @@ CREATE TABLE IF NOT EXISTS trips (
 CREATE TABLE IF NOT EXISTS interests (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   booking_ref VARCHAR(50) UNIQUE NOT NULL,
-  first_name VARCHAR(255) NOT NULL,
-  last_name VARCHAR(255) NOT NULL,
+  full_name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   phone VARCHAR(50) NOT NULL,
   country VARCHAR(255) NOT NULL,
@@ -44,6 +43,7 @@ CREATE TABLE IF NOT EXISTS interests (
   accommodation_status VARCHAR(50) DEFAULT 'not_started',
   transfers_status VARCHAR(50) DEFAULT 'not_started',
   questionnaire_complete BOOLEAN DEFAULT false,
+  q_form_clicked BOOLEAN DEFAULT false,
   notes TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -53,8 +53,7 @@ CREATE TABLE IF NOT EXISTS interests (
 CREATE TABLE IF NOT EXISTS companions (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   interest_id UUID NOT NULL REFERENCES interests(id) ON DELETE CASCADE,
-  first_name VARCHAR(255) NOT NULL,
-  last_name VARCHAR(255) NOT NULL,
+  full_name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   phone VARCHAR(50) NOT NULL,
   country VARCHAR(255) NOT NULL,
@@ -77,8 +76,7 @@ CREATE TABLE IF NOT EXISTS companions (
 CREATE TABLE IF NOT EXISTS questionnaires (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   reference VARCHAR(50) NOT NULL,
-  first_name VARCHAR(255) NOT NULL,
-  last_name VARCHAR(255) NOT NULL,
+  full_name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   phone VARCHAR(50) NOT NULL,
   date_of_birth DATE,
@@ -105,11 +103,10 @@ CREATE TABLE IF NOT EXISTS questionnaires (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 4. Create users table
+-- 5. Create users table
 CREATE TABLE IF NOT EXISTS users (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  first_name VARCHAR(255) NOT NULL,
-  last_name VARCHAR(255) NOT NULL,
+  full_name VARCHAR(255) NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
   phone VARCHAR(50),
   country VARCHAR(255),

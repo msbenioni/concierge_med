@@ -5,8 +5,7 @@ import { sendInterestConfirmationEmail } from './emailService.js';
 
 const testBookingData = {
   email: "test@example.com",
-  first_name: "Test",
-  last_name: "User",
+  full_name: "Test User",
   booking_ref: "CC-TEST123",
   phone: "+1234567890"
 };
