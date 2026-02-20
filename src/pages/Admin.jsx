@@ -1182,24 +1182,56 @@ export default function Admin() {
                               className="h-7 w-7 p-0"
                               title="Delete booking"
                               onClick={() => {
+                                console.log('Delete button clicked for notification:', notification.id);
                                 toast({
                                   title: "Delete Booking",
                                   description: "Are you sure you want to delete this booking? This action cannot be undone.",
                                   action: (
                                     <Button
                                       size="sm"
-                                      onClick={() => {
-                                        setNotifications(notifications.filter(n => n.id !== notification.id));
-                                        toast({
-                                          title: "Booking Deleted",
-                                          description: "The booking has been deleted successfully.",
-                                        });
+                                      onClick={async () => {
+                                        console.log('Delete action clicked for notification ID:', notification.id);
+                                        try {
+                                          // Delete from database
+                                          const deleteResult = await databaseService.deleteInterest(notification.id);
+                                          console.log('Delete result:', deleteResult);
+                                          
+                                          if (deleteResult.success) {
+                                            // Remove from UI
+                                            setNotifications(notifications.filter(n => n.id !== notification.id));
+                                            
+                                            // Show success toast with auto-dismiss
+                                            toast({
+                                              title: "Booking Deleted",
+                                              description: "The booking has been deleted successfully.",
+                                              duration: 3000, // Auto-dismiss after 3 seconds
+                                            });
+                                          } else {
+                                            // Show error toast
+                                            console.error('Delete failed:', deleteResult.error);
+                                            toast({
+                                              title: "Delete Failed",
+                                              description: `Failed to delete booking: ${deleteResult.error}`,
+                                              variant: "destructive",
+                                              duration: 5000,
+                                            });
+                                          }
+                                        } catch (error) {
+                                          console.error('Error deleting booking:', error);
+                                          toast({
+                                            title: "Delete Failed",
+                                            description: `An error occurred: ${error.message}`,
+                                            variant: "destructive",
+                                            duration: 5000,
+                                          });
+                                        }
                                       }}
                                       className="bg-red-600 hover:bg-red-700"
                                     >
                                       Delete
                                     </Button>
                                   ),
+                                  duration: 10000, // Confirmation toast stays for 10 seconds
                                 });
                               }}
                             >

@@ -1,3 +1,5 @@
+const { databaseService } = require('../shared/databaseService');
+
 exports.handler = async (event, context) => {
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
@@ -22,7 +24,6 @@ exports.handler = async (event, context) => {
 
     // Update database to mark q-form as completed
     try {
-      const { databaseService } = require('../../src/services/databaseService');
       const updateResult = await databaseService.updateInterestQuestionnaireClicked(booking_ref);
       
       if (updateResult.success) {
