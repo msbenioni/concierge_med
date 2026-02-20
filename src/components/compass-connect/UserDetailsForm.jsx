@@ -12,14 +12,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_80, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_50, ACCENT_PRIMARY, ACCENT_PRIMARY_ALPHA_20, BACKGROUND_PRIMARY_ALPHA_10, COMPONENTS, GLASS, SHADOWS, BORDERS } from "../../constants/colors";
+import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_80, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_50, COLORS, BACKGROUND_PRIMARY_ALPHA_10, BACKGROUND_PRIMARY, COMPONENTS, GLASS, SHADOWS, BORDERS } from "../../constants/colors";
 
 const COUNTRIES = [
   "Australia",
   "New Zealand", 
-  "United States",
-  "Canada",
-  "United Kingdom",
   "Other"
 ];
 
@@ -86,12 +83,12 @@ export default function UserDetailsForm({ onSubmit, isLoading }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className="rounded-2xl p-6 sm:p-8 shadow-sm"
-      style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}
+      style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_20}` }}
     >
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20 }}>
-          <User className="w-6 h-6" style={{ color: ACCENT_PRIMARY }} />
+        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }}>
+          <User className="w-6 h-6" style={{ color: COLORS.ACCENT_PRIMARY }} />
         </div>
         <h3 className="text-xl font-semibold mb-2" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
           Start Your Journey
@@ -183,10 +180,10 @@ export default function UserDetailsForm({ onSubmit, isLoading }) {
               value={formData.country}
               onValueChange={(value) => handleInputChange("country", value)}
             >
-              <SelectTrigger className={`pl-10 ${errors.country ? "border-red-300 focus:border-red-500" : ""}`}>
+              <SelectTrigger className={`pl-10 ${errors.country ? "border-red-300 focus:border-red-500" : ""}`} style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
                 <SelectValue placeholder="Select your country" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent style={{ backgroundColor: BACKGROUND_PRIMARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY, border: '1px solid' }}>
                 {COUNTRIES.map((country) => (
                   <SelectItem key={country} value={country}>
                     {country}
@@ -204,7 +201,7 @@ export default function UserDetailsForm({ onSubmit, isLoading }) {
         </div>
 
         {/* Terms and Privacy */}
-        <div className="rounded-xl p-4" style={{ backgroundColor: BACKGROUND_PRIMARY_ALPHA_10, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
+        <div className="rounded-xl p-4" style={{ backgroundColor: BACKGROUND_PRIMARY_ALPHA_10, border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_20}` }}>
           <div className="space-y-3">
             <div className="flex items-start gap-3">
               <input
@@ -213,7 +210,7 @@ export default function UserDetailsForm({ onSubmit, isLoading }) {
                 checked={formData.terms_accepted}
                 onChange={(e) => handleInputChange("terms_accepted", e.target.checked)}
                 className="mt-1 w-4 h-4 rounded"
-                style={{ color: ACCENT_PRIMARY, borderColor: TEXT_PRIMARY_ALPHA_50 }}
+                style={{ color: COLORS.ACCENT_PRIMARY, borderColor: TEXT_PRIMARY_ALPHA_50 }}
               />
               <label htmlFor="terms" className="text-sm leading-relaxed cursor-pointer" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
                 I understand that Compass Connect is a non-medical concierge service. All medical decisions and surgical care are provided solely by licensed hospitals and medical professionals. I agree to be contacted about my inquiry.

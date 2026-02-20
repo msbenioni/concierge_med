@@ -6,7 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { motion } from "framer-motion";
-import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, ACCENT_PRIMARY, ACCENT_PRIMARY_ALPHA_20, GLASS, BORDERS } from "../../constants/colors";
+import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, COLORS, GLASS, BORDERS } from "../../constants/colors";
 
 export default function FAQAccordion({ items }) {
   return (
@@ -22,7 +22,7 @@ export default function FAQAccordion({ items }) {
           <AccordionItem
             value={`faq-${i}`}
             className="rounded-2xl px-6 shadow-sm data-[state=open]:shadow-md transition-shadow"
-            style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}
+            style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_20}` }}
           >
             <AccordionTrigger className="text-left font-semibold text-base py-5 hover:no-underline" style={{ color: TEXT_PRIMARY, fontFamily: 'Inter, sans-serif' }}>
               {item.question}

@@ -7,12 +7,10 @@ import {
   BACKGROUND_PRIMARY, 
   BACKGROUND_SECONDARY,
   TEXT_PRIMARY, 
-  ACCENT_PRIMARY,
-  ACCENT_SECONDARY, 
+  COLORS,
   TEXT_PRIMARY_ALPHA_60, 
   TEXT_PRIMARY_ALPHA_50,
   TEXT_PRIMARY_ALPHA_25, 
-  ACCENT_PRIMARY_ALPHA_20, 
   GRADIENTS, 
   GLASS, 
   SHADOWS,
@@ -32,11 +30,11 @@ export default function CTASection() {
           style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}`, boxShadow: COMPONENTS.CARD_SHADOW }}
         >
           {/* Decorative */}
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20 }} />
+          <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }} />
           <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" style={{ backgroundColor: COMPONENTS.STATUS_WARNING + '10' }} />
 
           <div className="relative z-10 p-10 sm:p-14 lg:p-20 text-center">
-            <span className="text-xs uppercase tracking-[0.2em] font-semibold" style={{ color: ACCENT_PRIMARY }}>
+            <span className="text-xs uppercase tracking-[0.2em] font-semibold" style={{ color: COLORS.ACCENT_PRIMARY }}>
               Your Medical Journey Awaits
             </span>
             <h2
@@ -44,7 +42,7 @@ export default function CTASection() {
               style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}
             >
               Begin Your{" "}
-              <span className="italic" style={{ color: ACCENT_PRIMARY }}>Expression of Interest</span>
+              <span className="italic" style={{ color: COLORS.ACCENT_PRIMARY }}>Expression of Interest</span>
             </h2>
             <p className="max-w-lg mx-auto mb-10 text-lg" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_60 }}>
               Take the first step with our secure health questionnaire. Your medical assessment is handled directly by accredited hospital professionals.
@@ -55,7 +53,7 @@ export default function CTASection() {
                 to={createPageUrl("Booking")}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold text-sm transition-all duration-300 shadow-xl"
                 style={{ 
-                  background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})`, 
+                  background: `linear-gradient(to right, ${COLORS.ACCENT_PRIMARY}, ${COLORS.ACCENT_SECONDARY})`, 
                   color: COMPONENTS.BUTTON_PRIMARY_TEXT,
                   boxShadow: SHADOWS.ACCENT_MEDIUM
                 }}

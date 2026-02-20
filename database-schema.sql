@@ -49,7 +49,31 @@ CREATE TABLE IF NOT EXISTS interests (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 3. Create questionnaires table
+-- 3. Create companions table (linked to interests)
+CREATE TABLE IF NOT EXISTS companions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  interest_id UUID NOT NULL REFERENCES interests(id) ON DELETE CASCADE,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone VARCHAR(50) NOT NULL,
+  country VARCHAR(255) NOT NULL,
+  departure_country VARCHAR(255) NOT NULL,
+  departure_city VARCHAR(255) NOT NULL,
+  preferred_date VARCHAR(255) NOT NULL,
+  mobility_needs TEXT,
+  dietary_notes TEXT,
+  special_requests TEXT,
+  companion_cost DECIMAL(10,2) DEFAULT 2000.00,
+  payment_status VARCHAR(50) DEFAULT 'unpaid',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  
+  -- Ensure each interest can only have one companion
+  CONSTRAINT unique_companion_per_interest UNIQUE (interest_id)
+);
+
+-- 4. Create questionnaires table
 CREATE TABLE IF NOT EXISTS questionnaires (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   reference VARCHAR(50) NOT NULL,

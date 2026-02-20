@@ -9,16 +9,18 @@ import { sendInterestConfirmationEmail } from "../services/emailService";
 import { databaseService } from "../services/databaseService";
 import { 
   BACKGROUND_PRIMARY, 
+  BACKGROUND_SECONDARY,
   TEXT_PRIMARY, 
-  ACCENT_PRIMARY, 
-  ACCENT_SECONDARY,
-  TEXT_PRIMARY_ALPHA_70, 
-  TEXT_PRIMARY_ALPHA_60, 
-  TEXT_PRIMARY_ALPHA_50, 
-  TEXT_PRIMARY_ALPHA_20, 
+  COLORS,
+  TEXT_PRIMARY_ALPHA_90,
   TEXT_PRIMARY_ALPHA_80,
-  ACCENT_PRIMARY_ALPHA_20, 
-  ACCENT_PRIMARY_ALPHA_10,
+  TEXT_PRIMARY_ALPHA_70,
+  TEXT_PRIMARY_ALPHA_60,
+  TEXT_PRIMARY_ALPHA_50,
+  TEXT_PRIMARY_ALPHA_40,
+  TEXT_PRIMARY_ALPHA_30,
+  TEXT_PRIMARY_ALPHA_20,
+  ESPRESSO_ALPHA_12,
   GRADIENTS, 
   GLASS, 
   SHADOWS,
@@ -187,7 +189,7 @@ export default function Booking() {
       <div className="max-w-3xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mb-16">
-          <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
+          <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>
             Medical Journey Interest
           </span>
           <h1 className="font-serif text-4xl md:text-5xl mb-4" style={{ color: TEXT_PRIMARY }}>
@@ -204,14 +206,14 @@ export default function Booking() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="mb-8 p-6 rounded-2xl"
-            style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}
+            style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_20}` }}
           >
             <h3 className="font-semibold text-lg mb-3" style={{ color: TEXT_PRIMARY }}>
               What Happens After You Submit
             </h3>
             <div className="space-y-2">
               <div className="flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: ACCENT_PRIMARY }}>
+                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}>
                   <span className="text-xs font-bold text-white">1</span>
                 </div>
                 <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
@@ -219,7 +221,7 @@ export default function Booking() {
                 </p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: ACCENT_PRIMARY }}>
+                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}>
                   <span className="text-xs font-bold text-white">2</span>
                 </div>
                 <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
@@ -227,7 +229,7 @@ export default function Booking() {
                 </p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: ACCENT_PRIMARY }}>
+                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}>
                   <span className="text-xs font-bold text-white">3</span>
                 </div>
                 <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
@@ -235,7 +237,7 @@ export default function Booking() {
                 </p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: ACCENT_PRIMARY }}>
+                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}>
                   <span className="text-xs font-bold text-white">4</span>
                 </div>
                 <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
@@ -257,9 +259,9 @@ export default function Booking() {
                 className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-sans font-medium transition-all`}
                 style={{
                   background: i === step ? GRADIENTS.ACCENT_PRIMARY : 
-                           i < step ? ACCENT_PRIMARY_ALPHA_20 : COMPONENTS.BUTTON_SECONDARY,
+                           i < step ? COLORS.ACCENT_PRIMARY_ALPHA_20 : COMPONENTS.BUTTON_SECONDARY,
                   color: i === step ? COMPONENTS.BUTTON_PRIMARY_TEXT : 
-                         i < step ? ACCENT_PRIMARY : TEXT_PRIMARY
+                         i < step ? COLORS.ACCENT_PRIMARY : TEXT_PRIMARY
                 }}
               >
                 <s.icon className="w-3.5 h-3.5" />
@@ -267,7 +269,7 @@ export default function Booking() {
                 <span className="sm:hidden">{i + 1}</span>
               </div>
               {i < STEP_LABELS.length - 1 && (
-                <div style={{ width: '32px', height: '1px', background: i < step ? ACCENT_PRIMARY : BORDERS.TEXT_MEDIUM }} />
+                <div style={{ width: '32px', height: '1px', background: i < step ? COLORS.ACCENT_PRIMARY : BORDERS.TEXT_MEDIUM }} />
               )}
             </div>
           ))}
@@ -304,10 +306,10 @@ export default function Booking() {
                     <div>
                       <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Departure Country *</Label>
                       <Select value={formData.departure_country} onValueChange={(v) => updateFormData("departure_country", v)}>
-                        <SelectTrigger className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
+                        <SelectTrigger className="mt-1.5" style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
                           <SelectValue placeholder="Select country" />
                         </SelectTrigger>
-                        <SelectContent style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
+                        <SelectContent style={{ backgroundColor: BACKGROUND_PRIMARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY, border: '1px solid' }}>
                           <SelectItem value="new-zealand">New Zealand</SelectItem>
                           <SelectItem value="australia">Australia</SelectItem>
                           <SelectItem value="other">Other</SelectItem>
@@ -316,7 +318,7 @@ export default function Booking() {
                       {formData.departure_country === 'other' && (
                         <div className="mt-4">
                           <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Specify Country *</Label>
-                          <Input value={formData.other_country} onChange={(e) => updateFormData("other_country", e.target.value)} placeholder="Enter country name" className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
+                          <Input value={formData.other_country} onChange={(e) => updateFormData("other_country", e.target.value)} placeholder="Enter country name" className="mt-1.5" style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, border: `1px solid ${COMPONENTS.INPUT_BORDER}`, color: COMPONENTS.INPUT_TEXT }} />
                         </div>
                       )}
                     </div>
@@ -324,7 +326,7 @@ export default function Booking() {
                       <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
                         {formData.departure_country === 'other' ? 'City *' : 'Departure City *'}
                       </Label>
-                      <Input value={formData.departure_city} onChange={(e) => updateFormData("departure_city", e.target.value)} placeholder="City you will be traveling from" className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }} />
+                      <Input value={formData.departure_city} onChange={(e) => updateFormData("departure_city", e.target.value)} placeholder="City you will be traveling from" className="mt-1.5" style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, border: `1px solid ${COMPONENTS.INPUT_BORDER}`, color: COMPONENTS.INPUT_TEXT }} />
                     </div>
                   </div>
                   <p className="text-[11px] mt-3" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
@@ -335,10 +337,10 @@ export default function Booking() {
                 <div>
                   <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Surgery Type *</Label>
                   <Select value={formData.surgery_type} onValueChange={(value) => updateFormData("surgery_type", value)}>
-                    <SelectTrigger className="mt-1.5" style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
+                    <SelectTrigger className="mt-1.5" style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
                       <SelectValue placeholder="Select surgery type" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent style={{ backgroundColor: BACKGROUND_PRIMARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY, border: '1px solid' }}>
                       <SelectItem value="bariatric">Bariatric Surgery</SelectItem>
                       <SelectItem value="cosmetic">Cosmetic Surgery</SelectItem>
                     </SelectContent>
@@ -356,10 +358,10 @@ export default function Booking() {
                         const year = formData.preferred_date?.split('-')[0] || '2026';
                         updateFormData("preferred_date", `${year}-${month}`);
                       }}>
-                        <SelectTrigger style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
+                        <SelectTrigger style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
                           <SelectValue placeholder="Month" />
                         </SelectTrigger>
-                        <SelectContent style={{ backgroundColor: BACKGROUND_PRIMARY, borderColor: ACCENT_PRIMARY_ALPHA_20, border: '1px solid' }}>
+                        <SelectContent style={{ backgroundColor: BACKGROUND_PRIMARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY, border: '1px solid' }}>
                           <SelectItem value="01" style={{ color: TEXT_PRIMARY }}>January</SelectItem>
                           <SelectItem value="02" style={{ color: TEXT_PRIMARY }}>February</SelectItem>
                           <SelectItem value="03" style={{ color: TEXT_PRIMARY }}>March</SelectItem>
@@ -380,10 +382,10 @@ export default function Booking() {
                         const month = formData.preferred_date?.split('-')[1] || '01';
                         updateFormData("preferred_date", `${year}-${month}`);
                       }}>
-                        <SelectTrigger style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
+                        <SelectTrigger style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
                           <SelectValue placeholder="Year" />
                         </SelectTrigger>
-                        <SelectContent style={{ backgroundColor: BACKGROUND_PRIMARY, borderColor: ACCENT_PRIMARY_ALPHA_20, border: '1px solid' }}>
+                        <SelectContent style={{ backgroundColor: BACKGROUND_PRIMARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY, border: '1px solid' }}>
                           <SelectItem value="2026" style={{ color: TEXT_PRIMARY }}>2026</SelectItem>
                           <SelectItem value="2027" style={{ color: TEXT_PRIMARY }}>2027</SelectItem>
                         </SelectContent>
@@ -397,21 +399,21 @@ export default function Booking() {
             {/* Step 1: Confirmation */}
             {step === 1 && bookingResult && (
               <motion.div key="s3" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="space-y-8">
-                <div className="rounded-3xl p-8 shadow-2xl text-center" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
-                  <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})` }}>
+                <div className="rounded-3xl p-8 shadow-2xl text-center" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_20}` }}>
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: `linear-gradient(to right, ${COLORS.ACCENT_PRIMARY}, ${COLORS.ACCENT_SECONDARY})` }}>
                     <CheckCircle2 className="w-8 h-4" style={{ color: TEXT_PRIMARY }} />
                   </div>
                   <h2 className="font-serif text-3xl mb-2" style={{ color: TEXT_PRIMARY }}>Interest Received</h2>
                   <p className="mb-4" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Your interest has been submitted successfully. Complete the health questionnaire below to receive your custom quote.</p>
-                  <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
+                  <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, borderColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }}>
                     <span className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Interest Reference:</span>
                     <span className="font-mono font-semibold" style={{ color: TEXT_PRIMARY }}>{bookingResult.booking_ref}</span>
                     <button
                       type="button"
                       onClick={() => navigator.clipboard.writeText(bookingResult.booking_ref)}
-                      style={{ color: ACCENT_PRIMARY }}
-                      onMouseEnter={(e) => e.target.style.color = ACCENT_SECONDARY}
-                      onMouseLeave={(e) => e.target.style.color = ACCENT_PRIMARY}
+                      style={{ color: COLORS.ACCENT_PRIMARY }}
+                      onMouseEnter={(e) => e.target.style.color = COLORS.ACCENT_SECONDARY}
+                      onMouseLeave={(e) => e.target.style.color = COLORS.ACCENT_PRIMARY}
                     >
                       <Copy className="w-3.5 h-3.5" />
                     </button>
@@ -419,7 +421,7 @@ export default function Booking() {
                 </div>
 
                 {/* Partner Form Section */}
-                <div className="rounded-3xl p-8 shadow-2xl" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
+                <div className="rounded-3xl p-8 shadow-2xl" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_20}` }}>
                   <h3 className="font-serif text-xl mb-4" style={{ color: TEXT_PRIMARY }}>Receive Your Custom Quote</h3>
                   <p className="mb-6" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
                     Our partner clinic requires you to complete the below health questionnaire to receive your personalized quote. They will email your quote with a hospital reference number, which you can use to organize travel arrangements with us.
@@ -427,8 +429,8 @@ export default function Booking() {
                   
                   <div className="space-y-4 mb-6">
                     <div className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
-                        <span className="font-semibold text-sm" style={{ color: ACCENT_PRIMARY }}>1</span>
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, borderColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }}>
+                        <span className="font-semibold text-sm" style={{ color: COLORS.ACCENT_PRIMARY }}>1</span>
                       </div>
                       <div>
                         <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Medical questionnaire</p>
@@ -436,8 +438,8 @@ export default function Booking() {
                       </div>
                     </div>
                     <div className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
-                        <span className="font-semibold text-sm" style={{ color: ACCENT_PRIMARY }}>2</span>
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, borderColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }}>
+                        <span className="font-semibold text-sm" style={{ color: COLORS.ACCENT_PRIMARY }}>2</span>
                       </div>
                       <div>
                         <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Receive quote via email</p>
@@ -445,8 +447,8 @@ export default function Booking() {
                       </div>
                     </div>
                     <div className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, borderColor: ACCENT_PRIMARY_ALPHA_20 }}>
-                        <span className="font-semibold text-sm" style={{ color: ACCENT_PRIMARY }}>3</span>
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, borderColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }}>
+                        <span className="font-semibold text-sm" style={{ color: COLORS.ACCENT_PRIMARY }}>3</span>
                       </div>
                       <div>
                         <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Organize travel arrangements</p>
@@ -461,7 +463,7 @@ export default function Booking() {
                       onClick={() => window.open(import.meta.env.REACT_APP_PARTNER_LINK_MBC || 'https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120', '_blank')}
                       className="rounded-full px-8 gap-2 font-semibold shadow-lg flex-1"
                       style={{ 
-                        background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})`, 
+                        background: `linear-gradient(to right, ${COLORS.ACCENT_PRIMARY}, ${COLORS.ACCENT_SECONDARY})`, 
                         color: TEXT_PRIMARY 
                       }}
                       onMouseEnter={(e) => e.target.style.opacity = '0.9'}
@@ -497,7 +499,7 @@ export default function Booking() {
                 onClick={() => setUserSubmitted(true)} // Set flag when user clicks submit
                 className="rounded-full px-8 gap-2 font-semibold shadow-lg"
                 style={{ 
-                  background: `linear-gradient(to right, ${ACCENT_PRIMARY}, ${ACCENT_SECONDARY})`, 
+                  background: `linear-gradient(to right, ${COLORS.ACCENT_PRIMARY}, ${COLORS.ACCENT_SECONDARY})`, 
                   color: TEXT_PRIMARY 
                 }}
                 onMouseEnter={(e) => e.target.style.opacity = '0.9'}

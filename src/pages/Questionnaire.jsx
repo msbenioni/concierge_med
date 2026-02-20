@@ -7,9 +7,8 @@ import { databaseService } from "../services/databaseService";
 import { 
   BACKGROUND_PRIMARY, 
   TEXT_PRIMARY, 
-  ACCENT_PRIMARY, 
+  COLORS,
   TEXT_PRIMARY_ALPHA_70, 
-  ACCENT_PRIMARY_ALPHA_20,
   COMPONENTS
 } from "../constants/colors";
 
@@ -129,7 +128,7 @@ export default function Questionnaire() {
             <Link 
               to={createPageUrl("Home")}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all"
-              style={{ backgroundColor: ACCENT_PRIMARY, color: "white" }}
+              style={{ backgroundColor: COLORS.ACCENT_PRIMARY, color: "white" }}
             >
               Return to Homepage
             </Link>
@@ -152,7 +151,7 @@ export default function Questionnaire() {
           <Link 
             to={createPageUrl("Home")}
             className="inline-flex items-center gap-2 text-sm mb-6 transition-colors"
-            style={{ color: ACCENT_PRIMARY }}
+            style={{ color: COLORS.ACCENT_PRIMARY }}
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Home
@@ -167,8 +166,8 @@ export default function Questionnaire() {
           </p>
           
           {reference && (
-            <div className="p-4 rounded-xl inline-block" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20 }}>
-              <p className="text-sm font-medium" style={{ color: ACCENT_PRIMARY }}>
+            <div className="p-4 rounded-xl inline-block" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }}>
+              <p className="text-sm font-medium" style={{ color: COLORS.ACCENT_PRIMARY }}>
                 Reference: {reference}
               </p>
             </div>
@@ -185,7 +184,7 @@ export default function Questionnaire() {
             {/* Personal Information */}
             <div className="p-8 rounded-2xl" style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}` }}>
               <h2 className="text-2xl font-bold mb-6 flex items-center gap-3" style={{ color: TEXT_PRIMARY }}>
-                <Users className="w-6 h-6" style={{ color: ACCENT_PRIMARY }} />
+                <Users className="w-6 h-6" style={{ color: COLORS.ACCENT_PRIMARY }} />
                 Personal Information
               </h2>
               
@@ -270,7 +269,7 @@ export default function Questionnaire() {
             {/* Health Information */}
             <div className="p-8 rounded-2xl" style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}` }}>
               <h2 className="text-2xl font-bold mb-6 flex items-center gap-3" style={{ color: TEXT_PRIMARY }}>
-                <Heart className="w-6 h-6" style={{ color: ACCENT_PRIMARY }} />
+                <Heart className="w-6 h-6" style={{ color: COLORS.ACCENT_PRIMARY }} />
                 Health Information
               </h2>
               
@@ -358,7 +357,7 @@ export default function Questionnaire() {
             {/* Travel Preferences */}
             <div className="p-8 rounded-2xl" style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}` }}>
               <h2 className="text-2xl font-bold mb-6 flex items-center gap-3" style={{ color: TEXT_PRIMARY }}>
-                <MapPin className="w-6 h-6" style={{ color: ACCENT_PRIMARY }} />
+                <MapPin className="w-6 h-6" style={{ color: COLORS.ACCENT_PRIMARY }} />
                 Travel Preferences
               </h2>
               
@@ -398,7 +397,7 @@ export default function Questionnaire() {
             {/* Emergency Contact */}
             <div className="p-8 rounded-2xl" style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}` }}>
               <h2 className="text-2xl font-bold mb-6 flex items-center gap-3" style={{ color: TEXT_PRIMARY }}>
-                <Shield className="w-6 h-6" style={{ color: ACCENT_PRIMARY }} />
+                <Shield className="w-6 h-6" style={{ color: COLORS.ACCENT_PRIMARY }} />
                 Emergency Contact
               </h2>
               
@@ -457,7 +456,7 @@ export default function Questionnaire() {
                 type="submit"
                 disabled={isSubmitting}
                 className="px-8 py-4 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ backgroundColor: ACCENT_PRIMARY, color: "white" }}
+                style={{ backgroundColor: COLORS.ACCENT_PRIMARY, color: "white" }}
               >
                 {isSubmitting ? "Submitting..." : "Submit Questionnaire"}
               </button>

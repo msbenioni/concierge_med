@@ -70,6 +70,71 @@ export const databaseService = {
     }
   },
 
+  // Companions
+  async createCompanion(companionData) {
+    try {
+      const { data, error } = await supabase
+        .from('companions')
+        .insert([companionData])
+        .select();
+
+      if (error) throw error;
+      return { success: true, data: data[0] };
+    } catch (error) {
+      console.error('Error creating companion:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  async getCompanionByInterestId(interestId) {
+    try {
+      const { data, error } = await supabase
+        .from('companions')
+        .select('*')
+        .eq('interest_id', interestId)
+        .single();
+
+      if (error && error.code !== 'PGRST116') { // PGRST116 is "not found"
+        throw error;
+      }
+      return { success: true, data: data || null };
+    } catch (error) {
+      console.error('Error fetching companion:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  async updateCompanion(companionId, updates) {
+    try {
+      const { data, error } = await supabase
+        .from('companions')
+        .update(updates)
+        .eq('id', companionId)
+        .select();
+
+      if (error) throw error;
+      return { success: true, data: data[0] };
+    } catch (error) {
+      console.error('Error updating companion:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  async deleteCompanion(companionId) {
+    try {
+      const { error } = await supabase
+        .from('companions')
+        .delete()
+        .eq('id', companionId);
+
+      if (error) throw error;
+      return { success: true };
+    } catch (error) {
+      console.error('Error deleting companion:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
   // Questionnaires
   async createQuestionnaire(questionnaireData) {
     try {

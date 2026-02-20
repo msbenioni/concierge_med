@@ -4,6 +4,7 @@ import { createPageUrl } from "./utils";
 import { Menu, X, Globe, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollToTopButton from "./components/compass-connect/ScrollToTopButton";
+import { Toaster } from "@/components/ui/toaster";
 import { 
   BACKGROUND_PRIMARY, 
   BACKGROUND_DEEP,
@@ -12,15 +13,13 @@ import {
   BACKGROUND_PRIMARY_ALPHA_70,
   BACKGROUND_PRIMARY_ALPHA_80,
   TEXT_PRIMARY, 
-  ACCENT_PRIMARY,
-  ACCENT_SECONDARY,
+  COLORS,
   TEXT_PRIMARY_ALPHA_80,
   TEXT_PRIMARY_ALPHA_70, 
   TEXT_PRIMARY_ALPHA_60,
   TEXT_PRIMARY_ALPHA_50,
   TEXT_PRIMARY_ALPHA_30,
   TEXT_PRIMARY_ALPHA_20,
-  ACCENT_PRIMARY_ALPHA_20, 
   ESPRESSO_ALPHA_12,
   GRADIENTS, 
   GLASS, 
@@ -54,7 +53,7 @@ export default function Layout({ children, currentPageName }) {
               />
             </div>
             <div className="leading-tight">
-              <span className="font-semibold text-lg tracking-tight" style={{ color: ACCENT_PRIMARY, fontFamily: 'Playfair Display, serif' }}>
+              <span className="font-semibold text-lg tracking-tight" style={{ color: COLORS.ACCENT_PRIMARY, fontFamily: 'Playfair Display, serif' }}>
                 Compass Connect
               </span>
               <span className="block text-[10px] uppercase tracking-[0.2em] font-medium" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
@@ -71,12 +70,12 @@ export default function Layout({ children, currentPageName }) {
                 to={createPageUrl(item.page)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200`}
                 style={{
-                  backgroundColor: currentPageName === item.page ? ACCENT_PRIMARY : 'transparent',
+                  backgroundColor: currentPageName === item.page ? COLORS.ACCENT_PRIMARY : 'transparent',
                   color: currentPageName === item.page ? COMPONENTS.BUTTON_PRIMARY_TEXT : TEXT_PRIMARY
                 }}
                 onMouseEnter={(e) => {
                   if (currentPageName !== item.page) {
-                    e.target.style.backgroundColor = ACCENT_PRIMARY_ALPHA_20;
+                    e.target.style.backgroundColor = COLORS.ACCENT_PRIMARY_ALPHA_20;
                   }
                 }}
                 onMouseLeave={(e) => {
@@ -114,10 +113,10 @@ export default function Layout({ children, currentPageName }) {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="lg:hidden p-2 rounded-xl transition"
-            onMouseEnter={(e) => e.target.style.backgroundColor = ACCENT_PRIMARY_ALPHA_20}
+            onMouseEnter={(e) => e.target.style.backgroundColor = COLORS.ACCENT_PRIMARY_ALPHA_20}
             onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
           >
-            {mobileOpen ? <X className="w-6 h-6" style={{ color: ACCENT_PRIMARY }} /> : <Menu className="w-6 h-6" style={{ color: ACCENT_PRIMARY }} />}
+            {mobileOpen ? <X className="w-6 h-6" style={{ color: COLORS.ACCENT_PRIMARY }} /> : <Menu className="w-6 h-6" style={{ color: COLORS.ACCENT_PRIMARY }} />}
           </button>
         </div>
 
@@ -140,12 +139,12 @@ export default function Layout({ children, currentPageName }) {
                     onClick={() => setMobileOpen(false)}
                     className={`px-4 py-3 rounded-xl text-sm font-medium transition-all`}
                     style={{
-                      backgroundColor: currentPageName === item.page ? ACCENT_PRIMARY : 'transparent',
+                      backgroundColor: currentPageName === item.page ? COLORS.ACCENT_PRIMARY : 'transparent',
                       color: currentPageName === item.page ? COMPONENTS.BUTTON_PRIMARY_TEXT : TEXT_PRIMARY
                     }}
                     onMouseEnter={(e) => {
                       if (currentPageName !== item.page) {
-                        e.target.style.backgroundColor = ACCENT_PRIMARY_ALPHA_20;
+                        e.target.style.backgroundColor = COLORS.ACCENT_PRIMARY_ALPHA_20;
                       }
                     }}
                     onMouseLeave={(e) => {
@@ -218,12 +217,13 @@ export default function Layout({ children, currentPageName }) {
           {/* Copyright Row - Centered */}
           <div style={{ borderTop: `1px solid ${ESPRESSO_ALPHA_12}` }} className="pt-6 mt-6">
             <p className="text-xs text-center" style={{ color: BACKGROUND_PRIMARY_ALPHA_50 }}>
-              © {new Date().getFullYear()} Compass Connect. All rights reserved. | Powered by <a href="https://www.saasycookies.com" target="_blank" rel="noopener noreferrer" style={{ color: ACCENT_SECONDARY }} onMouseEnter={(e) => e.target.style.opacity = '0.8'} onMouseLeave={(e) => e.target.style.opacity = '1'}>SaaSy Cookies Ltd</a>
+              © {new Date().getFullYear()} Compass Connect. All rights reserved. | Powered by <a href="https://www.saasycookies.com" target="_blank" rel="noopener noreferrer" style={{ color: COLORS.ACCENT_SECONDARY }} onMouseEnter={(e) => e.target.style.opacity = '0.8'} onMouseLeave={(e) => e.target.style.opacity = '1'}>SaaSy Cookies Ltd</a>
             </p>
           </div>
         </div>
       </footer>
       <ScrollToTopButton />
+      <Toaster />
     </div>
   );
 }

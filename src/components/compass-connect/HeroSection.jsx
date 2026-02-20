@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { createPageUrl } from "../../utils";
 import { motion } from "framer-motion";
 import { ChevronRight, ArrowDown } from "lucide-react";
-import { TEXT_PRIMARY, ACCENT_PRIMARY, ACCENT_PRIMARY_ALPHA_20, ACCENT_PRIMARY_ALPHA_30, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_35, TEXT_PRIMARY_ALPHA_30, BACKGROUND_PRIMARY_ALPHA_40, ACCENT_SECONDARY, COMPONENTS, GLASS, SHADOWS, BORDERS } from "../../constants/colors";
+import { TEXT_PRIMARY, COLORS, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_35, TEXT_PRIMARY_ALPHA_30, BACKGROUND_PRIMARY_ALPHA_40, COMPONENTS, GLASS, SHADOWS, BORDERS } from "../../constants/colors";
 
 export default function HeroSection() {
   return (
@@ -27,7 +27,7 @@ export default function HeroSection() {
             transition={{ duration: 0.6 }}
             className="mb-6"
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.15em]" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20, border: `1px solid ${ACCENT_PRIMARY_ALPHA_30}`, color: ACCENT_PRIMARY }}>
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.15em]" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_20, border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_30}`, color: COLORS.ACCENT_PRIMARY }}>
               NZ & AU Patients
             </span>
           </motion.div>
@@ -41,7 +41,7 @@ export default function HeroSection() {
             style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}
           >
             International Surgery.{" "}
-            <span className="italic" style={{ color: ACCENT_PRIMARY, whiteSpace: 'nowrap' }}>Personally Guided.</span>
+            <span className="italic" style={{ color: COLORS.ACCENT_PRIMARY, whiteSpace: 'nowrap' }}>Personally Guided.</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -71,7 +71,7 @@ export default function HeroSection() {
                   boxShadow: SHADOWS.ACCENT_MEDIUM
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = ACCENT_SECONDARY;
+                  e.target.style.backgroundColor = COLORS.ACCENT_SECONDARY;
                   e.target.style.boxShadow = SHADOWS.ACCENT_STRONG;
                 }}
                 onMouseLeave={(e) => {

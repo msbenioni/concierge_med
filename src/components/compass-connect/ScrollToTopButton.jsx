@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ACCENT_PRIMARY, TEXT_PRIMARY, ACCENT_PRIMARY_ALPHA_20, COMPONENTS, SHADOWS } from "../../constants/colors";
+import { COLORS, TEXT_PRIMARY, COMPONENTS, SHADOWS } from "../../constants/colors";
 
 export default function ScrollToTopButton() {
   const [isVisible, setIsVisible] = useState(false);

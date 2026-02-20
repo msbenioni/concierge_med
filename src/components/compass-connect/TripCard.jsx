@@ -8,13 +8,11 @@ import { format } from "date-fns";
 import { 
   BACKGROUND_PRIMARY, 
   TEXT_PRIMARY, 
-  ACCENT_PRIMARY, 
-  ACCENT_SECONDARY, 
+  COLORS,
   TEXT_PRIMARY_ALPHA_70, 
   TEXT_PRIMARY_ALPHA_50, 
   TEXT_PRIMARY_ALPHA_10,
   BACKGROUND_PRIMARY_ALPHA_50,
-  ACCENT_PRIMARY_ALPHA_20, 
   GRADIENTS, 
   GLASS, 
   SHADOWS, 
@@ -117,7 +115,7 @@ export default function TripCard({ trip, index = 0, featured = false }) {
             style={{ 
               color: TEXT_PRIMARY,
             }}
-            onMouseEnter={(e) => e.target.style.color = ACCENT_PRIMARY}
+            onMouseEnter={(e) => e.target.style.color = COLORS.ACCENT_PRIMARY}
             onMouseLeave={(e) => e.target.style.color = TEXT_PRIMARY}
           >
             Departing<br />{trip.departure_city}
@@ -125,18 +123,18 @@ export default function TripCard({ trip, index = 0, featured = false }) {
 
           <div className="space-y-3 mb-6">
             <div className="flex items-center gap-3 text-sm">
-              <MapPin className="w-4 h-4" style={{ color: ACCENT_PRIMARY }} />
+              <MapPin className="w-4 h-4" style={{ color: COLORS.ACCENT_PRIMARY }} />
               <span style={{ color: TEXT_PRIMARY_ALPHA_70 }}>{trip.destination}</span>
             </div>
             <div className="flex items-center gap-3 text-sm">
-              <Calendar className="w-4 h-4" style={{ color: ACCENT_PRIMARY }} />
+              <Calendar className="w-4 h-4" style={{ color: COLORS.ACCENT_PRIMARY }} />
               <span style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
                 {trip.departure_date ? format(new Date(trip.departure_date), "d MMM") : "TBD"} –{" "}
                 {trip.return_date ? format(new Date(trip.return_date), "d MMM yyyy") : "TBD"}
               </span>
             </div>
             <div className="flex items-center gap-3 text-sm">
-              <Users className="w-4 h-4" style={{ color: ACCENT_PRIMARY }} />
+              <Users className="w-4 h-4" style={{ color: COLORS.ACCENT_PRIMARY }} />
               <span style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
                 {seatsLeft > 0 ? `${seatsLeft} seats remaining` : "Fully booked"}
               </span>
@@ -151,8 +149,8 @@ export default function TripCard({ trip, index = 0, featured = false }) {
                   key={i}
                   className="px-3 py-1 rounded-full text-[11px] font-sans border"
                   style={{ 
-                    backgroundColor: ACCENT_PRIMARY_ALPHA_20, 
-                    color: ACCENT_PRIMARY,
+                    backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_20, 
+                    color: COLORS.ACCENT_PRIMARY,
                     borderColor: BORDERS.ACCENT_SUBTLE
                   }}
                 >

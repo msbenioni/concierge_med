@@ -3,7 +3,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import { pagesConfig } from './pages.config'
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, ACCENT_PRIMARY, COMPONENTS } from './constants/colors';
+import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, COLORS, COMPONENTS } from './constants/colors';
 import { useEffect } from 'react';
 
 const { Pages, Layout, mainPage } = pagesConfig;
@@ -56,7 +56,7 @@ function App() {
                 <div className="text-center">
                   <h1 className="text-4xl font-bold mb-4" style={{ color: TEXT_PRIMARY }}>Page Not Found</h1>
                   <p className="mb-8" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>The page you're looking for doesn't exist.</p>
-                  <a href="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-colors" style={{ backgroundColor: ACCENT_PRIMARY, color: COMPONENTS.BUTTON_PRIMARY_TEXT }}>
+                  <a href="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-colors" style={{ backgroundColor: COLORS.ACCENT_PRIMARY, color: COMPONENTS.BUTTON_PRIMARY_TEXT }}>
                     Return Home
                   </a>
                 </div>

@@ -87,10 +87,35 @@ export const sendInterestConfirmationEmail = async (bookingData) => {
       html: emailContent,
     });
 
-    console.log('Email sent successfully:', response);
-    return { success: true, data: response };
+    // Check if the response actually indicates success
+    if (response && response.id) {
+      console.log('Email sent successfully:', response);
+      return { success: true, data: response };
+    } else {
+      console.error('Email failed to send:', response);
+      
+      // Development fallback: show email content in console
+      if (import.meta.env.DEV) {
+        console.log('📧 EMAIL CONTENT (Development Mode - Email Not Sent):');
+        console.log('To:', email);
+        console.log('Subject:', `Interest Confirmation - Reference: ${booking_ref}`);
+        console.log('Content:', emailContent);
+      }
+      
+      return { success: false, error: 'Email service returned no response ID' };
+    }
   } catch (error) {
     console.error('Error sending email:', error);
+    
+    // Development fallback: show email content in console
+    if (import.meta.env.DEV) {
+      console.log('📧 EMAIL CONTENT (Development Mode - Email Failed):');
+      console.log('To:', email);
+      console.log('Subject:', `Interest Confirmation - Reference: ${booking_ref}`);
+      console.log('Content:', emailContent);
+      console.log('Error:', error.message);
+    }
+    
     return { success: false, error: error.message };
   }
 };

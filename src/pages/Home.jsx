@@ -15,19 +15,15 @@ import {
   BACKGROUND_PRIMARY, 
   BACKGROUND_SECONDARY,
   TEXT_PRIMARY, 
-  ACCENT_PRIMARY, 
-  ACCENT_SECONDARY, 
+  COLORS,
   TEXT_PRIMARY_ALPHA_90,
   TEXT_PRIMARY_ALPHA_80,
   TEXT_PRIMARY_ALPHA_70,
   TEXT_PRIMARY_ALPHA_60,
   TEXT_PRIMARY_ALPHA_50,
+  TEXT_PRIMARY_ALPHA_40,
+  TEXT_PRIMARY_ALPHA_30,
   TEXT_PRIMARY_ALPHA_20,
-  BACKGROUND_PRIMARY_ALPHA_70, 
-  BACKGROUND_PRIMARY_ALPHA_50, 
-  ACCENT_PRIMARY_ALPHA_20, 
-  ACCENT_PRIMARY_ALPHA_10,
-  ACCENT_PRIMARY_ALPHA_30,
   ESPRESSO_ALPHA_12,
   GRADIENTS, 
   GLASS, 
@@ -126,7 +122,7 @@ export default function Home() {
             <h1 className="font-serif text-5xl md:text-7xl mb-6 leading-tight" style={{ color: TEXT_PRIMARY }}>
               Compass Connect
             </h1>
-            <p className="font-serif text-2xl md:text-3xl mb-6 leading-relaxed" style={{ color: ACCENT_PRIMARY }}>
+            <p className="font-serif text-2xl md:text-3xl mb-6 leading-relaxed" style={{ color: COLORS.ACCENT_PRIMARY }}>
               Your Concierge Guide to Trusted Surgical Care Abroad
             </p>
             <p className="text-lg mb-12 max-w-2xl mx-auto leading-relaxed" style={{ color: TEXT_PRIMARY_ALPHA_80 }}>
@@ -178,7 +174,7 @@ export default function Home() {
       </section>
 
       {/* Luxury Divider */}
-      <div className="h-px" style={{ background: `linear-gradient(to right, transparent, ${ACCENT_PRIMARY}, transparent)` }} />
+      <div className="h-px" style={{ background: `linear-gradient(to right, transparent, ${COLORS.ACCENT_PRIMARY}, transparent)` }} />
 
       {/* How It Works Section - Process Clarity */}
       <section className="py-24 lg:py-32">
@@ -189,7 +185,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <span className="text-xs uppercase tracking-[0.2em] font-semibold mb-4 block" style={{ color: ACCENT_PRIMARY }}>
+            <span className="text-xs uppercase tracking-[0.2em] font-semibold mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>
               Your Journey, Clearly Defined
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
@@ -208,7 +204,7 @@ export default function Home() {
               <div 
                 className="absolute top-1/2 left-0 right-0 h-0.5 -translate-y-1/2 hidden lg:block"
                 style={{ 
-                  background: `linear-gradient(to right, ${ACCENT_PRIMARY} 20%, ${ACCENT_PRIMARY_ALPHA_20} 20%, ${ACCENT_PRIMARY_ALPHA_20} 80%, ${ACCENT_PRIMARY} 80%)`
+                  background: `linear-gradient(to right, ${COLORS.ACCENT_PRIMARY} 20%, ${COLORS.ACCENT_PRIMARY_ALPHA_20} 20%, ${COLORS.ACCENT_PRIMARY_ALPHA_20} 80%, ${COLORS.ACCENT_PRIMARY} 80%)`
                 }}
               />
 
@@ -231,7 +227,7 @@ export default function Home() {
                     <div 
                       className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-lg font-bold"
                       style={{ 
-                        backgroundColor: index === 0 || index === 3 ? ACCENT_PRIMARY : ACCENT_PRIMARY_ALPHA_20,
+                        backgroundColor: index === 0 || index === 3 ? COLORS.ACCENT_PRIMARY : COLORS.ACCENT_PRIMARY_ALPHA_20,
                         color: index === 0 || index === 3 ? COMPONENTS.BUTTON_PRIMARY_TEXT : TEXT_PRIMARY_ALPHA_50
                       }}
                     >
@@ -255,7 +251,10 @@ export default function Home() {
                     {/* Arrow for mobile */}
                     {index < 3 && (
                       <div className="lg:hidden flex justify-center mt-4">
-                        <div className="w-4 h-4 rounded-full" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20 }} />
+                        <div className="w-4 h-4 rounded-full" style={{ 
+                          backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_20,
+                          color: COLORS.ACCENT_PRIMARY
+                        }} />
                       </div>
                     )}
                   </motion.div>
@@ -270,16 +269,16 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 className="text-center p-6 rounded-2xl"
-                style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10 }}
+                style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10 }}
               >
                 <div className="flex items-center justify-center gap-2 mb-3">
                   <div 
                     className="w-3 h-3 rounded-full"
-                    style={{ backgroundColor: ACCENT_PRIMARY }}
+                    style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}
                   />
                   <span 
                     className="text-sm font-semibold uppercase tracking-wider"
-                    style={{ color: ACCENT_PRIMARY }}
+                    style={{ color: COLORS.ACCENT_PRIMARY }}
                   >
                     Compass Connect
                   </span>
@@ -297,16 +296,16 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 className="text-center p-6 rounded-2xl"
-                style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10 }}
+                style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10 }}
               >
                 <div className="flex items-center justify-center gap-2 mb-3">
                   <div 
                     className="w-3 h-3 rounded-full"
-                    style={{ backgroundColor: ACCENT_PRIMARY }}
+                    style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}
                   />
                   <span 
                     className="text-sm font-semibold uppercase tracking-wider"
-                    style={{ color: ACCENT_PRIMARY }}
+                    style={{ color: COLORS.ACCENT_PRIMARY }}
                   >
                     Hospital & User
                   </span>
@@ -330,7 +329,7 @@ export default function Home() {
               className="text-center"
             >
               <div className="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-6" style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}` }}>
-                <CheckCircle className="w-8 h-8" style={{ color: ACCENT_PRIMARY }} />
+                <CheckCircle className="w-8 h-8" style={{ color: COLORS.ACCENT_PRIMARY }} />
               </div>
               <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
                 Express Interest
@@ -348,7 +347,7 @@ export default function Home() {
               className="text-center"
             >
               <div className="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-6" style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}` }}>
-                <Shield className="w-8 h-8" style={{ color: ACCENT_PRIMARY }} />
+                <Shield className="w-8 h-8" style={{ color: COLORS.ACCENT_PRIMARY }} />
               </div>
               <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
                 Receive Surgical Approval
@@ -366,7 +365,7 @@ export default function Home() {
               className="text-center"
             >
               <div className="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-6" style={{ backgroundColor: COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COMPONENTS.CARD_BORDER}` }}>
-                <Plane className="w-8 h-8" style={{ color: ACCENT_PRIMARY }} />
+                <Plane className="w-8 h-8" style={{ color: COLORS.ACCENT_PRIMARY }} />
               </div>
               <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
                 Book Your Group Journey
@@ -388,7 +387,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <span className="text-xs uppercase tracking-[0.2em] font-semibold mb-4 block" style={{ color: ACCENT_PRIMARY }}>
+            <span className="text-xs uppercase tracking-[0.2em] font-semibold mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>
               Trusted Partnership
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}>
@@ -411,8 +410,8 @@ export default function Home() {
                     e.target.nextElementSibling.style.display = 'flex';
                   }}
                 />
-                <div className="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20, display: 'none' }}>
-                  <Shield className="w-10 h-10" style={{ color: ACCENT_PRIMARY }} />
+                <div className="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_20, display: 'none' }}>
+                  <Shield className="w-10 h-10" style={{ color: COLORS.ACCENT_PRIMARY }} />
                 </div>
               </div>
               <p className="text-lg mb-6" style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}>
@@ -420,15 +419,15 @@ export default function Home() {
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
                 <div>
-                  <p className="text-2xl font-bold mb-2" style={{ color: ACCENT_PRIMARY }}>10,000+</p>
+                  <p className="text-2xl font-bold mb-2" style={{ color: COLORS.ACCENT_PRIMARY }}>10,000+</p>
                   <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Bariatric Surgeries Performed</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold mb-2" style={{ color: ACCENT_PRIMARY }}>15+ Years</p>
+                  <p className="text-2xl font-bold mb-2" style={{ color: COLORS.ACCENT_PRIMARY }}>15+ Years</p>
                   <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Specializing Exclusively in Bariatric Surgery</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold mb-2" style={{ color: ACCENT_PRIMARY }}>99%</p>
+                  <p className="text-2xl font-bold mb-2" style={{ color: COLORS.ACCENT_PRIMARY }}>99%</p>
                   <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Patient Satisfaction Rating</p>
                 </div>
               </div>
@@ -437,7 +436,7 @@ export default function Home() {
               <div className="mt-8 pt-6" style={{ borderTop: `1px solid ${ESPRESSO_ALPHA_12}` }}>
                 <p className="text-xs uppercase tracking-[0.15em] mb-4 font-semibold" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Recognised By:</p>
                 <div className="flex flex-wrap justify-center gap-3 text-xs items-center">
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-full" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${ACCENT_PRIMARY_ALPHA_30}`, color: TEXT_PRIMARY }}>
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_30}`, color: TEXT_PRIMARY }}>
                     <img 
                       src="/ifso_logo.png" 
                       alt="IFSO Logo" 
@@ -450,10 +449,10 @@ export default function Home() {
                     <span style={{ display: 'none' }}>🏥</span>
                     International Federation for the Surgery of Obesity (IFSO)
                   </div>
-                  <span className="px-3 py-1 rounded-full" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${ACCENT_PRIMARY_ALPHA_30}`, color: TEXT_PRIMARY }}>
+                  <span className="px-3 py-1 rounded-full" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_30}`, color: TEXT_PRIMARY }}>
                     U.S. Board-Certified Surgeons
                   </span>
-                  <span className="px-3 py-1 rounded-full" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${ACCENT_PRIMARY_ALPHA_30}`, color: TEXT_PRIMARY }}>
+                  <span className="px-3 py-1 rounded-full" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_30}`, color: TEXT_PRIMARY }}>
                     Joint Commission Standards
                   </span>
                 </div>
@@ -468,7 +467,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 mt-8 text-sm font-medium transition-colors"
-                style={{ color: ACCENT_PRIMARY }}
+                style={{ color: COLORS.ACCENT_PRIMARY }}
                 onMouseEnter={(e) => e.target.style.opacity = '0.8'}
                 onMouseLeave={(e) => e.target.style.opacity = '1'}
               >
@@ -491,7 +490,7 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="text-center max-w-2xl mx-auto mb-20"
         >
-          <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
+          <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>
             Exclusive Services
           </span>
           <h2 className="font-serif text-4xl md:text-5xl mb-6" style={{ color: TEXT_PRIMARY }}>
@@ -516,7 +515,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center max-w-2xl mx-auto mb-16"
           >
-            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
+            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>
               Elite Journeys
             </span>
             <h2 className="font-serif text-4xl md:text-5xl" style={{ color: TEXT_PRIMARY }}>
@@ -526,7 +525,7 @@ export default function Home() {
               <Link
                 to={createPageUrl("Trips")}
                 className="inline-flex items-center gap-2 font-sans font-medium text-sm transition-all duration-300"
-                style={{ color: ACCENT_PRIMARY }}
+                style={{ color: COLORS.ACCENT_PRIMARY }}
                 onMouseEnter={(e) => e.target.style.gap = '0.75rem'}
                 onMouseLeave={(e) => e.target.style.gap = '0.5rem'}
               >
@@ -569,13 +568,13 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <Quote className="w-12 h-12 mx-auto mb-8" style={{ color: ACCENT_PRIMARY_ALPHA_20 }} />
+            <Quote className="w-12 h-12 mx-auto mb-8" style={{ color: COLORS.ACCENT_PRIMARY_ALPHA_20 }} />
             <p className="font-serif text-3xl md:text-4xl italic leading-relaxed mb-12" style={{ color: TEXT_PRIMARY_ALPHA_90 }}>
               "Traveling for surgery felt daunting until Compass Connect arranged every detail. 
               I only had to focus on myself. The experience was like staying at a five-star spa."
             </p>
             <div className="flex items-center justify-center gap-4">
-              <div className="w-12 h-12 rounded-full flex items-center justify-center font-serif text-lg" style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20, color: ACCENT_PRIMARY }}>
+              <div className="w-12 h-12 rounded-full flex items-center justify-center font-serif text-lg" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_20, color: COLORS.ACCENT_PRIMARY }}>
                 S
               </div>
               <div className="text-left">
@@ -595,7 +594,7 @@ export default function Home() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
+          <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>
             Exclusive Invitation
           </span>
           <h2 className="font-serif text-4xl mb-6" style={{ color: TEXT_PRIMARY }}>Begin Your Journey</h2>

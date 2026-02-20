@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ClipboardCheck, FileText, Plane } from "lucide-react";
-import { TEXT_PRIMARY, ACCENT_PRIMARY, ACCENT_SECONDARY, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_50, ACCENT_PRIMARY_ALPHA_20, GLASS, SHADOWS } from "../../constants/colors";
+import { TEXT_PRIMARY, COLORS, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_50, GLASS, SHADOWS } from "../../constants/colors";
 
 const STEPS = [
   {
@@ -9,21 +9,21 @@ const STEPS = [
     icon: ClipboardCheck,
     title: "Complete Hospital Questionnaire",
     desc: "Fill out the health questionnaire directly with our partner hospitals. This is your first step toward assessment.",
-    accent: ACCENT_PRIMARY,
+    accent: COLORS.ACCENT_PRIMARY,
   },
   {
     num: "02",
     icon: FileText,
     title: "Receive Your Surgery Quote",
     desc: "The hospital will assess your information and provide a personalised surgery quote directly to you.",
-    accent: ACCENT_SECONDARY,
+    accent: COLORS.ACCENT_SECONDARY,
   },
   {
     num: "03",
     icon: Plane,
     title: "Secure Your Group Travel Seat",
     desc: "Return to Compass Connect to organise your travel — includes return flights, concierge support, and group coordination.",
-    accent: ACCENT_PRIMARY,
+    accent: COLORS.ACCENT_PRIMARY,
   },
 ];
 
@@ -56,15 +56,15 @@ export default function StepTimeline() {
               transition={{ delay: i * 0.15 }}
               className="group relative"
             >
-              <div className="rounded-2xl p-8 lg:p-10 shadow-sm hover:shadow-xl transition-all duration-500 h-full" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${ACCENT_PRIMARY_ALPHA_20}` }}>
+              <div className="rounded-2xl p-8 lg:p-10 shadow-sm hover:shadow-xl transition-all duration-500 h-full" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_20}` }}>
                 {/* Step Number */}
                 <div className="flex items-center justify-between mb-8">
-                  <span className="text-5xl font-bold" style={{ fontFamily: 'Playfair Display, serif', color: ACCENT_PRIMARY_ALPHA_20 }}>
+                  <span className="text-5xl font-bold" style={{ fontFamily: 'Playfair Display, serif', color: COLORS.ACCENT_PRIMARY_ALPHA_20 }}>
                     {step.num}
                   </span>
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300"
-                    style={{ backgroundColor: ACCENT_PRIMARY_ALPHA_20 }}
+                    style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }}
                   >
                     <step.icon className="w-5 h-5" style={{ color: step.accent }} />
                   </div>
@@ -80,7 +80,7 @@ export default function StepTimeline() {
 
               {/* Connector line */}
               {i < STEPS.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 -right-4 lg:-right-4 w-8 border-t-2 border-dashed" style={{ borderColor: ACCENT_PRIMARY_ALPHA_20 }} />
+                <div className="hidden md:block absolute top-1/2 -right-4 lg:-right-4 w-8 border-t-2 border-dashed" style={{ borderColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }} />
               )}
             </motion.div>
           ))}

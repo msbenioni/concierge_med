@@ -31,19 +31,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/components/ui/use-toast";
+import CompanionModal from "../components/CompanionModal";
 import { TRIP_CONFIG, TRIP_STATUS, BOOKING_STATUS, USER_STATUS, HOSPITAL_REF_PREFIX } from "../constants";
 import { databaseService } from "../services/databaseService";
 import { 
   BACKGROUND_PRIMARY, 
   TEXT_PRIMARY, 
-  ACCENT_PRIMARY, 
+  COLORS,
   TEXT_PRIMARY_ALPHA_70, 
   TEXT_PRIMARY_ALPHA_60, 
   TEXT_PRIMARY_ALPHA_50, 
   TEXT_PRIMARY_ALPHA_20, 
   TEXT_PRIMARY_ALPHA_80,
-  ACCENT_PRIMARY_ALPHA_20, 
-  ACCENT_PRIMARY_ALPHA_10,
   GRADIENTS, 
   GLASS, 
   SHADOWS,
@@ -54,16 +54,21 @@ import { mockTrips, mockNotifications } from "../data/mockData";
 import { getStatusClassName, getStatusLabel } from "../constants/statusConfig";
 
 export default function Admin() {
+  const { toast } = useToast();
   const [trips, setTrips] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editingTrip, setEditingTrip] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [companions, setCompanions] = useState({});
   const [editingFields, setEditingFields] = useState({});
+  const [showCompanionModal, setShowCompanionModal] = useState(false);
+  const [selectedInterestId, setSelectedInterestId] = useState(null);
   const [search, setSearch] = useState("");
   const [isLoadingTrips, setIsLoadingTrips] = useState(false);
   const [isLoadingNotifications, setIsLoadingNotifications] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -75,6 +80,7 @@ export default function Admin() {
       setIsLoadingTrips(true);
       setIsLoadingNotifications(true);
       setError(null);
+      setLoading(true);
       
       try {
         // Load trips from database
@@ -92,6 +98,16 @@ export default function Admin() {
         const interestsResult = await databaseService.getInterests();
         if (interestsResult.success) {
           setNotifications(interestsResult.data);
+          
+          // Load companions for each interest
+          const companionsData = {};
+          for (const interest of interestsResult.data) {
+            const companionResult = await databaseService.getCompanionByInterestId(interest.id);
+            if (companionResult.success && companionResult.data) {
+              companionsData[interest.id] = companionResult.data;
+            }
+          }
+          setCompanions(companionsData);
         } else {
           console.error('Failed to load interests:', interestsResult.error);
           // Fallback to mock data if database fails
@@ -324,14 +340,20 @@ export default function Admin() {
     handleFieldChange(notification.id, 'payment_status', 'link_sent');
     
     // Show success feedback
-    alert('Payment link created successfully!');
+    toast({
+      title: "Payment Link Created",
+      description: "Payment link has been generated and sent successfully!",
+    });
   };
 
   const handleCopyPaymentLink = (notification) => {
     const paymentLink = getFieldValue(notification, 'payment_link_url');
     if (paymentLink) {
       navigator.clipboard.writeText(paymentLink);
-      alert('Payment link copied to clipboard!');
+      toast({
+        title: "Link Copied",
+        description: "Payment link has been copied to clipboard!",
+      });
     }
   };
 
@@ -394,26 +416,95 @@ export default function Admin() {
     setCurrentPage(1);
   };
 
+  // Companion handlers
+  const handleAddCompanion = (interestId) => {
+    setSelectedInterestId(interestId);
+    setShowCompanionModal(true);
+  };
+
+  const handleCompanionSubmit = async (companionData) => {
+    const result = await databaseService.createCompanion({
+      ...companionData,
+      interest_id: selectedInterestId
+    });
+    
+    if (result.success) {
+      setCompanions(prev => ({
+        ...prev,
+        [selectedInterestId]: result.data
+      }));
+      toast({
+        title: "Companion Added",
+        description: "Companion has been added successfully!",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to add companion: " + result.error,
+        variant: "destructive",
+      });
+    }
+    
+    setSelectedInterestId(null);
+  };
+
+  const handleCompanionPaymentChange = async (interestId, newStatus) => {
+    const companion = companions[interestId];
+    if (!companion) return;
+    
+    const result = await databaseService.updateCompanion(companion.id, {
+      payment_status: newStatus
+    });
+    
+    if (result.success) {
+      setCompanions(prev => ({
+        ...prev,
+        [interestId]: {
+          ...companion,
+          payment_status: newStatus
+        }
+      }));
+      toast({
+        title: "Payment Updated",
+        description: "Companion payment status has been updated!",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to update companion payment: " + result.error,
+        variant: "destructive",
+      });
+    }
+  };
+
   // Export functionality
   const exportToCSV = () => {
     const headers = [
       'Interest Ref', 'Name', 'Email', 'Phone', 'Country', 
-      'Departure Country', 'Departure City', 'Surgery Type', 'Interest Status', 'Payment Status', 'Created At'
+      'Departure Country', 'Departure City', 'Surgery Type', 'Interest Status', 'Payment Status', 
+      'Companion Name', 'Companion Email', 'Companion Cost', 'Companion Payment Status', 'Created At'
     ];
     
-    const csvData = filteredNotifications.map(notification => [
-      notification.booking_ref || `CC-${String(notification.id).padStart(4, '0')}`,
-      `${notification.first_name || ''} ${notification.last_name || ''}`.trim(),
-      notification.email || '',
-      notification.phone || '',
-      notification.country || '',
-      notification.departure_country || '',
-      notification.departure_city || '',
-      notification.trip_type || '',
-      notification.booking_status || '',
-      notification.payment_status || '',
-      notification.created_at ? new Date(notification.created_at).toLocaleDateString() : ''
-    ]);
+    const csvData = filteredNotifications.map(notification => {
+      const companion = companions[notification.id];
+      return [
+        notification.booking_ref || `CC-${String(notification.id).padStart(4, '0')}`,
+        `${notification.first_name || ''} ${notification.last_name || ''}`.trim(),
+        notification.email || '',
+        notification.phone || '',
+        notification.country || '',
+        notification.departure_country || '',
+        notification.departure_city || '',
+        notification.trip_type || '',
+        notification.booking_status || '',
+        notification.payment_status || '',
+        companion ? `${companion.first_name} ${companion.last_name}` : '',
+        companion ? companion.email : '',
+        companion ? `$${companion.companion_cost}` : '',
+        companion ? companion.payment_status : '',
+        notification.created_at ? new Date(notification.created_at).toLocaleDateString() : ''
+      ];
+    });
     
     const csvContent = [
       headers.join(','),
@@ -463,11 +554,17 @@ export default function Admin() {
                 <th>Surgery Type</th>
                 <th>Interest Status</th>
                 <th>Payment Status</th>
+                <th>Companion Name</th>
+                <th>Companion Email</th>
+                <th>Companion Cost</th>
+                <th>Companion Payment</th>
                 <th>Created At</th>
               </tr>
             </thead>
             <tbody>
-              ${filteredNotifications.map(notification => `
+              ${filteredNotifications.map(notification => {
+                const companion = companions[notification.id];
+                return `
                 <tr>
                   <td>${notification.booking_ref || `CC-${String(notification.id).padStart(4, '0')}`}</td>
                   <td>${notification.first_name || ''} ${notification.last_name || ''}</td>
@@ -479,9 +576,14 @@ export default function Admin() {
                   <td>${notification.trip_type || ''}</td>
                   <td>${notification.booking_status || ''}</td>
                   <td>${notification.payment_status || ''}</td>
+                  <td>${companion ? `${companion.first_name} ${companion.last_name}` : ''}</td>
+                  <td>${companion ? companion.email : ''}</td>
+                  <td>${companion ? `$${companion.companion_cost}` : ''}</td>
+                  <td>${companion ? companion.payment_status : ''}</td>
                   <td>${notification.created_at ? new Date(notification.created_at).toLocaleDateString() : ''}</td>
                 </tr>
-              `).join('')}
+                `;
+              }).join('')}
             </tbody>
           </table>
         </body>
@@ -561,7 +663,7 @@ export default function Admin() {
             transition={{ duration: 0.8 }}
             className="max-w-2xl"
           >
-            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>Management Portal</span>
+            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>Management Portal</span>
             <h1 className="font-serif text-4xl md:text-5xl mb-4" style={{ color: TEXT_PRIMARY }}>
               Concierge Desk
             </h1>
@@ -602,7 +704,7 @@ export default function Admin() {
             { label: "Total Interests", value: totalInterests, color: TEXT_PRIMARY },
             { label: "Confirmed", value: confirmed, color: COMPONENTS.STATUS_SUCCESS },
             { label: "Reviewed", value: reviewed, color: COMPONENTS.STATUS_INFO },
-            { label: "Active Journeys", value: activeTrips, color: ACCENT_PRIMARY },
+            { label: "Active Journeys", value: activeTrips, color: COLORS.ACCENT_PRIMARY },
           ].map((stat, i) => (
             <div key={i} className="rounded-xl p-5 shadow-sm" style={{ backgroundColor: GLASS.CARD_BACKGROUND, border: `1px solid ${BORDERS.TEXT_SUBTLE}` }}>
               <p className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>{stat.label}</p>
@@ -718,8 +820,17 @@ export default function Admin() {
                       <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-80">
                         Transfers
                       </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-96">
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-64">
                         Notes
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-48">
+                        Companion
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-32">
+                        Companion Cost
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-32">
+                        Companion Payment
                       </th>
                       <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-80">
                         Actions
@@ -732,6 +843,16 @@ export default function Admin() {
                         return (
                           <tr key={notification.id} className="border-b border-gray-200">
                             {/* Empty row cells */}
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
                             <td className="border border-gray-200 px-3 py-2"></td>
                             <td className="border border-gray-200 px-3 py-2"></td>
                             <td className="border border-gray-200 px-3 py-2"></td>
@@ -854,7 +975,7 @@ export default function Admin() {
                         {/* Pref. Date */}
                         <td className="border border-gray-200 px-3 py-2 w-32">
                           <Input
-                            type="date"
+                            type="month"
                             value={getFieldValue(notification, 'preferred_date') || ''}
                             onChange={(e) => handleFieldChange(notification.id, 'preferred_date', e.target.value)}
                             className="text-sm text-gray-900 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500"
@@ -966,6 +1087,54 @@ export default function Admin() {
                           />
                         </td>
 
+                        {/* Companion */}
+                        <td className="border border-gray-200 px-3 py-2 w-48">
+                          {companions[notification.id] ? (
+                            <div className="text-sm">
+                              <div className="font-medium text-gray-900">
+                                {companions[notification.id].first_name} {companions[notification.id].last_name}
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                {companions[notification.id].email}
+                              </div>
+                            </div>
+                          ) : (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleAddCompanion(notification.id)}
+                              className="text-xs h-6 px-2"
+                            >
+                              <Plus className="w-3 h-3 mr-1" />
+                              Add
+                            </Button>
+                          )}
+                        </td>
+
+                        {/* Companion Cost */}
+                        <td className="border border-gray-200 px-3 py-2 w-32">
+                          <div className="text-sm text-gray-900">
+                            ${companions[notification.id]?.companion_cost || '0.00'}
+                          </div>
+                        </td>
+
+                        {/* Companion Payment */}
+                        <td className="border border-gray-200 px-3 py-2 w-32">
+                          {companions[notification.id] ? (
+                            <select
+                              value={companions[notification.id].payment_status || 'unpaid'}
+                              onChange={(e) => handleCompanionPaymentChange(notification.id, e.target.value)}
+                              className="text-xs px-2 py-1 rounded border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            >
+                              <option value="unpaid">Unpaid</option>
+                              <option value="paid">Paid</option>
+                              <option value="pending">Pending</option>
+                            </select>
+                          ) : (
+                            <div className="text-sm text-gray-400">-</div>
+                          )}
+                        </td>
+
                         {/* Actions */}
                         <td className="border border-gray-200 px-3 py-2 w-40">
                           <div className="flex items-center gap-1 justify-center">
@@ -978,7 +1147,10 @@ export default function Admin() {
                                   title="Copy payment link"
                                   onClick={() => {
                                     navigator.clipboard.writeText(getFieldValue(notification, 'payment_link_url'));
-                                    alert('Payment link copied to clipboard!');
+                                    toast({
+                                      title: "Link Copied",
+                                      description: "Payment link has been copied to clipboard!",
+                                    });
                                   }}
                                 >
                                   <Copy className="w-3.5 h-3.5 text-gray-500" />
@@ -1010,9 +1182,25 @@ export default function Admin() {
                               className="h-7 w-7 p-0"
                               title="Delete booking"
                               onClick={() => {
-                                if (confirm('Delete this booking?')) {
-                                  setNotifications(notifications.filter(n => n.id !== notification.id));
-                                }
+                                toast({
+                                  title: "Delete Booking",
+                                  description: "Are you sure you want to delete this booking? This action cannot be undone.",
+                                  action: (
+                                    <Button
+                                      size="sm"
+                                      onClick={() => {
+                                        setNotifications(notifications.filter(n => n.id !== notification.id));
+                                        toast({
+                                          title: "Booking Deleted",
+                                          description: "The booking has been deleted successfully.",
+                                        });
+                                      }}
+                                      className="bg-red-600 hover:bg-red-700"
+                                    >
+                                      Delete
+                                    </Button>
+                                  ),
+                                });
                               }}
                             >
                               <Trash2 className="w-3.5 h-3.5 text-red-400" />
@@ -1106,9 +1294,9 @@ export default function Admin() {
                 <Button
                   onClick={() => setShowAddForm(true)}
                   className="rounded-xl"
-                  style={{ backgroundColor: ACCENT_PRIMARY, color: COMPONENTS.BUTTON_PRIMARY_TEXT }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = ACCENT_SECONDARY}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = ACCENT_PRIMARY}
+                  style={{ backgroundColor: COLORS.ACCENT_PRIMARY, color: COMPONENTS.BUTTON_PRIMARY_TEXT }}
+                  onMouseEnter={(e) => e.target.style.backgroundColor = COLORS.ACCENT_SECONDARY}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = COLORS.ACCENT_PRIMARY}
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Journey
@@ -1191,6 +1379,17 @@ export default function Admin() {
       </div>
       </div>
     </section>
+    
+    {/* Companion Modal */}
+    <CompanionModal
+      isOpen={showCompanionModal}
+      onClose={() => {
+        setShowCompanionModal(false);
+        setSelectedInterestId(null);
+      }}
+      onSubmit={handleCompanionSubmit}
+      interestData={notifications.find(n => n.id === selectedInterestId)}
+    />
     </div>
   );
 }

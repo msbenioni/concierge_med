@@ -6,7 +6,7 @@ import { mockTrips } from "../data/mockData";
 import TripCard from "../components/compass-connect/TripCard";
 import CTASection from "../components/compass-connect/CTASection";
 import LoadingSpinner from "../components/compass-connect/LoadingSpinner";
-import { TEXT_PRIMARY, ACCENT_PRIMARY, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_50 } from "../constants/colors";
+import { TEXT_PRIMARY, COLORS, TEXT_PRIMARY_ALPHA_70, TEXT_PRIMARY_ALPHA_50 } from "../constants/colors";
 
 export default function Trips() {
   const trips = mockTrips;
@@ -21,7 +21,7 @@ export default function Trips() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-2xl"
           >
-            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
+            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>
               Upcoming Departures
             </span>
             <h1 className="font-serif text-4xl md:text-5xl mb-4" style={{ color: TEXT_PRIMARY }}>

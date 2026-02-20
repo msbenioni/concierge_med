@@ -3,10 +3,9 @@ import { motion } from "framer-motion";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { 
   TEXT_PRIMARY, 
-  ACCENT_PRIMARY, 
+  COLORS, 
   TEXT_PRIMARY_ALPHA_70,
   TEXT_PRIMARY_ALPHA_50,
-  ACCENT_PRIMARY_ALPHA_20,
   BACKGROUND_PRIMARY_ALPHA_10,
   COMPONENTS
 } from "../../constants/colors";
@@ -71,7 +70,7 @@ export default function JourneyOverview() {
           <div 
             className="absolute top-1/2 left-0 right-0 h-0.5 -translate-y-1/2 hidden lg:block"
             style={{ 
-              background: `linear-gradient(to right, ${ACCENT_PRIMARY} 20%, ${ACCENT_PRIMARY_ALPHA_20} 20%, ${ACCENT_PRIMARY_ALPHA_20} 80%, ${ACCENT_PRIMARY} 80%)`
+              background: `linear-gradient(to right, ${COLORS.ACCENT_PRIMARY} 20%, ${COLORS.ACCENT_PRIMARY_ALPHA_20} 20%, ${COLORS.ACCENT_PRIMARY_ALPHA_20} 80%, ${COLORS.ACCENT_PRIMARY} 80%)`
             }}
           />
 
@@ -89,7 +88,7 @@ export default function JourneyOverview() {
                 <div 
                   className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-lg font-bold"
                   style={{ 
-                    backgroundColor: index === 0 || index === 4 ? ACCENT_PRIMARY : ACCENT_PRIMARY_ALPHA_20,
+                    backgroundColor: index === 0 || index === 4 ? COLORS.ACCENT_PRIMARY : COLORS.ACCENT_PRIMARY_ALPHA_20,
                     color: index === 0 || index === 4 ? COMPONENTS.BUTTON_PRIMARY_TEXT : TEXT_PRIMARY_ALPHA_50
                   }}
                 >
@@ -113,7 +112,7 @@ export default function JourneyOverview() {
                 {/* Arrow for mobile */}
                 {index < journeySteps.length - 1 && (
                   <div className="lg:hidden flex justify-center mt-4">
-                    <ArrowRight className="w-4 h-4" style={{ color: ACCENT_PRIMARY_ALPHA_20 }} />
+                    <ArrowRight className="w-4 h-4" style={{ color: COLORS.ACCENT_PRIMARY_ALPHA_20 }} />
                   </div>
                 )}
               </motion.div>
@@ -133,11 +132,11 @@ export default function JourneyOverview() {
             <div className="flex items-center justify-center gap-2 mb-3">
               <div 
                 className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: ACCENT_PRIMARY }}
+                style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}
               />
               <span 
                 className="text-sm font-semibold uppercase tracking-wider"
-                style={{ color: ACCENT_PRIMARY }}
+                style={{ color: COLORS.ACCENT_PRIMARY }}
               >
                 Medical Phase
               </span>
@@ -160,11 +159,11 @@ export default function JourneyOverview() {
             <div className="flex items-center justify-center gap-2 mb-3">
               <div 
                 className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: ACCENT_PRIMARY }}
+                style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}
               />
               <span 
                 className="text-sm font-semibold uppercase tracking-wider"
-                style={{ color: ACCENT_PRIMARY }}
+                style={{ color: COLORS.ACCENT_PRIMARY }}
               >
                 Travel Phase
               </span>

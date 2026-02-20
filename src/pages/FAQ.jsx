@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
-import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, TEXT_PRIMARY_ALPHA_70, ACCENT_PRIMARY } from "../constants/colors";
+import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, TEXT_PRIMARY_ALPHA_70, COLORS } from "../constants/colors";
 
 const FAQS = [
   {

@@ -1,7 +1,6 @@
 import { 
   COMPONENTS,
-  ACCENT_PRIMARY_ALPHA_20,
-  ACCENT_PRIMARY,
+  COLORS,
   BORDERS
 } from "./colors";
 
