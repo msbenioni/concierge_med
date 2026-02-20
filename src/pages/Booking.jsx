@@ -168,6 +168,32 @@ export default function Booking() {
     window.scrollTo(0, 0);
   };
 
+  const trackQuestionnaireClick = async (bookingRef) => {
+    try {
+      await fetch('/.netlify/functions/track-questionnaire', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          booking_ref: bookingRef,
+          timestamp: new Date().toISOString(),
+          user_agent: navigator.userAgent
+        })
+      });
+    } catch (error) {
+      console.log('Failed to track questionnaire click:', error);
+    }
+  };
+
+  const handleQuestionnaireClick = (bookingRef) => {
+    // Track the click
+    trackQuestionnaireClick(bookingRef);
+    
+    // Open the external questionnaire
+    window.open(import.meta.env.REACT_APP_PARTNER_LINK_MBC || 'https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120', '_blank');
+  };
+
   const validateStep = () => {
     let isValid = false;
     if (step === 0) {
@@ -399,7 +425,7 @@ export default function Booking() {
                           color: TEXT_PRIMARY,
                         }}
                         onClick={() => {
-                          window.open(import.meta.env.REACT_APP_PARTNER_LINK_MBC || 'https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120', '_blank');
+                          handleQuestionnaireClick(bookingResult.booking_ref);
                         }}
                       >
                         <span className="mr-2">Start Questionnaire</span>
@@ -464,7 +490,7 @@ export default function Booking() {
                       color: TEXT_PRIMARY,
                     }}
                     onClick={() => {
-                      window.open(import.meta.env.REACT_APP_PARTNER_LINK_MBC || 'https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120', '_blank');
+                      handleQuestionnaireClick(bookingResult.booking_ref);
                     }}
                   >
                     Start Questionnaire <ArrowRight className="w-5 h-5 ml-2" />

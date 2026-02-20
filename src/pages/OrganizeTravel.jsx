@@ -156,7 +156,7 @@ const OrganizeTravel = () => {
           <Card className="rounded-2xl p-6 mb-8" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_20}` }}>
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}>
-                <span className="text-white font-bold">4000</span>
+                <span className="text-white font-bold">$4000</span>
               </div>
               <div>
                 <h3 className="font-semibold" style={{ color: TEXT_PRIMARY }}>Concierge Service Fee</h3>

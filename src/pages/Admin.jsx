@@ -1030,8 +1030,8 @@ export default function Admin() {
                           <div className="flex justify-center">
                             <input
                               type="checkbox"
-                              checked={getFieldValue(notification, 'questionnaire_complete') || false}
-                              onChange={(e) => handleFieldChange(notification.id, 'questionnaire_complete', e.target.checked)}
+                              checked={getFieldValue(notification, 'q_form_clicked') || false}
+                              onChange={(e) => handleFieldChange(notification.id, 'q_form_clicked', e.target.checked)}
                               className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                             />
                           </div>

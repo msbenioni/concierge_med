@@ -55,6 +55,22 @@ export const databaseService = {
     }
   },
 
+  async updateInterestQuestionnaireClicked(bookingRef) {
+    try {
+      const { data, error } = await supabase
+        .from('interests')
+        .update({ q_form_clicked: true })
+        .eq('booking_ref', bookingRef)
+        .select();
+
+      if (error) throw error;
+      return { success: true, data };
+    } catch (error) {
+      console.error('Error updating q-form clicked status:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
   async deleteInterest(interestId) {
     try {
       const { error } = await supabase

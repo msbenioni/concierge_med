@@ -20,8 +20,20 @@ exports.handler = async (event, context) => {
       ip: event.headers['x-forwarded-for'] || event.headers['client-ip']
     });
 
-    // TODO: Save to database - update questionnaire_clicked status
-    // Example: await databaseService.updateQuestionnaireClicked(booking_ref);
+    // Update database to mark q-form as completed
+    try {
+      const { databaseService } = require('../../src/services/databaseService');
+      const updateResult = await databaseService.updateInterestQuestionnaireClicked(booking_ref);
+      
+      if (updateResult.success) {
+        console.log('✅ q-form column updated successfully for:', booking_ref);
+      } else {
+        console.error('❌ Failed to update q-form column:', updateResult.error);
+      }
+    } catch (dbError) {
+      console.error('❌ Database update error:', dbError);
+      // Continue with response even if database update fails
+    }
 
     return {
       statusCode: 200,
