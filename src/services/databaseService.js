@@ -139,6 +139,21 @@ export const databaseService = {
     }
   },
 
+  async deleteCompanion(companionId) {
+    try {
+      const { error } = await supabase
+        .from('companions')
+        .delete()
+        .eq('id', companionId);
+
+      if (error) throw error;
+      return { success: true };
+    } catch (error) {
+      console.error('Error deleting companion:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
   async updateCompanion(companionId, updates) {
     try {
       const { data, error } = await supabase

@@ -28,7 +28,7 @@ export default function HeroSection() {
             className="mb-6"
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.15em]" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_20, border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_30}`, color: COLORS.ACCENT_PRIMARY }}>
-              NZ & AU Patients
+              Medical Travel Concierge
             </span>
           </motion.div>
 
@@ -37,22 +37,46 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] mb-6"
+            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] mb-4"
             style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY }}
           >
-            International Surgery.{" "}
-            <span className="italic" style={{ color: COLORS.ACCENT_PRIMARY, whiteSpace: 'nowrap' }}>Personally Guided.</span>
+            You're making a{" "}
+            <span className="italic" style={{ color: COLORS.ACCENT_PRIMARY, whiteSpace: 'nowrap' }}>life-changing decision.</span>
           </motion.h1>
 
           {/* Subheadline */}
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="text-3xl sm:text-4xl lg:text-5xl font-semibold leading-[1.1] mb-4 text-right ml-auto"
+            style={{ fontFamily: 'Playfair Display, serif', color: TEXT_PRIMARY_ALPHA_90 }}
+          >
+            It deserves{" "}
+            <span className="italic" style={{ color: COLORS.ACCENT_PRIMARY, whiteSpace: 'nowrap' }}>real support.</span>
+          </motion.h2>
+
+          {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
+            className="text-lg sm:text-xl leading-relaxed mb-6 text-right ml-auto"
+            style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}
+          >
+            Don't navigate it alone. Compass Connect is a boutique medical travel concierge supporting people in New Zealand and Australia seeking surgery overseas.
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
             className="text-lg sm:text-xl leading-relaxed mb-10 text-right ml-auto"
             style={{ fontFamily: 'Inter, sans-serif', color: TEXT_PRIMARY_ALPHA_70 }}
           >
-            Independent medical tourism concierge for NZ & AU patients travelling overseas for bariatric and cosmetic surgery.
+            We combine ethical hospital partnerships, structured coordination, and small group journeys so you feel{" "}
+            <span className="italic" style={{ color: COLORS.ACCENT_PRIMARY }}>informed, supported, and never isolated</span>
+            {" "}throughout the process.
           </motion.p>
 
           {/* CTAs */}

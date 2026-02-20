@@ -52,7 +52,6 @@ export default function CompanionModal({ isOpen, onClose, onSubmit, interestData
         departure_country: interestData.departure_country,
         departure_city: interestData.departure_city,
         preferred_date: interestData.preferred_date,
-        companion_cost: 2000.00,
         payment_status: 'unpaid'
       });
       

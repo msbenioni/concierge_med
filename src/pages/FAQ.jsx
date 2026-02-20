@@ -31,6 +31,14 @@ const FAQS = [
         a: "Compass Connect is a non-medical travel concierge service. We coordinate group flights and provide on-the-ground concierge support for patients traveling overseas for surgery. This includes flights coordination, emotional companionship, and dietary/mobility assistance during travel. We do NOT arrange accommodation, transfers, or provide any medical care — those are handled entirely by the partner hospital."
       },
       {
+        q: "What makes Compass Connect different from other medical tourism services?",
+        a: "Most medical tourism services focus on bookings. We focus on people. With Compass Connect, you receive a dedicated concierge team from first enquiry through to your return home, small group journeys with intimate support, pre-travel group sessions so you feel prepared and connected, daily non-medical check-ins while overseas, and structured, non-clinical group support after you return."
+      },
+      {
+        q: "Is Compass Connect only for women?",
+        a: "While our lived experience began with supporting women, Compass Connect is open to anyone seeking ethical, well-supported medical travel. We welcome all individuals who are considering surgery overseas and want to feel supported throughout their journey."
+      },
+      {
         q: "What is a non-medical concierge?",
         a: "A non-medical concierge focuses exclusively on flights coordination and on-the-ground support. We arrange group flights, provide emotional companionship, and assist with dietary/mobility needs during travel. We never give medical advice, arrange accommodation, or handle transfers — those are managed by the partner hospital."
       },

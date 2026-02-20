@@ -438,6 +438,32 @@ export default function Admin() {
     }
     
     setSelectedInterestId(null);
+    setShowCompanionModal(false); // Close the modal
+  };
+
+  const handleDeleteCompanion = async (interestId) => {
+    const companion = companions[interestId];
+    if (!companion) return;
+    
+    const result = await databaseService.deleteCompanion(companion.id);
+    
+    if (result.success) {
+      setCompanions(prev => {
+        const newCompanions = { ...prev };
+        delete newCompanions[interestId];
+        return newCompanions;
+      });
+      toast({
+        title: "Companion Deleted",
+        description: "Companion has been removed successfully!",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to delete companion: " + result.error,
+        variant: "destructive",
+      });
+    }
   };
 
   const handleCompanionPaymentChange = async (interestId, newStatus) => {
@@ -627,6 +653,17 @@ export default function Admin() {
     }));
   };
 
+  const handleCompanionFieldChange = (notificationId, field, value) => {
+    // Update companion data
+    setCompanions(prev => ({
+      ...prev,
+      [notificationId]: {
+        ...prev[notificationId],
+        [field]: value
+      }
+    }));
+  };
+
   const getFieldValue = (notification, field) => {
     const fieldKey = `${notification.id}-${field}`;
     return editingFields[fieldKey] !== undefined ? editingFields[fieldKey] : 
@@ -646,26 +683,6 @@ export default function Admin() {
 
   return (
     <div>
-      {/* Hero */}
-      <section className="pt-16 pb-8 lg:pt-24 lg:pb-12">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-2xl"
-          >
-            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>Management Portal</span>
-            <h1 className="font-serif text-4xl md:text-5xl mb-4" style={{ color: TEXT_PRIMARY }}>
-              Concierge Desk
-            </h1>
-            <p className="text-lg" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
-              Manage bookings, journeys & payments for your medical travel concierge service.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Main Content */}
       <section className="py-12 lg:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
@@ -827,6 +844,12 @@ export default function Admin() {
                       <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-32">
                         Companion Payment
                       </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-32">
+                        Traveler Cost
+                      </th>
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-32">
+                        Total Cost
+                      </th>
                       <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-80">
                         Actions
                       </th>
@@ -838,6 +861,8 @@ export default function Admin() {
                         return (
                           <tr key={notification.id} className="border-b border-gray-200">
                             {/* Empty row cells */}
+                            <td className="border border-gray-200 px-3 py-2"></td>
+                            <td className="border border-gray-200 px-3 py-2"></td>
                             <td className="border border-gray-200 px-3 py-2"></td>
                             <td className="border border-gray-200 px-3 py-2"></td>
                             <td className="border border-gray-200 px-3 py-2"></td>
@@ -1088,13 +1113,24 @@ export default function Admin() {
                         {/* Companion */}
                         <td className="border border-gray-200 px-3 py-2 w-48">
                           {companions[notification.id] ? (
-                            <div className="text-sm">
-                              <div className="font-medium text-gray-900">
-                                {companions[notification.id].full_name}
+                            <div className="flex items-center justify-between">
+                              <div className="text-sm flex-1">
+                                <div className="font-medium text-gray-900">
+                                  {companions[notification.id].full_name}
+                                </div>
+                                <div className="text-xs text-gray-500">
+                                  {companions[notification.id].email}
+                                </div>
                               </div>
-                              <div className="text-xs text-gray-500">
-                                {companions[notification.id].email}
-                              </div>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-6 w-6 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                                title="Delete companion"
+                                onClick={() => handleDeleteCompanion(notification.id)}
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </Button>
                             </div>
                           ) : (
                             <Button
@@ -1111,9 +1147,17 @@ export default function Admin() {
 
                         {/* Companion Cost */}
                         <td className="border border-gray-200 px-3 py-2 w-32">
-                          <div className="text-sm text-gray-900">
-                            ${companions[notification.id]?.companion_cost || '0.00'}
-                          </div>
+                          {companions[notification.id] ? (
+                            <Input
+                              type="number"
+                              value={companions[notification.id].companion_cost || ''}
+                              onChange={(e) => handleCompanionFieldChange(notification.id, 'companion_cost', e.target.value ? parseInt(e.target.value) : '')}
+                              placeholder="2000"
+                              className="text-sm text-gray-900 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500 w-20"
+                            />
+                          ) : (
+                            <div className="text-sm text-gray-400">-</div>
+                          )}
                         </td>
 
                         {/* Companion Payment */}
@@ -1131,6 +1175,24 @@ export default function Admin() {
                           ) : (
                             <div className="text-sm text-gray-400">-</div>
                           )}
+                        </td>
+
+                        {/* Traveler Cost */}
+                        <td className="border border-gray-200 px-3 py-2 w-32">
+                          <Input
+                            type="number"
+                            value={editingFields[`${notification.id}-traveler_cost`] || ''}
+                            onChange={(e) => handleFieldChange(notification.id, 'traveler_cost', e.target.value ? parseInt(e.target.value) : '')}
+                            placeholder="4000"
+                            className="text-sm text-gray-900 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500 w-20"
+                          />
+                        </td>
+
+                        {/* Total Cost */}
+                        <td className="border border-gray-200 px-3 py-2 w-32">
+                          <div className="text-sm font-medium text-gray-900">
+                            ${((editingFields[`${notification.id}-traveler_cost`] ? parseInt(editingFields[`${notification.id}-traveler_cost`]) : 0) + (companions[notification.id] && companions[notification.id].companion_cost ? parseInt(companions[notification.id].companion_cost) : 0))}
+                          </div>
                         </td>
 
                         {/* Actions */}

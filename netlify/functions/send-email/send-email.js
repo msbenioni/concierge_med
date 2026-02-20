@@ -66,6 +66,9 @@ exports.handler = async (event, context) => {
               Dear ${full_name},
             </p>
             <p style="color: #4A4541; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+              You're making a life-changing decision, and we're honored to support you. Compass Connect was founded by women who've travelled this path themselves - you don't have to navigate it alone.
+            </p>
+            <p style="color: #4A4541; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
               Thank you for registering your interest with Compass Connect. We're here to support you on your medical journey with personalized care and attention.
             </p>
             

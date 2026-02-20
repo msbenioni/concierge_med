@@ -1,494 +1,259 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Heart, Users, Globe, Shield, Compass, Star, Plane, MapPin, Calendar, MessageCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Heart, Users, Globe, Shield, Compass } from "lucide-react";
 import CTASection from "../components/compass-connect/CTASection";
 import * as COLORS from "../constants/colors";
-
-const VALUES = [
-  {
-    icon: Shield,
-    title: "Structured Support",
-    description: "Clear processes and organized journey management"
-  },
-  {
-    icon: Heart,
-    title: "Emotional Safety",
-    description: "Understanding the vulnerability of transformation"
-  },
-  {
-    icon: Users,
-    title: "Group Connection",
-    description: "Never feeling alone on your journey"
-  },
-  {
-    icon: Globe,
-    title: "Trusted Hospitals",
-    description: "Only recommending places we'd go ourselves"
-  }
-];
 
 export default function About() {
   return (
     <div>
-      {/* Hero */}
+      {/* Hero Section */}
       <section className="pt-16 pb-8 lg:pt-24 lg:pb-12">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-2xl"
+            className="max-w-3xl mx-auto text-center"
           >
-            <span className="text-xs uppercase tracking-[0.2em] font-semibold mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>
+            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>
               Our Story
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: 'font-serif', color: COLORS.TEXT_PRIMARY }}>
-              Built by Women Who've Walked the Journey
+            <h1 className="font-serif text-4xl md:text-5xl mb-6" style={{ color: COLORS.TEXT_PRIMARY }}>
+              You Don't Have to Do This Alone
             </h1>
-            <p className="max-w-3xl mx-auto text-lg" style={{ fontFamily: 'Inter, sans-serif', color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
-              Compass Connect was founded by two women who understand medical travel not as a concept — but as lived experience.
+            <p className="text-lg mb-4" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
+              Choosing surgery overseas is not a small decision. It often follows years of trying. Years of navigating waitlists or financial barriers. Years of carrying frustration, hope, and vulnerability. Too often, it is done quietly.
+            </p>
+            <p className="text-lg mb-4" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
+              Compass Connect was founded by two women who have travelled overseas for surgery ourselves. We understand the nerves. The research. The second-guessing. The courage it takes to say yes to change.
+            </p>
+            <p className="text-lg font-medium italic" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_80 }}>
+              You will know who you are travelling with. You will know what to expect. You will not be walking into the unknown by yourself.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Introduction */}
-      <section className="py-24 lg:py-32">
+      {/* What Makes Us Different */}
+      <section className="py-16 lg:py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="max-w-3xl mx-auto"
+            className="text-center mb-12"
           >
-            <div className="space-y-2 mb-8">
-              <p className="text-lg font-medium font-serif" style={{ color: COLORS.TEXT_PRIMARY }}>
-                We are not medical professionals.
-              </p>
-              <p className="text-lg font-medium font-serif" style={{ color: COLORS.TEXT_PRIMARY }}>
-                We are not surgeons.
-              </p>
-              <p className="text-lg font-medium font-serif" style={{ color: COLORS.TEXT_PRIMARY }}>
-                We are not here to provide clinical advice.
-              </p>
-            </div>
-            
-            <p className="text-xl font-medium mb-3 font-serif" style={{ color: COLORS.TEXT_PRIMARY }}>
-              We are patients who have walked this path — and built the support system we wish we had.
+            <h2 className="font-serif text-3xl md:text-4xl mb-4" style={{ color: COLORS.TEXT_PRIMARY }}>
+              What Makes Us Different
+            </h2>
+            <p className="text-lg" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
+              Most medical tourism services focus on bookings. We focus on people.
             </p>
-
-            {/* Hero Image */}
-            <div className="relative rounded-2xl overflow-hidden mb-8" style={{ height: '400px' }}>
-              <img 
-                src="/friends.png" 
-                alt="Women supporting each other on a journey"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.3))' }} />
+          </motion.div>
+          
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full flex-shrink-0 mt-1" style={{ background: COLORS.ACCENT_PRIMARY }}></div>
+                <div>
+                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>A dedicated concierge team</h3>
+                  <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>From first enquiry through to your return home</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full flex-shrink-0 mt-1" style={{ background: COLORS.ACCENT_PRIMARY }}></div>
+                <div>
+                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>Small group journeys with intimate support</h3>
+                  <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>Supportive environment for sharing</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full flex-shrink-0 mt-1" style={{ background: COLORS.ACCENT_PRIMARY }}></div>
+                <div>
+                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>Pre-travel group sessions</h3>
+                  <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>So you feel prepared and connected</p>
+                </div>
+              </div>
             </div>
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full flex-shrink-0 mt-1" style={{ background: COLORS.ACCENT_PRIMARY }}></div>
+                <div>
+                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>Daily non-medical check-ins while overseas</h3>
+                  <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>Regular support during your journey</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full flex-shrink-0 mt-1" style={{ background: COLORS.ACCENT_PRIMARY }}></div>
+                <div>
+                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>Structured, non-clinical group support after you return</h3>
+                  <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>Continued care and community connection</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full flex-shrink-0 mt-1" style={{ background: COLORS.ACCENT_PRIMARY }}></div>
+                <div>
+                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>Clear separation between medical care, travel logistics, and concierge support</h3>
+                  <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>We do not provide medical advice or treatment</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trauma-Informed Approach */}
+      <section className="py-16 lg:py-24">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="font-serif text-3xl md:text-4xl mb-4" style={{ color: COLORS.TEXT_PRIMARY }}>
+              A Trauma-Informed Approach
+            </h2>
+            <p className="text-lg" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
+              Major body change can activate old emotions, fears, and patterns. We understand that.
+            </p>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <Heart className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: COLORS.ACCENT_PRIMARY }}></Heart>
+                <div>
+                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>We prioritise safety and informed choice</h3>
+                  <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>Your comfort and autonomy come first</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <Shield className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: COLORS.ACCENT_PRIMARY }}></Shield>
+                <div>
+                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>We move without pressure or shame</h3>
+                  <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>No judgment, only support</p>
+                </div>
+              </div>
+            </div>
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <Users className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: COLORS.ACCENT_PRIMARY }}></Users>
+                <div>
+                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>We respect personal history and vulnerability</h3>
+                  <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>Your story matters and is honored</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <Compass className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: COLORS.ACCENT_PRIMARY }}></Compass>
+                <div>
+                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>We are clear about what we do and what we do not do</h3>
+                  <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>Transparent boundaries and expectations</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-12 text-center max-w-3xl mx-auto">
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+              <p className="text-sm font-medium" style={{ color: COLORS.TEXT_PRIMARY }}>
+                <strong>Important:</strong> We are not medical providers. We do not interpret medical results or override clinical guidance. All medical responsibility remains with your chosen hospital and surgeon. Our responsibility is to ensure you feel supported, connected, and clearly informed throughout the journey.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Vision */}
+      <section className="py-16 lg:py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-3xl mx-auto"
+          >
+            <h2 className="font-serif text-3xl md:text-4xl mb-6" style={{ color: COLORS.TEXT_PRIMARY }}>
+              Our Vision
+            </h2>
+            <p className="text-lg mb-8" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
+              To redefine medical travel as ethical, connected, and human. To remove isolation from a life-changing decision. To build small, intentional group journeys where safety, transparency, and community matter more than volume.
+            </p>
+            <p className="text-lg font-medium italic" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_80 }}>
+              Compass Connect is not about rushing people through a process. It is about guiding them through it well.
+            </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Jasmin's Journey */}
-      <section className="py-24 lg:py-32">
+      {/* Our Story */}
+      <section className="py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="max-w-3xl mx-auto text-center"
           >
-            <span className="text-xs uppercase tracking-[0.2em] font-semibold mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>
-              Founder Stories
+            <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.3em] mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>
+              Founded by Women Who've Been There
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: 'font-serif', color: COLORS.TEXT_PRIMARY }}>
-              Jasmin's Journey
+            <h2 className="font-serif text-3xl md:text-4xl mb-6" style={{ color: COLORS.TEXT_PRIMARY }}>
+              Jasmin & Angela's Journey
             </h2>
-          </motion.div>
-            
-          <div className="max-w-3xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-8">
-              <div className="space-y-6 font-serif" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
-                <p className="text-lg">
-                  In February 2025, Jasmin travelled to Mexico for bariatric surgery with Mexico Bariatric Center.
-                </p>
-                
-                <p className="text-lg">
-                  She travelled with her partner — but not with a group.
-                </p>
-                
-                <p className="text-lg font-medium font-serif">
-                  And even though she wasn't physically alone, she felt it.
-                </p>
-                
-                <p className="text-lg">
-                  There was endless research. So much reading. So many unknowns.
-                </p>
-                
-                <p className="text-lg">
-                  She worried about getting stuck at the Mexico or U.S. border, missing something important, being too far from home and her children, making the wrong decision.
-                </p>
-                
-                <p className="text-lg font-medium font-serif">
-                  The fear wasn't about the surgery itself. It was about the unknown.
-                </p>
-                
-                <p className="text-lg">
-                  There was no one to ask. No one she trusted. Online forums felt unreliable.
-                </p>
-                
-                <p className="text-lg font-semibold">
-                  She wished she had travelled with a group — not just for logistics, but for understanding.
-                </p>
-              </div>
-              
-              <div className="space-y-4">
-                {/* Jasmin's Photo */}
-                <div className="rounded-2xl overflow-hidden" style={{ height: '450px' }}>
-                  <img 
-                    src="/jasmin.png" 
-                    alt="Portrait of Jasmin"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                
-                {/* Results Card */}
-                <div className="p-6 rounded-2xl" style={{ backgroundColor: COLORS.COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COLORS.COMPONENTS.CARD_BORDER}` }}>
-                  <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'font-serif', color: COLORS.TEXT_PRIMARY }}>One Year Later:</h3>
-                  <ul className="space-y-2 text-sm" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
-                    <li className="flex items-center gap-2">
-                      <Star className="w-4 h-4" style={{ color: COLORS.ACCENT_PRIMARY }} />
-                      30kg lost
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Star className="w-4 h-4" style={{ color: COLORS.ACCENT_PRIMARY }} />
-                      Type 2 diabetes reversed
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Star className="w-4 h-4" style={{ color: COLORS.ACCENT_PRIMARY }} />
-                      Liver issues resolved
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Star className="w-4 h-4" style={{ color: COLORS.ACCENT_PRIMARY }} />
-                      Size 22 to 12/14
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Star className="w-4 h-4" style={{ color: COLORS.ACCENT_PRIMARY }} />
-                      Health restored, confidence regained
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            
-            <p className="text-lg font-medium font-serif" style={{ color: COLORS.TEXT_PRIMARY }}>
-              But the emotional gaps she felt along the way never left her.
+            <p className="text-lg mb-8" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
+              Compass Connect was founded by Jasmin and Angela, two businesswomen with full lives, competing priorities, and a shared experience of travelling overseas for surgery.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Angela's Journey */}
-      <section className="py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: 'font-serif', color: COLORS.TEXT_PRIMARY }}>
-              Angela's Journey
-            </h2>
           </motion.div>
           
-          <div className="max-w-3xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-8">
-              <div className="space-y-6 font-serif" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
-                <p className="text-lg">
-                  Angela had bariatric surgery in Australia.
-                </p>
-                
-                <p className="text-lg">
-                  Although her experience was different geographically, the emotional thread was the same:
-                </p>
-                
-                <p className="text-lg font-medium font-serif">
-                  There was no structured, consistent mental support.
-                </p>
-                
-                <p className="text-lg">
-                  Patients are often left to navigate fear, hormonal changes, identity shifts, post-surgery emotions, and social adjustment. Alone.
-                </p>
-                
-                <p className="text-lg font-medium font-serif">
-                  Angela brings something powerful to Compass Connect: She is a trauma coach.
-                </p>
-                
-                <p className="text-lg font-serif">
-                  She understands the mindset shifts required before and after surgery. She understands emotional regulation. She understands the vulnerability of transformation.
-                </p>
-              </div>
-              
-              <div className="space-y-4">
-                {/* Angela's Photo */}
-                <div className="rounded-2xl overflow-hidden" style={{ height: '450px' }}>
-                  <img 
-                    src="/angela.webp" 
-                    alt="Portrait of Angela"
-                    className="w-full h-full object-cover"
-                  />
+          <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+            <div>
+              <p className="text-lg mb-6" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
+                On the outside, we were capable. Managing businesses. Managing families. Managing everything.
+              </p>
+              <p className="text-lg mb-6" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
+                On the inside, we were quietly carrying something heavier. The frustration with our bodies. The exhaustion of trying. The late nights researching hospitals and surgeons. The spreadsheets. The quotes. The fear of getting it wrong. And the loneliness.
+              </p>
+              <p className="text-lg mb-6" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
+                We created Compass Connect because we genuinely care about making that journey different for others. So no one has to navigate it quietly. So no one feels like they are doing it alone.
+              </p>
+              <p className="text-lg font-medium italic" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_80 }}>
+                This is not just coordination. It is compassion, structure, and continuity.
+              </p>
+            </div>
+            
+            <div className="flex justify-center gap-8">
+              <div className="text-center space-y-4">
+                <div className="w-20 h-20 rounded-full mx-auto bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                  <span className="text-white text-2xl font-bold">J</span>
                 </div>
-                
-                {/* Trauma Coach Card */}
-                <div className="p-6 rounded-2xl" style={{ backgroundColor: COLORS.COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COLORS.COMPONENTS.CARD_BORDER}` }}>
-                  <div className="flex items-center gap-3 mb-3">
-                    <Heart className="w-6 h-6" style={{ color: COLORS.ACCENT_PRIMARY }} />
-                    <h3 className="text-xl font-bold" style={{ fontFamily: 'font-serif', color: COLORS.TEXT_PRIMARY }}>Trauma-Informed Support</h3>
-                  </div>
-                  <p className="text-sm" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
-                    Angela brings deep emotional understanding and trauma-informed coaching to help patients navigate the psychological aspects of their transformation journey.
-                  </p>
+                <h3 className="font-semibold text-lg" style={{ color: COLORS.TEXT_PRIMARY }}>Jasmin</h3>
+                <p className="text-sm" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_60 }}>Co-Founder</p>
+              </div>
+              <div className="text-center space-y-4">
+                <div className="w-20 h-20 rounded-full mx-auto bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                  <span className="text-white text-2xl font-bold">A</span>
                 </div>
+                <h3 className="font-semibold text-lg" style={{ color: COLORS.TEXT_PRIMARY }}>Angela</h3>
+                <p className="text-sm" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_60 }}>Co-Founder</p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* How Compass Connect Was Born */}
-      <section className="py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-center max-w-3xl mx-auto mt-12"
           >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: 'font-serif', color: COLORS.TEXT_PRIMARY }}>
-              How Compass Connect Was Born
-            </h2>
+            <p className="text-2xl font-serif font-semibold" style={{ color: COLORS.ACCENT_PRIMARY }}>
+              You do not need to do this alone anymore.
+            </p>
           </motion.div>
-          
-          <div className="max-w-3xl mx-auto">
-            {/* Meeting Image */}
-            <div className="rounded-2xl overflow-hidden mb-8" style={{ height: '500px' }}>
-              <img 
-                src="/womens_business_meeting.png" 
-                alt="Women meeting in professional setting"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
-            <div className="space-y-6 font-serif" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
-              <p className="text-lg">
-                The two founders met at a women's business networking group.
-              </p>
-              
-              <p className="text-lg">
-                On just their second meeting, they discovered they had both undergone bariatric surgery.
-              </p>
-              
-              <p className="text-lg font-medium">
-                Different journeys. Different countries. Same emotional gap.
-              </p>
-              
-              <p className="text-lg">
-                They realised: The hospital handles the surgery. But no one truly walks beside the patient.
-              </p>
-              
-              <p className="text-lg font-semibold">
-                So they built what they both needed.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* What Makes Compass Connect Different */}
-      <section className="py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: 'font-serif', color: COLORS.TEXT_PRIMARY }}>
-              What Makes Compass Connect Different
-            </h2>
-          </motion.div>
-          
-          <div className="max-w-3xl mx-auto">
-            <div className="p-6 rounded-2xl mb-8" style={{ backgroundColor: COLORS.COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COLORS.COMPONENTS.CARD_BORDER}` }}>
-              <p className="text-xl font-bold mb-4" style={{ fontFamily: 'font-serif', color: COLORS.TEXT_PRIMARY }}>
-                Compass Connect is an independent, non-medical concierge service.
-              </p>
-              
-              <div className="space-y-3 mb-6 font-serif">
-                <p className="text-lg font-medium" style={{ color: COLORS.TEXT_PRIMARY }}>
-                  We do not provide clinical advice.
-                </p>
-                <p className="text-lg font-medium" style={{ color: COLORS.TEXT_PRIMARY }}>
-                  We do not access medical records.
-                </p>
-                <p className="text-lg font-medium" style={{ color: COLORS.TEXT_PRIMARY }}>
-                  We do not replace surgeons.
-                </p>
-              </div>
-              
-              <p className="text-lg mb-4 font-serif">We:</p>
-              
-              <ul className="space-y-3 font-serif">
-                <li className="flex items-start gap-3">
-                  <Compass className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.ACCENT_PRIMARY }} />
-                  <span>Coordinate structured group travel for medically approved patients</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Compass className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.ACCENT_PRIMARY }} />
-                  <span>Travel with our groups</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Compass className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.ACCENT_PRIMARY }} />
-                  <span>Provide online pre-surgery support spaces</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Compass className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.ACCENT_PRIMARY }} />
-                  <span>Offer emotional reassurance during hotel and hospital stays</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Compass className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.ACCENT_PRIMARY }} />
-                  <span>Return home with our patients</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Compass className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.ACCENT_PRIMARY }} />
-                  <span>Provide continued mindset and emotional support for 3 months post-surgery</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="p-6 rounded-2xl text-center" style={{ backgroundColor: COLORS.COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COLORS.COMPONENTS.CARD_BORDER}` }}>
-              <p className="text-xl font-bold" style={{ fontFamily: 'font-serif', color: COLORS.TEXT_PRIMARY }}>
-                Because the journey doesn't end at discharge.
-              </p>
-              <p className="text-lg font-medium mt-2" style={{ color: COLORS.ACCENT_PRIMARY }}>
-                It begins there.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Promise */}
-      <section className="py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: 'font-serif', color: COLORS.TEXT_PRIMARY }}>
-              Our Promise
-            </h2>
-          </motion.div>
-          
-          <div className="max-w-3xl mx-auto">
-            <div className="space-y-6 font-serif" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
-              <p className="text-lg">
-                We cannot remove every fear.
-              </p>
-              
-              <p className="text-lg">
-                But we can ensure you:
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-                {[
-                  "Understand each stage",
-                  "Feel supported before departure",
-                  "Travel in a structured group", 
-                  "Have someone present",
-                  "Return home not alone",
-                  "Receive post-surgery support"
-                ].map((promise, i) => (
-                  <div key={i} className="flex items-center gap-3 p-4 rounded-xl" style={{ backgroundColor: COLORS.COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COLORS.COMPONENTS.CARD_BORDER}` }}>
-                    <Heart className="w-5 h-5 flex-shrink-0" style={{ color: COLORS.ACCENT_PRIMARY }} />
-                    <span className="text-sm font-medium">{promise}</span>
-                  </div>
-                ))}
-              </div>
-              
-              <p className="text-xl font-bold text-center mt-8" style={{ fontFamily: 'font-serif', color: COLORS.TEXT_PRIMARY }}>
-                Most importantly — we want you to feel safe.<br />
-                Not just physically.<br />
-                Emotionally.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* This Is Personal */}
-      <section className="py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: 'font-serif', color: COLORS.TEXT_PRIMARY }}>
-              This Is Personal
-            </h2>
-          </motion.div>
-          
-          <div className="max-w-3xl mx-auto">
-            {/* Personal Image */}
-            <div className="rounded-2xl overflow-hidden mb-8" style={{ height: '400px' }}>
-              <img 
-                src="/helping_hands.png" 
-                alt="Helping hands showing support and connection"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
-            <div className="space-y-6 font-serif" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
-              <p className="text-lg">
-                Compass Connect isn't just a business.
-              </p>
-              
-              <p className="text-lg">
-                It's built from the moments we wished someone had stood beside us and said:
-              </p>
-              
-              <div className="p-8 rounded-2xl text-center my-8" style={{ backgroundColor: COLORS.COMPONENTS.CARD_BACKGROUND, border: `1px solid ${COLORS.COMPONENTS.CARD_BORDER}` }}>
-                <p className="text-2xl font-serif font-semibold mb-4" style={{ color: COLORS.TEXT_PRIMARY }}>
-                  "You're not alone in this."
-                </p>
-              </div>
-              
-              <p className="text-lg">
-                Five years from now, we want Compass Connect to be known for one thing above all:
-              </p>
-              
-              <p className="text-xl font-bold text-center mt-6" style={{ color: COLORS.ACCENT_PRIMARY }}>
-                Caring for people to a high standard.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      {/* CTA Section */}
       <CTASection />
     </div>
   );

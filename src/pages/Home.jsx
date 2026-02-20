@@ -4,6 +4,7 @@ import { createPageUrl } from "../utils";
 import { motion } from "framer-motion";
 import { ArrowRight, Quote, Sparkles, CheckCircle, Shield, Users, Plane } from "lucide-react";
 import HeroSection from "../components/compass-connect/HeroSection";
+import TrustSection from "../components/compass-connect/TrustSection";
 import StepTimeline from "../components/compass-connect/StepTimeline";
 import WhatWeDoSection from "../components/compass-connect/WhatWeDoSection";
 import WhyGroupTravel from "../components/compass-connect/WhyGroupTravel";
@@ -477,6 +478,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Trust Section - Founder Story */}
+      <TrustSection />
 
       {/* Why Group Travel Section - Emotional Justification */}
       <WhyGroupTravel />
