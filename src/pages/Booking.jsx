@@ -7,6 +7,7 @@ import LoadingSpinner from "../components/compass-connect/LoadingSpinner";
 import { TRIP_CONFIG, TRIP_STATUS, BOOKING_STATUS, USER_STATUS, HOSPITAL_REF_PREFIX } from "../constants";
 import { sendInterestConfirmationEmail } from "../services/emailService";
 import { databaseService } from "../services/databaseService";
+import { DATE_FORMATS, formatDate, parseDate, convertDateFormat } from "../utils/dateFormats";
 import { 
   BACKGROUND_PRIMARY, 
   BACKGROUND_SECONDARY,
@@ -340,47 +341,51 @@ export default function Booking() {
                 </div>
 
                 <div>
-                    <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Preferred Travel Month</Label>
+                  <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Preferred Travel Month *</Label>
                   <div className="grid grid-cols-2 gap-3 mt-1.5">
                     <div>
-                      <Select value={formData.preferred_date?.split('-')[1] || ''} onValueChange={(month) => {
-                        const year = formData.preferred_date?.split('-')[0] || '2026';
-                        updateFormData("preferred_date", `${year}-${month}`);
+                      <Select value={formData.preferred_date?.split('/')[0] || ''} onValueChange={(month) => {
+                        const year = formData.preferred_date?.split('/')[1] || '2026';
+                        updateFormData("preferred_date", `${month}/${year}`);
                       }}>
                         <SelectTrigger style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
                           <SelectValue placeholder="Month" />
                         </SelectTrigger>
-                        <SelectContent style={{ backgroundColor: BACKGROUND_PRIMARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY, border: '1px solid' }}>
-                          <SelectItem value="01" style={{ color: TEXT_PRIMARY }}>January</SelectItem>
-                          <SelectItem value="02" style={{ color: TEXT_PRIMARY }}>February</SelectItem>
-                          <SelectItem value="03" style={{ color: TEXT_PRIMARY }}>March</SelectItem>
-                          <SelectItem value="04" style={{ color: TEXT_PRIMARY }}>April</SelectItem>
-                          <SelectItem value="05" style={{ color: TEXT_PRIMARY }}>May</SelectItem>
-                          <SelectItem value="06" style={{ color: TEXT_PRIMARY }}>June</SelectItem>
-                          <SelectItem value="07" style={{ color: TEXT_PRIMARY }}>July</SelectItem>
-                          <SelectItem value="08" style={{ color: TEXT_PRIMARY }}>August</SelectItem>
-                          <SelectItem value="09" style={{ color: TEXT_PRIMARY }}>September</SelectItem>
-                          <SelectItem value="10" style={{ color: TEXT_PRIMARY }}>October</SelectItem>
-                          <SelectItem value="11" style={{ color: TEXT_PRIMARY }}>November</SelectItem>
-                          <SelectItem value="12" style={{ color: TEXT_PRIMARY }}>December</SelectItem>
+                        <SelectContent style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, borderColor: BORDERS.TEXT_SUBTLE }}>
+                          <SelectItem value="Jan">January</SelectItem>
+                          <SelectItem value="Feb">February</SelectItem>
+                          <SelectItem value="Mar">March</SelectItem>
+                          <SelectItem value="Apr">April</SelectItem>
+                          <SelectItem value="May">May</SelectItem>
+                          <SelectItem value="Jun">June</SelectItem>
+                          <SelectItem value="Jul">July</SelectItem>
+                          <SelectItem value="Aug">August</SelectItem>
+                          <SelectItem value="Sep">September</SelectItem>
+                          <SelectItem value="Oct">October</SelectItem>
+                          <SelectItem value="Nov">November</SelectItem>
+                          <SelectItem value="Dec">December</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                     <div>
-                      <Select value={formData.preferred_date?.split('-')[0] || ''} onValueChange={(year) => {
-                        const month = formData.preferred_date?.split('-')[1] || '01';
-                        updateFormData("preferred_date", `${year}-${month}`);
+                      <Select value={formData.preferred_date?.split('/')[1] || ''} onValueChange={(year) => {
+                        const month = formData.preferred_date?.split('/')[0] || 'Jan';
+                        updateFormData("preferred_date", `${month}/${year}`);
                       }}>
                         <SelectTrigger style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}>
                           <SelectValue placeholder="Year" />
                         </SelectTrigger>
-                        <SelectContent style={{ backgroundColor: BACKGROUND_PRIMARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY, border: '1px solid' }}>
-                          <SelectItem value="2026" style={{ color: TEXT_PRIMARY }}>2026</SelectItem>
-                          <SelectItem value="2027" style={{ color: TEXT_PRIMARY }}>2027</SelectItem>
+                        <SelectContent style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, borderColor: BORDERS.TEXT_SUBTLE }}>
+                          <SelectItem value="2026">2026</SelectItem>
+                          <SelectItem value="2027">2027</SelectItem>
+                          <SelectItem value="2028">2028</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
+                  <p className="text-[11px] mt-1.5" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
+                    Select your preferred travel month. This helps us plan journey dates.
+                  </p>
                 </div>
               </motion.div>
             )}

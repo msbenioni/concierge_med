@@ -127,7 +127,7 @@ export const databaseService = {
         .from('companions')
         .select('*')
         .eq('interest_id', interestId)
-        .single();
+        .maybeSingle(); // Use maybeSingle() instead of single() to handle no results
 
       if (error && error.code !== 'PGRST116') { // PGRST116 is "not found"
         throw error;
@@ -383,6 +383,158 @@ export const databaseService = {
       return { success: true, data };
     } catch (error) {
       console.error('Error fetching questionnaire stats:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  // Patient Documents
+  async uploadDocument(file, interestId, documentType, description = '') {
+    try {
+      // Generate unique file path
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filePath = `patient-documents/${interestId}/${fileName}`;
+
+      // Upload file to Supabase Storage
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('patient-documents')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL for the file
+      const { data: urlData } = supabase.storage
+        .from('patient-documents')
+        .getPublicUrl(filePath);
+
+      // Create document record in database
+      const documentData = {
+        interest_id: interestId,
+        document_type: documentType,
+        file_name: file.name,
+        file_path: filePath,
+        file_size: file.size,
+        file_type: file.type,
+        public_url: urlData.publicUrl,
+        description: description,
+        uploaded_at: new Date().toISOString()
+      };
+
+      const { data: docData, error: docError } = await supabase
+        .from('patient_documents')
+        .insert([documentData])
+        .select();
+
+      if (docError) throw docError;
+
+      return { success: true, data: docData[0] };
+    } catch (error) {
+      console.error('Error uploading document:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  async getDocumentsByInterestId(interestId) {
+    try {
+      const { data, error } = await supabase
+        .from('patient_documents')
+        .select('*')
+        .eq('interest_id', interestId)
+        .order('uploaded_at', { ascending: false });
+
+      if (error) throw error;
+      return { success: true, data };
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  async getAllDocuments() {
+    try {
+      const { data, error } = await supabase
+        .from('patient_documents')
+        .select(`
+          *,
+          interests!inner(
+            id,
+            booking_ref,
+            full_name,
+            email,
+            trip_title
+          )
+        `)
+        .order('uploaded_at', { ascending: false });
+
+      if (error) throw error;
+      return { success: true, data };
+    } catch (error) {
+      console.error('Error fetching all documents:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  async deleteDocument(documentId) {
+    try {
+      // Get document info first
+      const { data: docData, error: fetchError } = await supabase
+        .from('patient_documents')
+        .select('file_path')
+        .eq('id', documentId)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      // Delete file from storage
+      const { error: storageError } = await supabase.storage
+        .from('patient-documents')
+        .remove([docData.file_path]);
+
+      if (storageError) throw storageError;
+
+      // Delete database record
+      const { error: dbError } = await supabase
+        .from('patient_documents')
+        .delete()
+        .eq('id', documentId);
+
+      if (dbError) throw dbError;
+
+      return { success: true };
+    } catch (error) {
+      console.error('Error deleting document:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  async updateDocument(documentId, updates) {
+    try {
+      const { data, error } = await supabase
+        .from('patient_documents')
+        .update(updates)
+        .eq('id', documentId)
+        .select();
+
+      if (error) throw error;
+      return { success: true, data: data[0] };
+    } catch (error) {
+      console.error('Error updating document:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  async getDocumentById(documentId) {
+    try {
+      const { data, error } = await supabase
+        .from('patient_documents')
+        .select('*')
+        .eq('id', documentId)
+        .single();
+
+      if (error && error.code !== 'PGRST116') throw error;
+      return { success: true, data };
+    } catch (error) {
+      console.error('Error fetching document:', error);
       return { success: false, error: error.message };
     }
   }

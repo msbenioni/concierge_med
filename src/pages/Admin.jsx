@@ -25,7 +25,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
-  FileText
+  FileText,
+  Upload
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,8 +34,11 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import CompanionModal from "../components/CompanionModal";
+import DocumentUpload from "../components/DocumentUpload";
+import DocumentList from "../components/DocumentList";
 import { TRIP_CONFIG, TRIP_STATUS, BOOKING_STATUS, USER_STATUS, HOSPITAL_REF_PREFIX } from "../constants";
 import { databaseService } from "../services/databaseService";
+import { DATE_FORMATS, formatDate, parseDate, convertDateFormat } from "../utils/dateFormats";
 import { 
   BACKGROUND_PRIMARY, 
   TEXT_PRIMARY, 
@@ -62,8 +66,13 @@ export default function Admin() {
   const [notifications, setNotifications] = useState([]);
   const [companions, setCompanions] = useState({});
   const [editingFields, setEditingFields] = useState({});
+  const [travelerCosts, setTravelerCosts] = useState({});
   const [showCompanionModal, setShowCompanionModal] = useState(false);
   const [selectedInterestId, setSelectedInterestId] = useState(null);
+  const [showDocumentModal, setShowDocumentModal] = useState(false);
+  const [selectedDocumentInterestId, setSelectedDocumentInterestId] = useState(null);
+  const [showDocumentList, setShowDocumentList] = useState(false);
+  const [selectedListInterestId, setSelectedListInterestId] = useState(null);
   const [search, setSearch] = useState("");
   const [isLoadingTrips, setIsLoadingTrips] = useState(false);
   const [isLoadingNotifications, setIsLoadingNotifications] = useState(false);
@@ -75,54 +84,48 @@ export default function Admin() {
   const [itemsPerPage, setItemsPerPage] = useState(20);
 
   // Initialize with database data
-  useEffect(() => {
-    const loadData = async () => {
-      setIsLoadingTrips(true);
+  const loadData = async () => {
+    try {
       setIsLoadingNotifications(true);
       setError(null);
       setLoading(true);
       
-      try {
-        // Load trips from database
-        const tripsResult = await databaseService.getAllTrips();
-        if (tripsResult.success) {
-          setTrips(tripsResult.data);
-        } else {
-          console.error('Failed to load trips:', tripsResult.error);
-          // Fallback to mock data if database fails
-          const { mockTrips } = await import("../data/mockData");
-          setTrips(mockTrips);
+      // Load interests
+      const interestsResult = await databaseService.getInterests();
+      if (interestsResult.success) {
+        setNotifications(interestsResult.data);
+        
+        // Load existing companions for these interests
+        const companionsData = {};
+        for (const notification of interestsResult.data) {
+          const companionResult = await databaseService.getCompanionByInterestId(notification.id);
+          if (companionResult.success && companionResult.data) {
+            companionsData[notification.id] = companionResult.data;
+          }
         }
-
-        // Load interests/notifications from database
-        const interestsResult = await databaseService.getInterests();
-        if (interestsResult.success) {
-          setNotifications(interestsResult.data);
-          // No companions needed - travelers are solo
-          setCompanions({});
-        } else {
-          console.error('Failed to load interests:', interestsResult.error);
-          // Fallback to mock data if database fails
-          const { mockNotifications } = await import("../data/mockData");
-          setNotifications(mockNotifications);
-        }
-      } catch (err) {
-        setError("Failed to load data. Please try again.");
-        console.error("Error loading admin data:", err);
-        // Fallback to mock data
-        try {
-          const { mockTrips, mockNotifications } = await import("../data/mockData");
-          setTrips(mockTrips);
-          setNotifications(mockNotifications);
-        } catch (fallbackErr) {
-          console.error("Failed to load fallback data:", fallbackErr);
-        }
-      } finally {
-        setIsLoadingTrips(false);
-        setIsLoadingNotifications(false);
+        setCompanions(companionsData);
+      } else {
+        console.error('Failed to load interests:', interestsResult.error);
+        // Fallback to mock data if database fails
+        const { mockNotifications } = await import("../data/mockData");
+        setNotifications(mockNotifications);
       }
-    };
+    } catch (err) {
+      setError("Failed to load data. Please try again.");
+      console.error("Error loading admin data:", err);
+      // Fallback to mock data
+      try {
+        const { mockNotifications } = await import("../data/mockData");
+        setNotifications(mockNotifications);
+      } catch (fallbackErr) {
+        console.error("Failed to load fallback data:", fallbackErr);
+      }
+    } finally {
+      setIsLoadingNotifications(false);
+    }
+  };
 
+  useEffect(() => {
     loadData();
   }, []);
 
@@ -414,6 +417,22 @@ export default function Admin() {
     setShowCompanionModal(true);
   };
 
+  // Document handlers
+  const handleAddDocument = (interestId) => {
+    setSelectedDocumentInterestId(interestId);
+    setShowDocumentModal(true);
+  };
+
+  const handleViewDocuments = (interestId) => {
+    setSelectedListInterestId(interestId);
+    setShowDocumentList(true);
+  };
+
+  const handleDocumentUploadSuccess = () => {
+    // Refresh the notifications list to show updated document count
+    loadData();
+  };
+
   const handleCompanionSubmit = async (companionData) => {
     const result = await databaseService.createCompanion({
       ...companionData,
@@ -520,7 +539,7 @@ export default function Admin() {
         companion ? companion.email : '',
         companion ? `$${companion.companion_cost}` : '',
         companion ? companion.payment_status : '',
-        notification.created_at ? new Date(notification.created_at).toLocaleDateString() : ''
+        notification.created_at ? formatDate(new Date(notification.created_at), DATE_FORMATS.DISPLAY) : ''
       ];
     });
     
@@ -557,7 +576,7 @@ export default function Admin() {
         </head>
         <body>
           <h1>Compass Connect - Interests Export</h1>
-          <p>Generated: ${new Date().toLocaleDateString()}</p>
+          <p>Generated: ${formatDate(new Date(), DATE_FORMATS.DISPLAY)}</p>
           <p>Total Records: ${filteredNotifications.length}</p>
           <table>
             <thead>
@@ -598,7 +617,7 @@ export default function Admin() {
                   <td>${companion ? companion.email : ''}</td>
                   <td>${companion ? `$${companion.companion_cost}` : ''}</td>
                   <td>${companion ? companion.payment_status : ''}</td>
-                  <td>${notification.created_at ? new Date(notification.created_at).toLocaleDateString() : ''}</td>
+                  <td>${notification.created_at ? formatDate(new Date(notification.created_at), DATE_FORMATS.DISPLAY) : ''}</td>
                 </tr>
                 `;
               }).join('')}
@@ -661,6 +680,14 @@ export default function Admin() {
         ...prev[notificationId],
         [field]: value
       }
+    }));
+  };
+
+  const handleTravelerCostChange = (notificationId, value) => {
+    // Update traveler cost data
+    setTravelerCosts(prev => ({
+      ...prev,
+      [notificationId]: value
     }));
   };
 
@@ -781,7 +808,7 @@ export default function Admin() {
                       <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-32">
                         Created At
                       </th>
-                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-48">
+                      <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-56">
                         Ref
                       </th>
                       <th className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-72">
@@ -894,10 +921,10 @@ export default function Admin() {
                       <tr key={notification.id} className="border-b border-gray-200 hover:bg-gray-50">
                         {/* Created At */}
                         <td className="border border-gray-200 px-3 py-2 w-32 text-xs text-gray-600">
-                          {notification.created_at ? new Date(notification.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' }) : ''}
+                          {notification.created_at ? formatDate(new Date(notification.created_at), DATE_FORMATS.DISPLAY) : ''}
                         </td>
                         {/* Ref */}
-                        <td className="border border-gray-200 px-3 py-2 w-24">
+                        <td className="border border-gray-200 px-3 py-2 w-32">
                           <Input
                             type="text"
                             value={getFieldValue(notification, 'booking_ref') || `CC-${String(notification.id).padStart(4, '0')}`}
@@ -992,8 +1019,9 @@ export default function Admin() {
                         <td className="border border-gray-200 px-3 py-2 w-32">
                           <Input
                             type="month"
-                            value={getFieldValue(notification, 'preferred_date') || ''}
-                            onChange={(e) => handleFieldChange(notification.id, 'preferred_date', e.target.value)}
+                            value={getFieldValue(notification, 'preferred_date') ? 
+                              convertDateFormat(getFieldValue(notification, 'preferred_date'), DATE_FORMATS.PREFERRED_MONTH, DATE_FORMATS.HTML_MONTH_INPUT) : ''}
+                            onChange={(e) => handleFieldChange(notification.id, 'preferred_date', convertDateFormat(e.target.value, DATE_FORMATS.HTML_MONTH_INPUT, DATE_FORMATS.PREFERRED_MONTH))}
                             className="text-sm text-gray-900 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500"
                           />
                         </td>
@@ -1153,7 +1181,7 @@ export default function Admin() {
                               value={companions[notification.id].companion_cost || ''}
                               onChange={(e) => handleCompanionFieldChange(notification.id, 'companion_cost', e.target.value ? parseInt(e.target.value) : '')}
                               placeholder="2000"
-                              className="text-sm text-gray-900 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500 w-20"
+                              className="text-sm text-gray-900 border-0 bg-transparent px-2 py-1 h-6 focus:ring-1 focus:ring-blue-500 w-24"
                             />
                           ) : (
                             <div className="text-sm text-gray-400">-</div>
@@ -1181,23 +1209,55 @@ export default function Admin() {
                         <td className="border border-gray-200 px-3 py-2 w-32">
                           <Input
                             type="number"
-                            value={editingFields[`${notification.id}-traveler_cost`] || ''}
-                            onChange={(e) => handleFieldChange(notification.id, 'traveler_cost', e.target.value ? parseInt(e.target.value) : '')}
+                            value={travelerCosts[notification.id] || ''}
+                            onChange={(e) => handleTravelerCostChange(notification.id, e.target.value ? parseInt(e.target.value) : '')}
                             placeholder="4000"
-                            className="text-sm text-gray-900 border-0 bg-transparent p-0 h-6 focus:ring-1 focus:ring-blue-500 w-20"
+                            className="text-sm text-gray-900 border-0 bg-transparent px-2 py-1 h-6 focus:ring-1 focus:ring-blue-500 w-24"
                           />
                         </td>
 
                         {/* Total Cost */}
                         <td className="border border-gray-200 px-3 py-2 w-32">
                           <div className="text-sm font-medium text-gray-900">
-                            ${((editingFields[`${notification.id}-traveler_cost`] ? parseInt(editingFields[`${notification.id}-traveler_cost`]) : 0) + (companions[notification.id] && companions[notification.id].companion_cost ? parseInt(companions[notification.id].companion_cost) : 0))}
+                            ${(travelerCosts[notification.id] ? parseInt(travelerCosts[notification.id]) : 0) + (companions[notification.id] && companions[notification.id].companion_cost ? parseInt(companions[notification.id].companion_cost) : 0)}
                           </div>
                         </td>
 
                         {/* Actions */}
                         <td className="border border-gray-200 px-3 py-2 w-40">
                           <div className="flex items-center gap-1 justify-center">
+                            {/* Document Management Buttons */}
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 w-7 p-0"
+                              title="View documents"
+                              onClick={() => handleViewDocuments(notification.id)}
+                            >
+                              <FileText className="w-3.5 h-3.5 text-blue-500" />
+                            </Button>
+                            
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 w-7 p-0"
+                              title="Upload document"
+                              onClick={() => handleAddDocument(notification.id)}
+                            >
+                              <Upload className="w-3.5 h-3.5 text-green-500" />
+                            </Button>
+                            
+                            {/* Companion Button */}
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 w-7 p-0"
+                              title="Manage companion"
+                              onClick={() => handleAddCompanion(notification.id)}
+                            >
+                              <Users className="w-3.5 h-3.5 text-purple-500" />
+                            </Button>
+                            
                             {getFieldValue(notification, 'payment_link_url') ? (
                               <>
                                 <Button
@@ -1482,6 +1542,75 @@ export default function Admin() {
       onSubmit={handleCompanionSubmit}
       interestData={notifications.find(n => n.id === selectedInterestId)}
     />
+
+    {/* Document Upload Modal */}
+    {showDocumentModal && (
+      <DocumentUpload
+        interestId={selectedDocumentInterestId}
+        onUploadSuccess={handleDocumentUploadSuccess}
+        onClose={() => {
+          setShowDocumentModal(false);
+          setSelectedDocumentInterestId(null);
+        }}
+      />
+    )}
+
+    {/* Document List Modal */}
+    {showDocumentList && (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+        onClick={() => setShowDocumentList(false)}
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          className="bg-white rounded-2xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: COLORS.ACCENT_PRIMARY }}>
+                  <FileText className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold" style={{ color: COMPONENTS.TEXT_PRIMARY }}>Patient Documents</h2>
+                  <p className="text-sm" style={{ color: COMPONENTS.TEXT_MUTED }}>Manage patient-related documents</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  onClick={() => handleAddDocument(selectedListInterestId)}
+                  className="rounded-xl"
+                  style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Upload Document
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowDocumentList(false)}
+                  className="rounded-full"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+            
+            <DocumentList
+              interestId={selectedListInterestId}
+              patientInfo={notifications.find(n => n.id === selectedListInterestId)}
+              onDocumentDeleted={handleDocumentUploadSuccess}
+            />
+          </div>
+        </motion.div>
+      </motion.div>
+    )}
     </div>
   );
 }
