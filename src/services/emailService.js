@@ -1,11 +1,11 @@
 export const sendInterestConfirmationEmail = async (bookingData) => {
   try {
-    const { email, first_name, last_name, booking_ref, phone } = bookingData;
+    const { email, full_name, booking_ref, phone } = bookingData;
     
     console.log('📧 Starting secure email send process...');
     console.log('📧 To:', email);
     console.log('📧 Ref:', booking_ref);
-    console.log('📧 Name:', `${first_name} ${last_name}`);
+    console.log('📧 Name:', full_name);
     
     // Call the secure Netlify function
     const response = await fetch('/.netlify/functions/send-email', {
@@ -15,8 +15,7 @@ export const sendInterestConfirmationEmail = async (bookingData) => {
       },
       body: JSON.stringify({
         email,
-        first_name,
-        last_name,
+        full_name,
         booking_ref,
         phone
       })

@@ -15,20 +15,20 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { email, first_name, last_name, booking_ref, phone } = JSON.parse(event.body);
+    const { email, full_name, booking_ref, phone } = JSON.parse(event.body);
     
     console.log('📧 Server-side email send process starting...');
     console.log('📧 To:', email);
     console.log('📧 Ref:', booking_ref);
-    console.log('📧 Name:', `${first_name} ${last_name}`);
+    console.log('📧 Name:', full_name);
 
     // Validate required fields
-    if (!email || !first_name || !last_name || !booking_ref) {
+    if (!email || !full_name || !booking_ref) {
       return {
         statusCode: 400,
         body: JSON.stringify({ 
           success: false, 
-          error: 'Missing required fields: email, first_name, last_name, booking_ref' 
+          error: 'Missing required fields: email, full_name, booking_ref' 
         })
       };
     }

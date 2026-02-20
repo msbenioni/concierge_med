@@ -131,27 +131,17 @@ export default function Layout({ children, currentPageName }) {
               className="lg:hidden overflow-hidden"
               style={{ borderTop: `1px solid ${BORDERS.ACCENT_SUBTLE}` }}
             >
-              <nav className="px-5 py-4 flex flex-col gap-1">
+              <nav className="px-4 py-3 flex flex-col gap-2">
                 {NAV_ITEMS.map((item) => (
                   <Link
                     key={item.page}
                     to={createPageUrl(item.page)}
                     onClick={() => setMobileOpen(false)}
-                    className={`px-4 py-3 rounded-xl text-sm font-medium transition-all`}
-                    style={{
-                      backgroundColor: currentPageName === item.page ? COLORS.ACCENT_PRIMARY : 'transparent',
-                      color: currentPageName === item.page ? COMPONENTS.BUTTON_PRIMARY_TEXT : TEXT_PRIMARY
-                    }}
-                    onMouseEnter={(e) => {
-                      if (currentPageName !== item.page) {
-                        e.target.style.backgroundColor = COLORS.ACCENT_PRIMARY_ALPHA_20;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (currentPageName !== item.page) {
-                        e.target.style.backgroundColor = 'transparent';
-                      }
-                    }}
+                    className={`text-sm font-medium transition-all duration-200 pb-1 border-b-2 ${
+                      currentPageName === item.page 
+                        ? 'border-[#C79A3A] text-[#C79A3A]' 
+                        : 'border-transparent text-[#2C2623] hover:border-[#C79A3A] hover:text-[#C79A3A]'
+                    }`}
                   >
                     {item.label}
                   </Link>
@@ -159,8 +149,7 @@ export default function Layout({ children, currentPageName }) {
                 <Link
                   to={createPageUrl("Booking")}
                   onClick={() => setMobileOpen(false)}
-                  className="mt-2 px-5 py-3 rounded-xl text-sm font-semibold text-center"
-                  style={{ backgroundColor: COMPONENTS.STATUS_WARNING, color: TEXT_PRIMARY_ALPHA_50 }}
+                  className="mt-3 text-sm font-semibold text-center text-[#2C2623] hover:text-[#C79A3A] transition-all duration-200 pb-1 border-b-2 border-transparent hover:border-[#C79A3A]"
                 >
                   Register Your Interest →
                 </Link>

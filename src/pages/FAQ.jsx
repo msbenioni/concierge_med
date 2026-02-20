@@ -114,7 +114,7 @@ function FAQItem({ question, answer }) {
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between py-5 text-left group"
       >
-        <span className="font-sans font-medium text-sm pr-8 transition-colors" style={{ color: TEXT_PRIMARY }} onMouseEnter={(e) => e.target.style.color = ACCENT_PRIMARY} onMouseLeave={(e) => e.target.style.color = TEXT_PRIMARY}>
+        <span className="font-sans font-medium text-sm pr-8 transition-colors" style={{ color: TEXT_PRIMARY }} onMouseEnter={(e) => e.target.style.color = COLORS.ACCENT_PRIMARY} onMouseLeave={(e) => e.target.style.color = TEXT_PRIMARY}>
           {question}
         </span>
         <ChevronDown
@@ -122,7 +122,7 @@ function FAQItem({ question, answer }) {
             open ? "rotate-180" : ""
           }`}
           style={{ color: TEXT_PRIMARY_ALPHA_50 }}
-          onMouseEnter={(e) => e.target.style.color = ACCENT_PRIMARY}
+          onMouseEnter={(e) => e.target.style.color = COLORS.ACCENT_PRIMARY}
           onMouseLeave={(e) => e.target.style.color = TEXT_PRIMARY_ALPHA_50}
         />
       </button>
@@ -155,7 +155,7 @@ export default function FAQ() {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] mb-4 block" style={{ color: ACCENT_PRIMARY }}>
+          <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] mb-4 block" style={{ color: COLORS.ACCENT_PRIMARY }}>
             Questions & Clarity
           </span>
           <h1 className="font-serif text-4xl md:text-5xl mb-4" style={{ color: TEXT_PRIMARY }}>
@@ -176,7 +176,7 @@ export default function FAQ() {
             className="mb-12"
           >
             <div className="flex items-center gap-2 mb-4">
-              <HelpCircle className="w-4 h-4" style={{ color: ACCENT_PRIMARY }} />
+              <HelpCircle className="w-4 h-4" style={{ color: COLORS.ACCENT_PRIMARY }} />
               <h2 className="font-serif text-xl" style={{ color: TEXT_PRIMARY }}>{section.category}</h2>
             </div>
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">

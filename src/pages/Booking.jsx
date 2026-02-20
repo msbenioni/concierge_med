@@ -125,7 +125,6 @@ export default function Booking() {
       flight_status: "not_started",
       accommodation_status: "not_started",
       transfers_status: "not_started",
-      q_form_clicked: false,
       notes: `Mobility needs: ${formData.mobility_needs || 'None'} | Dietary: ${formData.dietary_notes || 'None'} | Special requests: ${formData.special_requests || 'None'}`,
     };
     
