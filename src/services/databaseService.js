@@ -39,6 +39,25 @@ export const databaseService = {
     }
   },
 
+  async getInterestByRef(bookingRef) {
+    try {
+      const { data, error } = await supabase
+        .from('interests')
+        .select('*')
+        .eq('booking_ref', bookingRef)
+        .single();
+
+      if (error && error.code !== 'PGRST116') { // PGRST116 is "not found"
+        throw error;
+      }
+      
+      return { success: true, data };
+    } catch (error) {
+      console.error('Error fetching interest by ref:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
   async updateInterest(interestId, updates) {
     try {
       const { data, error } = await supabase

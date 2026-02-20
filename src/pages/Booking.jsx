@@ -57,7 +57,7 @@ export default function Booking() {
   const [submitting, setSubmitting] = useState(false);
   const [userSubmitted, setUserSubmitted] = useState(false); // Track if user actually clicked submit
   const [formData, setFormData] = useState({
-    name: "",
+    full_name: "",
     email: "",
     phone: "",
     country: "",
@@ -109,8 +109,7 @@ export default function Booking() {
     const ref = generateBookingRef();
     const booking = {
       booking_ref: ref,
-      first_name: formData.name.split(' ')[0] || formData.name,
-      last_name: formData.name.split(' ').slice(1).join(' ') || '',
+      full_name: formData.full_name,
       email: formData.email,
       phone: formData.phone,
       country: formData.country,
@@ -126,7 +125,7 @@ export default function Booking() {
       flight_status: "not_started",
       accommodation_status: "not_started",
       transfers_status: "not_started",
-      questionnaire_complete: false,
+      q_form_clicked: false,
       notes: `Mobility needs: ${formData.mobility_needs || 'None'} | Dietary: ${formData.dietary_notes || 'None'} | Special requests: ${formData.special_requests || 'None'}`,
     };
     
@@ -262,8 +261,8 @@ export default function Booking() {
                 <h2 className="font-serif text-2xl mb-6" style={{ color: TEXT_PRIMARY }}>Traveler Details</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Full Name *</Label>
-                    <Input value={formData.name} onChange={(e) => updateFormData("name", e.target.value)} placeholder="Jane Doe" className="mt-1.5" style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, border: `1px solid ${COMPONENTS.INPUT_BORDER}`, color: COMPONENTS.INPUT_TEXT }} />
+                    <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Full Name (as per passport) *</Label>
+                    <Input value={formData.full_name} onChange={(e) => updateFormData("full_name", e.target.value)} placeholder="Jane Doe" className="mt-1.5" style={{ backgroundColor: COMPONENTS.INPUT_BACKGROUND, border: `1px solid ${COMPONENTS.INPUT_BORDER}`, color: COMPONENTS.INPUT_TEXT }} />
                   </div>
                   <div>
                     <Label className="text-xs font-sans" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Email *</Label>

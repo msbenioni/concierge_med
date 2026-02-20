@@ -63,7 +63,7 @@ exports.handler = async (event, context) => {
           <div style="background: #FFFFFF; padding: 30px; border-radius: 16px; margin-bottom: 30px; border: 1px solid rgba(44, 38, 35, 0.15); box-shadow: 0 4px 6px rgba(44, 38, 35, 0.08);">
             <h2 style="color: #2C2623; font-size: 24px; font-weight: 600; margin-bottom: 16px; line-height: 1.3;">Interest Registration Confirmed</h2>
             <p style="color: #4A4541; font-size: 16px; line-height: 1.6; margin-bottom: 16px;">
-              Dear ${first_name} ${last_name},
+              Dear ${full_name},
             </p>
             <p style="color: #4A4541; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
               Thank you for registering your interest with Compass Connect. We're here to support you on your medical journey with personalized care and attention.

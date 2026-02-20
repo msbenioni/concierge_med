@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useSearchParams } from "react-router-dom";
 import { 
   BACKGROUND_PRIMARY, 
   TEXT_PRIMARY, 
@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Plus, X, Calendar, User, MapPin, FileText } from 'lucide-react';
+import LoadingSpinner from "../components/compass-connect/LoadingSpinner";
 
 const OrganizeTravel = () => {
   const [searchParams] = useSearchParams();
@@ -49,6 +50,39 @@ const OrganizeTravel = () => {
   const [companions, setCompanions] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch existing interest data when component mounts
+  useEffect(() => {
+    const fetchInterestData = async () => {
+      if (!bookingRef) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const { databaseService } = await import('../services/databaseService');
+        const result = await databaseService.getInterestByRef(bookingRef);
+        
+        if (result.success && result.data) {
+          const interest = result.data;
+          setFormData(prev => ({
+            ...prev,
+            fullName: interest.full_name || '',
+            city: interest.departure_city || '',
+            country: interest.country || '',
+            phoneNumber: interest.phone || ''
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching interest data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInterestData();
+  }, [bookingRef]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -99,6 +133,22 @@ const OrganizeTravel = () => {
       setSubmitting(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen" style={{ backgroundColor: BACKGROUND_PRIMARY }}>
+        <div className="container mx-auto px-4 py-12">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center">
+              <LoadingSpinner />
+              <h1 className="font-serif text-3xl mb-4 mt-6" style={{ color: TEXT_PRIMARY }}>Loading Your Information...</h1>
+              <p style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Please wait while we prepare your travel details.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (submitted) {
     return (
