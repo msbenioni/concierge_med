@@ -184,12 +184,24 @@ export default function Booking() {
     }
   };
 
-  const handleQuestionnaireClick = (bookingRef) => {
-    // Track the click
-    trackQuestionnaireClick(bookingRef);
-    
-    // Open the external questionnaire
-    window.open(import.meta.env.REACT_APP_PARTNER_LINK_MBC || 'https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120', '_blank');
+  const handleQuestionnaireClick = async (bookingRef) => {
+    try {
+      // Track the click first
+      await trackQuestionnaireClick(bookingRef);
+      
+      // Get the partner link with booking reference
+      const partnerLink = import.meta.env.REACT_APP_PARTNER_LINK_MBC || 'https://mexicobariatriccenter.com/health-questionnaire/';
+      const questionnaireUrl = `${partnerLink}?RefID=${bookingRef}`;
+      
+      // Open the external questionnaire in a new tab
+      window.open(questionnaireUrl, '_blank', 'noopener,noreferrer');
+      
+    } catch (error) {
+      console.error('Error opening questionnaire:', error);
+      // Fallback: open without tracking if tracking fails
+      const fallbackUrl = 'https://mexicobariatriccenter.com/health-questionnaire/?RefID=' + bookingRef;
+      window.open(fallbackUrl, '_blank', 'noopener,noreferrer');
+    }
   };
 
   const validateStep = () => {
@@ -390,34 +402,34 @@ export default function Booking() {
                     backdropFilter: "blur(16px)",
                   }}
                 >
-                  <div className="flex items-start gap-4">
+                  <div className="flex flex-col items-center text-center">
                     <div
-                      className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+                      className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
                       style={{ background: GRADIENTS.ACCENT_PRIMARY }}
                     >
-                      <FileText className="w-6 h-6" style={{ color: TEXT_PRIMARY }} />
+                      <FileText className="w-8 h-8" style={{ color: TEXT_PRIMARY }} />
                     </div>
 
-                    <div className="flex-1">
+                    <div className="max-w-2xl">
                       <p
-                        className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] mb-2"
+                        className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] mb-3"
                         style={{ color: TEXT_PRIMARY_ALPHA_60 }}
                       >
                         Next step required
                       </p>
 
-                      <h2 className="font-serif text-3xl mb-2" style={{ color: TEXT_PRIMARY }}>
+                      <h2 className="font-serif text-3xl mb-3" style={{ color: TEXT_PRIMARY }}>
                         Complete the Health Questionnaire
                       </h2>
 
-                      <p className="text-base mb-6" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
+                      <p className="text-base mb-8" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
                         Your hospital quote can't be created until this is submitted. It takes{" "}
                         <span style={{ color: TEXT_PRIMARY, fontWeight: 600 }}>5–10 minutes</span>.
                       </p>
 
                       <Button
                         type="button"
-                        className="w-full md:w-auto rounded-2xl px-8 py-6 text-base font-semibold shadow-lg"
+                        className="w-full md:w-auto rounded-2xl px-8 py-4 text-base font-semibold shadow-lg"
                         style={{
                           background: GRADIENTS.ACCENT_PRIMARY,
                           color: TEXT_PRIMARY,

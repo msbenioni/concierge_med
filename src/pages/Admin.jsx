@@ -98,16 +98,8 @@ export default function Admin() {
         const interestsResult = await databaseService.getInterests();
         if (interestsResult.success) {
           setNotifications(interestsResult.data);
-          
-          // Load companions for each interest
-          const companionsData = {};
-          for (const interest of interestsResult.data) {
-            const companionResult = await databaseService.getCompanionByInterestId(interest.id);
-            if (companionResult.success && companionResult.data) {
-              companionsData[interest.id] = companionResult.data;
-            }
-          }
-          setCompanions(companionsData);
+          // No companions needed - travelers are solo
+          setCompanions({});
         } else {
           console.error('Failed to load interests:', interestsResult.error);
           // Fallback to mock data if database fails

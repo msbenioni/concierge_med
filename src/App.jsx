@@ -41,8 +41,8 @@ function App() {
           } />
           {Object.entries(Pages).map(([path, Page]) => (
             <Route
-              key={path}
-              path={`/${path}`}
+              key={path.toLowerCase()}
+              path={`/${path.toLowerCase()}`}
               element={
                 <LayoutWrapper currentPageName={path}>
                   <Page />
