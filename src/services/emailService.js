@@ -1,119 +1,53 @@
-import { Resend } from 'resend';
-
-const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
-
 export const sendInterestConfirmationEmail = async (bookingData) => {
   try {
     const { email, first_name, last_name, booking_ref, phone } = bookingData;
     
-    console.log('📧 Starting email send process...');
+    console.log('📧 Starting secure email send process...');
     console.log('📧 To:', email);
     console.log('📧 Ref:', booking_ref);
     console.log('📧 Name:', `${first_name} ${last_name}`);
     
-    // Check if Resend API key is available
-    if (!import.meta.env.VITE_RESEND_API_KEY) {
-      console.error('❌ VITE_RESEND_API_KEY not found in environment variables');
-      return { success: false, error: 'Email service not configured' };
-    }
-    
-    console.log('📧 Resend API key found, proceeding...');
-    
-    const emailContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="color: #2563eb; margin-bottom: 10px;">Compass Connect</h1>
-          <p style="color: #64748b; font-size: 16px;">Medical Journey Support System</p>
-        </div>
-        
-        <div style="background: #f8fafc; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
-          <h2 style="color: #1e293b; margin-bottom: 20px;">Interest Registration Confirmed</h2>
-          <p style="color: #475569; line-height: 1.6; margin-bottom: 20px;">
-            Dear ${first_name} ${last_name},
-          </p>
-          <p style="color: #475569; line-height: 1.6; margin-bottom: 20px;">
-            Thank you for registering your interest with Compass Connect. We're here to support you on your medical journey.
-          </p>
-          <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #2563eb; margin-bottom: 20px;">
-            <p style="margin: 0; color: #1e293b;"><strong>Your Interest Reference:</strong></p>
-            <p style="margin: 5px 0 0 0; font-size: 24px; font-weight: bold; color: #2563eb;">${booking_ref}</p>
-          </div>
-        </div>
-        
-        <div style="background: #f0f9ff; padding: 25px; border-radius: 10px; margin-bottom: 30px;">
-          <h3 style="color: #0369a1; margin-bottom: 15px;">Next Steps</h3>
-          <ol style="color: #475569; line-height: 1.8; padding-left: 20px;">
-            <li style="margin-bottom: 10px;"><strong>Complete Health Questionnaire:</strong> Click the link below to fill out your health questionnaire</li>
-            <li style="margin-bottom: 10px;"><strong>Receive Hospital Quote:</strong> We'll email you a personalized quote from our trusted hospital partners</li>
-            <li style="margin-bottom: 10px;"><strong>Organize Travel:</strong> Use your hospital reference to arrange travel with Compass Connect</li>
-            <li style="margin-bottom: 10px;"><strong>Group Support:</strong> Join our supportive community of travelers</li>
-          </ol>
-        </div>
-        
-        <div style="text-align: center; margin-bottom: 30px;">
-          <a href="${typeof window !== 'undefined' ? window.location.origin : ''}/questionnaire?ref=${booking_ref}" 
-             style="background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
-            Complete Health Questionnaire
-          </a>
-          <p style="color: #64748b; font-size: 12px; margin-top: 10px;">
-            Link: ${typeof window !== 'undefined' ? window.location.origin : ''}/questionnaire?ref=${booking_ref}
-          </p>
-        </div>
-        
-        <div style="background: #fef3c7; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
-          <h4 style="color: #92400e; margin-bottom: 10px;">Important Information</h4>
-          <ul style="color: #78350f; line-height: 1.6; padding-left: 20px; margin: 0;">
-            <li style="margin-bottom: 8px;">Keep your interest reference (${booking_ref}) for all communications</li>
-            <li style="margin-bottom: 8px;">Hospital quotes are typically sent within 2-3 business days</li>
-            <li style="margin-bottom: 8px;">You can use your hospital reference to organize travel once you receive your quote</li>
-          </ul>
-        </div>
-        
-        <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center;">
-          <p style="color: #64748b; font-size: 14px; margin-bottom: 10px;">
-            If you have any questions, please contact us at support@compassconnect.com
-          </p>
-          <p style="color: #64748b; font-size: 12px;">
-            Compass Connect - Supporting you every step of the way
-          </p>
-        </div>
-      </div>
-    `;
-
-    const response = await resend.emails.send({
-      from: 'Compass Connect <noreply@compassconnect.com>',
-      to: [email],
-      subject: `Interest Confirmation - Reference: ${booking_ref}`,
-      html: emailContent,
+    // Call the secure Netlify function
+    const response = await fetch('/.netlify/functions/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        first_name,
+        last_name,
+        booking_ref,
+        phone
+      })
     });
 
-    // Check if the response actually indicates success
-    if (response && response.id) {
-      console.log('Email sent successfully:', response);
-      return { success: true, data: response };
+    const result = await response.json();
+
+    if (response.ok && result.success) {
+      console.log('✅ Email sent successfully via secure function:', result.data);
+      return { success: true, data: result.data };
     } else {
-      console.error('Email failed to send:', response);
+      console.error('❌ Email failed to send:', result.error);
       
       // Development fallback: show email content in console
       if (import.meta.env.DEV) {
-        console.log('📧 EMAIL CONTENT (Development Mode - Email Not Sent):');
+        console.log('📧 EMAIL CONTENT (Development Mode - Email Failed):');
         console.log('To:', email);
         console.log('Subject:', `Interest Confirmation - Reference: ${booking_ref}`);
-        console.log('Content:', emailContent);
+        console.log('Error:', result.error);
       }
       
-      return { success: false, error: 'Email service returned no response ID' };
+      return { success: false, error: result.error || 'Unknown error occurred' };
     }
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('❌ Error calling email function:', error);
     
-    // Development fallback: show email content in console
+    // Development fallback: show error details
     if (import.meta.env.DEV) {
-      console.log('📧 EMAIL CONTENT (Development Mode - Email Failed):');
-      console.log('To:', email);
-      console.log('Subject:', `Interest Confirmation - Reference: ${booking_ref}`);
-      console.log('Content:', emailContent);
+      console.log('📧 EMAIL FUNCTION ERROR (Development Mode):');
       console.log('Error:', error.message);
+      console.log('This might be a network error or the function is not deployed yet.');
     }
     
     return { success: false, error: error.message };
