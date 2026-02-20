@@ -161,8 +161,8 @@ CREATE POLICY "Enable all operations on users" ON users
 
 -- 8. Insert sample featured trips (optional - you can remove these)
 INSERT INTO trips (title, departure_city, destination, departure_date, return_date, confirmed_count, min_travelers, price, status, hospital_approved, hospital_reference, image_url, featured, description) VALUES
-('Auckland Medical Journey', 'Auckland', 'Tijuana, Mexico', '2024-03-15', '2024-03-22', 6, 4, 4000.00, 'available', true, 'MBC-2024-0315', '/mexico/medical-facility-1.jpg', true, 'Complete medical journey package from Auckland to Tijuana with accommodation and transfers included.'),
-('Sydney Medical Journey', 'Sydney', 'Tijuana, Mexico', '2024-04-12', '2024-04-19', 3, 4, 4000.00, 'available', true, 'MBC-2024-0412', '/mexico/medical-facility-2.jpg', true, 'All-inclusive medical travel package from Sydney with premium hospital partnerships.');
+('Auckland Medical Journey', 'Auckland', 'Tijuana, Mexico', '2024-03-15', '2024-03-22', 6, 4, 4000.00, 'available', true, 'MBC-2024-0315', '/mexico/mexico_city.jpeg', true, 'Complete medical journey package from Auckland to Tijuana with accommodation and transfers included.'),
+('Sydney Medical Journey', 'Sydney', 'Tijuana, Mexico', '2024-04-12', '2024-04-19', 3, 4, 4000.00, 'available', true, 'MBC-2024-0412', '/mexico/san_miguel.jpeg', true, 'All-inclusive medical travel package from Sydney with premium hospital partnerships.');
 
 -- 9. Create updated_at trigger function (if not exists)
 CREATE OR REPLACE FUNCTION update_updated_at_column()

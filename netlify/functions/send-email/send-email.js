@@ -77,12 +77,12 @@ exports.handler = async (event, context) => {
         </div>
         
         <div style="text-align: center; margin-bottom: 30px;">
-          <a href="${process.env.SITE_URL || 'https://your-domain.com'}/questionnaire?ref=${booking_ref}" 
+          <a href="${process.env.SITE_URL || 'https://compassconnect.vip'}/questionnaire?ref=${booking_ref}" 
              style="background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
             Complete Health Questionnaire
           </a>
           <p style="color: #64748b; font-size: 12px; margin-top: 10px;">
-            Link: ${process.env.SITE_URL || 'https://your-domain.com'}/questionnaire?ref=${booking_ref}
+            Link: ${process.env.SITE_URL || 'https://compassconnect.vip'}/questionnaire?ref=${booking_ref}
           </p>
         </div>
         
@@ -97,7 +97,7 @@ exports.handler = async (event, context) => {
         
         <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center;">
           <p style="color: #64748b; font-size: 14px; margin-bottom: 10px;">
-            If you have any questions, please contact us at support@compassconnect.com
+            If you have any questions, please contact us at support@compassconnect.vip
           </p>
           <p style="color: #64748b; font-size: 12px;">
             Compass Connect - Supporting you every step of the way
@@ -107,7 +107,7 @@ exports.handler = async (event, context) => {
     `;
 
     const response = await resend.emails.send({
-      from: 'Compass Connect <noreply@compassconnect.com>',
+      from: 'Compass Connect <noreply@compassconnect.vip>',
       to: [email],
       subject: `Interest Confirmation - Reference: ${booking_ref}`,
       html: emailContent,

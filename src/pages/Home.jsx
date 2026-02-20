@@ -59,7 +59,7 @@ export default function Home() {
               status: "available",
               hospital_approved: true,
               hospital_reference: "MBC-2024-0315",
-              image_url: "/mexico/medical-facility-1.jpg"
+              image_url: "/mexico/mexico_city.jpeg"
             },
             {
               id: 2,
@@ -74,7 +74,7 @@ export default function Home() {
               status: "available",
               hospital_approved: true,
               hospital_reference: "MBC-2024-0412",
-              image_url: "/mexico/medical-facility-2.jpg"
+              image_url: "/mexico/san_miguel.jpeg"
             }
           ]);
         }
