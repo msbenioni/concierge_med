@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, User, Plane, Settings, CheckCircle2, ExternalLink, Copy } from "lucide-react";
+import { ArrowRight, ArrowLeft, User, Plane, Settings, CheckCircle2, ExternalLink, Copy, FileText, MapPin, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
 import LoadingSpinner from "../components/compass-connect/LoadingSpinner";
@@ -200,53 +200,6 @@ export default function Booking() {
           </p>
         </motion.div>
 
-          {/* What Happens After You Submit */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mb-8 p-6 rounded-2xl"
-            style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_20}` }}
-          >
-            <h3 className="font-semibold text-lg mb-3" style={{ color: TEXT_PRIMARY }}>
-              What Happens After You Submit
-            </h3>
-            <div className="space-y-2">
-              <div className="flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}>
-                  <span className="text-xs font-bold text-white">1</span>
-                </div>
-                <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
-                  You'll receive a confirmation email with your interest reference number
-                </p>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}>
-                  <span className="text-xs font-bold text-white">2</span>
-                </div>
-                <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
-                  You'll complete the hospital's secure health questionnaire
-                </p>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}>
-                  <span className="text-xs font-bold text-white">3</span>
-                </div>
-                <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
-                  The hospital reviews your medical suitability and sends you a quote
-                </p>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: COLORS.ACCENT_PRIMARY }}>
-                  <span className="text-xs font-bold text-white">4</span>
-                </div>
-                <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
-                  Once approved, you return to us with your hospital reference to finalize travel arrangements
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
       {/* Main booking form */}
       <section className="pt-2 pb-32 px-6 lg:px-12">
         <div className="max-w-3xl mx-auto">
@@ -396,97 +349,130 @@ export default function Booking() {
               </motion.div>
             )}
 
-            {/* Step 1: Confirmation */}
             {step === 1 && bookingResult && (
-              <motion.div key="s3" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="space-y-8">
-                <div className="rounded-3xl p-8 shadow-2xl text-center" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_20}` }}>
-                  <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: `linear-gradient(to right, ${COLORS.ACCENT_PRIMARY}, ${COLORS.ACCENT_SECONDARY})` }}>
-                    <CheckCircle2 className="w-8 h-4" style={{ color: TEXT_PRIMARY }} />
-                  </div>
-                  <h2 className="font-serif text-3xl mb-2" style={{ color: TEXT_PRIMARY }}>Interest Received</h2>
-                  <p className="mb-4" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>Your interest has been submitted successfully. Complete the health questionnaire below to receive your custom quote.</p>
-                  <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, borderColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }}>
-                    <span className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Interest Reference:</span>
-                    <span className="font-mono font-semibold" style={{ color: TEXT_PRIMARY }}>{bookingResult.booking_ref}</span>
-                    <button
-                      type="button"
-                      onClick={() => navigator.clipboard.writeText(bookingResult.booking_ref)}
-                      style={{ color: COLORS.ACCENT_PRIMARY }}
-                      onMouseEnter={(e) => e.target.style.color = COLORS.ACCENT_SECONDARY}
-                      onMouseLeave={(e) => e.target.style.color = COLORS.ACCENT_PRIMARY}
+              <motion.div
+                key="s1"
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35 }}
+                className="space-y-6"
+              >
+                {/* ABOVE THE FOLD: ONLY PRIMARY ACTION */}
+                <div
+                  className="rounded-3xl p-8 shadow-2xl"
+                  style={{
+                    backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10,
+                    border: `2px solid ${COLORS.ACCENT_PRIMARY}`,
+                    backdropFilter: "blur(16px)",
+                  }}
+                >
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+                      style={{ background: GRADIENTS.ACCENT_PRIMARY }}
                     >
-                      <Copy className="w-3.5 h-3.5" />
-                    </button>
+                      <FileText className="w-6 h-6" style={{ color: TEXT_PRIMARY }} />
+                    </div>
+
+                    <div className="flex-1">
+                      <p
+                        className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] mb-2"
+                        style={{ color: TEXT_PRIMARY_ALPHA_60 }}
+                      >
+                        Next step required
+                      </p>
+
+                      <h2 className="font-serif text-3xl mb-2" style={{ color: TEXT_PRIMARY }}>
+                        Complete the Health Questionnaire
+                      </h2>
+
+                      <p className="text-base mb-6" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
+                        Your hospital quote can't be created until this is submitted. It takes{" "}
+                        <span style={{ color: TEXT_PRIMARY, fontWeight: 600 }}>5–10 minutes</span>.
+                      </p>
+
+                      <Button
+                        type="button"
+                        className="w-full md:w-auto rounded-2xl px-8 py-6 text-base font-semibold shadow-lg"
+                        style={{
+                          background: GRADIENTS.ACCENT_PRIMARY,
+                          color: TEXT_PRIMARY,
+                        }}
+                        onClick={() => {
+                          window.open(import.meta.env.REACT_APP_PARTNER_LINK_MBC || 'https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120', '_blank');
+                        }}
+                      >
+                        <span className="mr-2">Start Questionnaire</span>
+                        <ArrowRight className="w-5 h-5" />
+                      </Button>
+
+                    </div>
                   </div>
                 </div>
 
-                {/* Partner Form Section */}
-                <div className="rounded-3xl p-8 shadow-2xl" style={{ backgroundColor: GLASS.CARD_BACKGROUND, backdropFilter: 'blur(16px)', border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_20}` }}>
-                  <h3 className="font-serif text-xl mb-4" style={{ color: TEXT_PRIMARY }}>Receive Your Custom Quote</h3>
-                  <p className="mb-6" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
-                    Our partner clinic requires you to complete the below health questionnaire to receive your personalized quote. They will email your quote with a hospital reference number, which you can use to organize travel arrangements with us.
-                  </p>
-                  
-                  <div className="space-y-4 mb-6">
-                    <div className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, borderColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }}>
-                        <span className="font-semibold text-sm" style={{ color: COLORS.ACCENT_PRIMARY }}>1</span>
-                      </div>
-                      <div>
-                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Medical questionnaire</p>
-                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Complete the partner hospital's medical form</p>
-                      </div>
+                {/* SECONDARY: Interest received + Reference */}
+                <div
+                  className="rounded-3xl p-6 shadow-xl"
+                  style={{
+                    backgroundColor: GLASS.CARD_BACKGROUND,
+                    backdropFilter: "blur(16px)",
+                    border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_20}`,
+                  }}
+                >
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                      <h3 className="font-serif text-xl mb-1" style={{ color: TEXT_PRIMARY }}>
+                        Interest received
+                      </h3>
+                      <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_70 }}>
+                        Keep this reference for your records.
+                      </p>
                     </div>
-                    <div className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, borderColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }}>
-                        <span className="font-semibold text-sm" style={{ color: COLORS.ACCENT_PRIMARY }}>2</span>
-                      </div>
-                      <div>
-                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Receive quote via email</p>
-                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Get personalized pricing with hospital reference number</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, borderColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }}>
-                        <span className="font-semibold text-sm" style={{ color: COLORS.ACCENT_PRIMARY }}>3</span>
-                      </div>
-                      <div>
-                        <p className="font-medium" style={{ color: TEXT_PRIMARY }}>Organize travel arrangements</p>
-                        <p className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_60 }}>Click email link with hospital reference to book travel</p>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Button
-                      type="button"
-                      onClick={() => window.open(import.meta.env.REACT_APP_PARTNER_LINK_MBC || 'https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120', '_blank')}
-                      className="rounded-full px-8 gap-2 font-semibold shadow-lg flex-1"
-                      style={{ 
-                        background: `linear-gradient(to right, ${COLORS.ACCENT_PRIMARY}, ${COLORS.ACCENT_SECONDARY})`, 
-                        color: TEXT_PRIMARY 
+                    <div
+                      className="inline-flex items-center gap-2 px-5 py-2 rounded-full border"
+                      style={{
+                        backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10,
+                        borderColor: COLORS.ACCENT_PRIMARY_ALPHA_20,
                       }}
-                      onMouseEnter={(e) => e.target.style.opacity = '0.9'}
-                      onMouseLeave={(e) => e.target.style.opacity = '1'}
                     >
-                      <ExternalLink className="w-4 h-4" />
-                      Complete Medical Form
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => window.location.href = createPageUrl("Home")}
-                      className="rounded-full px-8 gap-2"
-                      style={{ backgroundColor: COMPONENTS.BUTTON_SECONDARY, borderColor: BORDERS.TEXT_SUBTLE, color: TEXT_PRIMARY }}
-                    >
-                      Return Home
-                    </Button>
+                      <span className="text-sm" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
+                        Reference:
+                      </span>
+                      <span className="font-mono font-semibold" style={{ color: TEXT_PRIMARY }}>
+                        {bookingResult.booking_ref}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => navigator.clipboard.writeText(bookingResult.booking_ref)}
+                        style={{ color: COLORS.ACCENT_PRIMARY }}
+                        aria-label="Copy reference"
+                      >
+                        <Copy className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
-                  
-                  <p className="text-xs mt-4 text-center" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>
-                    Your interest has been registered and we'll be in touch soon.
-                  </p>
                 </div>
+
+                {/* MOBILE: Sticky bottom CTA so it cannot be missed */}
+                <div className="md:hidden fixed bottom-0 left-0 right-0 p-4" style={{ backgroundColor: BACKGROUND_PRIMARY }}>
+                  <Button
+                    type="button"
+                    className="w-full rounded-2xl py-6 text-base font-semibold shadow-lg"
+                    style={{
+                      background: GRADIENTS.ACCENT_PRIMARY,
+                      color: TEXT_PRIMARY,
+                    }}
+                    onClick={() => {
+                      window.open(import.meta.env.REACT_APP_PARTNER_LINK_MBC || 'https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120', '_blank');
+                    }}
+                  >
+                    Start Questionnaire <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </div>
+
+                {/* Spacer so sticky button doesn't cover content */}
+                <div className="md:hidden h-24" />
               </motion.div>
             )}
           {/* Navigation */}

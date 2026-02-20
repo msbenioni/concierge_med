@@ -46,6 +46,27 @@ export default function Questionnaire() {
     const ref = searchParams.get("ref");
     if (ref) {
       setReference(ref);
+      
+      // Track questionnaire link click
+      const trackQuestionnaireClick = async () => {
+        try {
+          await fetch('/.netlify/functions/track-questionnaire', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              booking_ref: ref,
+              timestamp: new Date().toISOString(),
+              user_agent: navigator.userAgent
+            })
+          });
+        } catch (error) {
+          console.log('Failed to track questionnaire click:', error);
+        }
+      };
+      
+      trackQuestionnaireClick();
     }
   }, [searchParams]);
 

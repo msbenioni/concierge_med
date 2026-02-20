@@ -67,23 +67,50 @@ exports.handler = async (event, context) => {
         </div>
         
         <div style="background: #f0f9ff; padding: 25px; border-radius: 10px; margin-bottom: 30px;">
-          <h3 style="color: #0369a1; margin-bottom: 15px;">Next Steps</h3>
+          <h3 style="color: #0369a1; margin-bottom: 15px;">Your Journey Progress</h3>
           <ol style="color: #475569; line-height: 1.8; padding-left: 20px;">
-            <li style="margin-bottom: 10px;"><strong>Complete Health Questionnaire:</strong> Click the link below to fill out your health questionnaire</li>
-            <li style="margin-bottom: 10px;"><strong>Receive Hospital Quote:</strong> We'll email you a personalized quote from our trusted hospital partners</li>
-            <li style="margin-bottom: 10px;"><strong>Organize Travel:</strong> Use your hospital reference to arrange travel with Compass Connect</li>
-            <li style="margin-bottom: 10px;"><strong>Group Support:</strong> Join our supportive community of travelers</li>
+            <li style="margin-bottom: 15px;">
+              <strong>✅ Interest Registered - Complete!</strong><br>
+              <span style="font-size: 14px; color: #64748b;">Your interest has been successfully registered and saved to our database. This completes your registration with Compass Connect.</span>
+            </li>
+            <li style="margin-bottom: 15px;">
+              <strong>Health Questionnaire - Your Next Step:</strong><br>
+              <span style="font-size: 14px; color: #64748b;">Click below to complete the hospital's health questionnaire for your surgery quote.</span>
+              <div style="text-align: center; margin-top: 10px;">
+                <a href="https://mexicobariatriccenter.com/health-questionnaire/?RefID=2120" target="_blank"
+                   style="background: #2563eb; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; font-size: 14px;">
+                  Complete Health Questionnaire
+                </a>
+              </div>
+            </li>
+            <li style="margin-bottom: 10px;">
+              <strong>Receive Hospital Quote:</strong><br>
+              <span style="font-size: 14px; color: #64748b;">The hospital will send your personalized surgery quote directly to you.</span>
+            </li>
+            <li style="margin-bottom: 15px;">
+              <strong>Organize Travel with Compass Connect:</strong><br>
+              <span style="font-size: 14px; color: #64748b;">Once you have your quote, return to organize your travel arrangements.</span>
+              <div style="text-align: center; margin-top: 10px;">
+                <a href="${process.env.SITE_URL || 'https://compassconnect.vip'}/organize-travel?ref=${booking_ref}" 
+                   style="background: #2563eb; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; font-size: 14px;">
+                  Organize Travel with Compass Connect
+                </a>
+              </div>
+              <p style="font-size: 12px; color: #64748b; margin-top: 8px; text-align: center;">
+                Note: Pricing for concierge service is 4000
+              </p>
+            </li>
+            <li style="margin-bottom: 15px;">
+              <strong>Join Group Support:</strong><br>
+              <span style="font-size: 14px; color: #64748b;">Connect with others on the same medical journey.</span>
+              <div style="text-align: center; margin-top: 10px;">
+                <a href="https://facebook.com/groups/compassconnect" target="_blank"
+                   style="background: #1877f2; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; font-size: 14px;">
+                  Join Facebook Support Group
+                </a>
+              </div>
+            </li>
           </ol>
-        </div>
-        
-        <div style="text-align: center; margin-bottom: 30px;">
-          <a href="${process.env.SITE_URL || 'https://compassconnect.vip'}/questionnaire?ref=${booking_ref}" 
-             style="background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
-            Complete Health Questionnaire
-          </a>
-          <p style="color: #64748b; font-size: 12px; margin-top: 10px;">
-            Link: ${process.env.SITE_URL || 'https://compassconnect.vip'}/questionnaire?ref=${booking_ref}
-          </p>
         </div>
         
         <div style="background: #fef3c7; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
