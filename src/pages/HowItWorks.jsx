@@ -21,6 +21,7 @@ const MEDICAL_PHASE = [
       "Non-medical information only",
     ],
     color: COLORS.ACCENT_PRIMARY,
+    iconColor: COLORS.ACCENT_PRIMARY,
   },
   {
     num: "02",
@@ -35,6 +36,7 @@ const MEDICAL_PHASE = [
       "Compass Connect does not access or store medical data",
     ],
     color: COLORS.ACCENT_PRIMARY,
+    iconColor: COLORS.ACCENT_PRIMARY,
   },
   {
     num: "03",
@@ -49,6 +51,7 @@ const MEDICAL_PHASE = [
       "Medical approval confirmed",
     ],
     color: COLORS.ACCENT_PRIMARY,
+    iconColor: COLORS.ACCENT_PRIMARY,
   },
 ];
 
@@ -65,7 +68,8 @@ const TRAVEL_PHASE = [
       "Begin travel coordination process",
       "Join approved patient community",
     ],
-    color: COLORS.ACCENT_SECONDARY,
+    color: COLORS.ROSE_GOLD_PRIMARY,
+    iconColor: COLORS.ROSE_GOLD_PRIMARY,
   },
   {
     num: "05",
@@ -79,7 +83,8 @@ const TRAVEL_PHASE = [
       "Private transfers and ground transport",
       "24/7 on-ground concierge support",
     ],
-    color: COLORS.ACCENT_SECONDARY,
+    color: COLORS.ROSE_GOLD_PRIMARY,
+    iconColor: COLORS.ROSE_GOLD_PRIMARY,
   },
 ];
 
@@ -98,7 +103,7 @@ export default function HowItWorks() {
             <h1 className="font-serif text-4xl md:text-5xl mb-4" style={{ color: COLORS.TEXT_PRIMARY }}>
               How It Works
             </h1>
-            <p className="text-lg" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
+            <p className="text-lg leading-relaxed" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
               A transparent two-phase journey that separates medical assessment from travel coordination. Every step is clearly defined and legally protected.
             </p>
           </motion.div>
@@ -115,19 +120,22 @@ export default function HowItWorks() {
             <div className="space-y-8 lg:space-y-10">
               {/* Medical Phase */}
               <div className="mb-12">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="text-center mb-8"
+                <div className="flex justify-center mb-8">
+                <div
+                  className="inline-flex flex-col items-center rounded-2xl px-6 py-4"
+                  style={{
+                    backgroundColor: COLORS.OLIVE_TINT_10,
+                    border: `1px solid ${COLORS.ESPRESSO_ALPHA_08}`,
+                  }}
                 >
-                  <h2 className="text-2xl font-bold mb-2" style={{ color: COLORS.ACCENT_PRIMARY }}>
+                  <h2 className="text-2xl font-bold" style={{ color: COLORS.TEXT_PRIMARY }}>
                     Phase One: Medical Assessment
                   </h2>
-                  <p className="text-sm" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
+                  <p className="text-sm mt-1" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_60 }}>
                     Handled directly by accredited hospital partners
                   </p>
-                </motion.div>
+                </div>
+              </div>
                 
                 {MEDICAL_PHASE.map((phase, i) => (
                   <motion.div
@@ -148,19 +156,28 @@ export default function HowItWorks() {
                           <phase.icon className="w-8 h-8" />
                         </div>
                         <div className="flex-1 flex items-center justify-center">
-                          <span className="text-xs font-bold" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_50 }}>{phase.num}</span>
+                          <span className="text-xs font-bold" style={{ color: COLORS.TEXT_PRIMARY }}>{phase.num}</span>
                         </div>
                       </div>
                       {/* Content */}
                       <div className="flex-1 min-w-0">
-                        <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm" style={{ backgroundColor: COLORS.GLASS.CARD_BACKGROUND, border: `1px solid ${COLORS.BORDERS.ACCENT_SUBTLE}` }}>
+                        <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm" style={{
+                          backgroundColor: COLORS.BACKGROUND_SECONDARY,
+                          border: `1px solid ${COLORS.TEXT_PRIMARY_ALPHA_10}`,
+                          boxShadow: COLORS.SHADOWS.SUBTLE,
+                          backdropFilter: "blur(10px)"
+                        }}>
                           <h3 className="text-xl font-bold mb-1" style={{ color: COLORS.TEXT_PRIMARY }}>{phase.title}</h3>
-                          <p className="text-sm font-medium mb-3" style={{ color: phase.color }}>{phase.subtitle}</p>
-                          <p className="text-base mb-4 leading-relaxed" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>{phase.description}</p>
+                          <p className="text-sm font-semibold mb-3" style={{ color: COLORS.ACCENT_DEEP }}>
+                          {phase.subtitle}
+                        </p>
+                          <p className="text-base mb-4 leading-relaxed" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_80 }}>
+                          {phase.description}
+                        </p>
                           <ul className="space-y-2">
                             {phase.details.map((detail, idx) => (
-                              <li key={idx} className="flex items-start gap-2 text-sm" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_60 }}>
-                                <ChevronRight className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: phase.color }} />
+                              <li key={idx} className="flex items-start gap-2 text-sm" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_80 }}>
+                                <ChevronRight className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: phase.iconColor || phase.color }} />
                                 {detail}
                               </li>
                             ))}
@@ -176,7 +193,7 @@ export default function HowItWorks() {
               <div className="text-center py-8">
                 <div className="inline-flex items-center gap-4">
                   <div className="h-px w-20" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }} />
-                  <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_50 }}>
+                  <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: COLORS.TEXT_PRIMARY }}>
                     Medical Complete → Travel Begins
                   </span>
                   <div className="h-px w-20" style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_20 }} />
@@ -185,19 +202,22 @@ export default function HowItWorks() {
 
               {/* Travel Phase */}
               <div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="text-center mb-8"
+                <div className="flex justify-center mb-8">
+                <div
+                  className="inline-flex flex-col items-center rounded-2xl px-6 py-4"
+                  style={{
+                    backgroundColor: COLORS.OLIVE_TINT_10,
+                    border: `1px solid ${COLORS.ESPRESSO_ALPHA_08}`,
+                  }}
                 >
-                  <h2 className="text-2xl font-bold mb-2" style={{ color: COLORS.ACCENT_SECONDARY }}>
+                  <h2 className="text-2xl font-bold" style={{ color: COLORS.TEXT_PRIMARY }}>
                     Phase Two: Travel Coordination
                   </h2>
-                  <p className="text-sm" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>
+                  <p className="text-sm mt-1" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_60 }}>
                     Coordinated by Compass Connect concierge team
                   </p>
-                </motion.div>
+                </div>
+              </div>
                 
                 {TRAVEL_PHASE.map((phase, i) => (
                   <motion.div
@@ -206,7 +226,7 @@ export default function HowItWorks() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: (i + 3) * 0.1 }}
-                    className="relative mb-24 lg:mb-32"
+                    className="relative mb-8 lg:mb-10"
                   >
                     <div className="flex gap-6 lg:gap-10">
                       {/* Timeline Dot */}
@@ -218,19 +238,28 @@ export default function HowItWorks() {
                           <phase.icon className="w-8 h-8" />
                         </div>
                         <div className="flex-1 flex items-center justify-center">
-                          <span className="text-xs font-bold" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_50 }}>{phase.num}</span>
+                          <span className="text-xs font-bold" style={{ color: COLORS.TEXT_PRIMARY }}>{phase.num}</span>
                         </div>
                       </div>
                       {/* Content */}
                       <div className="flex-1 min-w-0">
-                        <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm" style={{ backgroundColor: COLORS.GLASS.CARD_BACKGROUND, border: `1px solid ${COLORS.BORDERS.ACCENT_SUBTLE}` }}>
+                        <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm" style={{
+                          backgroundColor: COLORS.BACKGROUND_SECONDARY,
+                          border: `1px solid ${COLORS.TEXT_PRIMARY_ALPHA_10}`,
+                          boxShadow: COLORS.SHADOWS.SUBTLE,
+                          backdropFilter: "blur(10px)"
+                        }}>
                           <h3 className="text-xl font-bold mb-1" style={{ color: COLORS.TEXT_PRIMARY }}>{phase.title}</h3>
-                          <p className="text-sm font-medium mb-3" style={{ color: phase.color }}>{phase.subtitle}</p>
-                          <p className="text-base mb-4 leading-relaxed" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>{phase.description}</p>
+                          <p className="text-sm font-semibold mb-3" style={{ color: COLORS.ACCENT_DEEP }}>
+                          {phase.subtitle}
+                        </p>
+                          <p className="text-base mb-4 leading-relaxed" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_80 }}>
+                          {phase.description}
+                        </p>
                           <ul className="space-y-2">
                             {phase.details.map((detail, idx) => (
-                              <li key={idx} className="flex items-start gap-2 text-sm" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_60 }}>
-                                <ChevronRight className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: phase.color }} />
+                              <li key={idx} className="flex items-start gap-2 text-sm" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_80 }}>
+                                <ChevronRight className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: phase.iconColor || phase.color }} />
                                 {detail}
                               </li>
                             ))}
@@ -243,26 +272,6 @@ export default function HowItWorks() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Legal Disclaimer */}
-      <section className="py-2">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center p-8 rounded-2xl"
-            style={{ backgroundColor: COLORS.ACCENT_PRIMARY_ALPHA_10, border: `1px solid ${COLORS.ACCENT_PRIMARY_ALPHA_20}` }}
-          >
-            <p className="text-sm font-medium mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>
-              Compass Connect is an independent, non-medical concierge service.
-            </p>
-            <p className="text-xs" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_60 }}>
-              We coordinate travel logistics only. All medical care, assessments, and treatments are provided directly by accredited hospital partners.
-            </p>
-          </motion.div>
         </div>
       </section>
 

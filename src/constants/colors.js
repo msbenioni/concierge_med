@@ -62,6 +62,14 @@ export const COLORS = {
   BACKGROUND_PRIMARY_ALPHA_70: 'rgba(243, 239, 232, 0.7)',   // Very heavy overlays
   BACKGROUND_PRIMARY_ALPHA_80: 'rgba(243, 239, 232, 0.8)',   // Maximum overlays
   
+  // Rose-Gold Accent System (premium, readable)
+  ROSE_GOLD_PRIMARY: '#C98E7A',     // warm rose-gold (accent fills, chips)
+  ROSE_GOLD_SUBTLE: '#E7B9AA',      // soft highlight (hover backgrounds)
+  ROSE_GOLD_DEEP: '#8A5A4B',        // rose-bronze (readable for small text/icons)
+  ROSE_GOLD_ALPHA_10: 'rgba(201, 142, 122, 0.10)',
+  ROSE_GOLD_ALPHA_20: 'rgba(201, 142, 122, 0.20)',
+  ROSE_GOLD_GRADIENT: 'linear-gradient(135deg, #F6E1D9 0%, #E7B9AA 28%, #C98E7A 60%, #8A5A4B 100%)',
+
   // Gradients - Named by purpose - Brilliance Gold System
   GRADIENTS: {
     // 5-Stop Brilliance Gold (specular highlight) - Enhanced

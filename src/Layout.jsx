@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "./utils";
-import { Menu, X, Globe, ChevronRight } from "lucide-react";
+import { Menu, X, Globe, ChevronRight, LogIn, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollToTopButton from "./components/compass-connect/ScrollToTopButton";
 import { Toaster } from "@/components/ui/toaster";
+import ConciergeLoginModal from "./components/ConciergeLoginModal";
 import { 
   BACKGROUND_PRIMARY, 
   BACKGROUND_DEEP,
@@ -38,6 +39,32 @@ const NAV_ITEMS = [
 
 export default function Layout({ children, currentPageName }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  // Check authentication status on mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem('concierge_admin');
+    if (storedUser) {
+      setCurrentUser(JSON.parse(storedUser));
+      setIsAdmin(true);
+    }
+  }, []);
+
+  const handleLoginSuccess = (user) => {
+    setCurrentUser(user);
+    setIsAdmin(true);
+    localStorage.setItem('concierge_admin', JSON.stringify(user));
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    setIsAdmin(false);
+    localStorage.removeItem('concierge_admin');
+    // Redirect to home page after logout
+    window.location.href = createPageUrl("Home");
+  };
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: BACKGROUND_PRIMARY }}>
@@ -64,29 +91,76 @@ export default function Layout({ children, currentPageName }) {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-1">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.page}
-                to={createPageUrl(item.page)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200`}
-                style={{
-                  backgroundColor: currentPageName === item.page ? COLORS.ACCENT_PRIMARY : 'transparent',
-                  color: currentPageName === item.page ? COMPONENTS.BUTTON_PRIMARY_TEXT : TEXT_PRIMARY
-                }}
-                onMouseEnter={(e) => {
-                  if (currentPageName !== item.page) {
-                    e.target.style.backgroundColor = COLORS.ACCENT_PRIMARY_ALPHA_20;
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (currentPageName !== item.page) {
-                    e.target.style.backgroundColor = 'transparent';
-                  }
-                }}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              if (item.page === 'Admin') {
+                // Special handling for Concierge Desk
+                return (
+                  <button
+                    key={item.page}
+                    onClick={() => {
+                      if (isAdmin) {
+                        // If logged in, navigate to admin page
+                        window.location.href = createPageUrl("Admin");
+                      } else {
+                        // If not logged in, show login modal
+                        setShowLoginModal(true);
+                      }
+                    }}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2`}
+                    style={{
+                      backgroundColor: currentPageName === item.page ? COLORS.ACCENT_PRIMARY : 'transparent',
+                      color: currentPageName === item.page ? COMPONENTS.BUTTON_PRIMARY_TEXT : TEXT_PRIMARY
+                    }}
+                    onMouseEnter={(e) => {
+                      if (currentPageName !== item.page) {
+                        e.target.style.backgroundColor = COLORS.ACCENT_PRIMARY_ALPHA_20;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (currentPageName !== item.page) {
+                        e.target.style.backgroundColor = 'transparent';
+                      }
+                    }}
+                  >
+                    {isAdmin ? (
+                      <>
+                        <LogOut className="w-4 h-4" />
+                        {item.label}
+                      </>
+                    ) : (
+                      <>
+                        <LogIn className="w-4 h-4" />
+                        {item.label}
+                      </>
+                    )}
+                  </button>
+                );
+              }
+              
+              return (
+                <Link
+                  key={item.page}
+                  to={createPageUrl(item.page)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200`}
+                  style={{
+                    backgroundColor: currentPageName === item.page ? COLORS.ACCENT_PRIMARY : 'transparent',
+                    color: currentPageName === item.page ? COMPONENTS.BUTTON_PRIMARY_TEXT : TEXT_PRIMARY
+                  }}
+                  onMouseEnter={(e) => {
+                    if (currentPageName !== item.page) {
+                      e.target.style.backgroundColor = COLORS.ACCENT_PRIMARY_ALPHA_20;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (currentPageName !== item.page) {
+                      e.target.style.backgroundColor = 'transparent';
+                    }
+                  }}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
             <Link
               to={createPageUrl("Booking")}
               className="ml-3 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 shadow-md flex items-center gap-2"
@@ -213,6 +287,13 @@ export default function Layout({ children, currentPageName }) {
       </footer>
       <ScrollToTopButton />
       <Toaster />
+      
+      {/* Concierge Login Modal */}
+      <ConciergeLoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onLoginSuccess={handleLoginSuccess}
+      />
     </div>
   );
 }

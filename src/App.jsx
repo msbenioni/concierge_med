@@ -4,7 +4,8 @@ import { queryClientInstance } from '@/lib/query-client'
 import { pagesConfig } from './pages.config'
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { TEXT_PRIMARY, TEXT_PRIMARY_ALPHA_50, COLORS, COMPONENTS } from './constants/colors';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import ConciergeLoginModal from '@/components/ConciergeLoginModal';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -29,6 +30,37 @@ function ScrollToTop() {
 }
 
 function App() {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  // Check if user is already logged in on mount
+  useEffect(() => {
+    const checkAuthStatus = () => {
+      // This would typically check with your auth service
+      // For now, we'll assume no one is logged in initially
+      const storedUser = localStorage.getItem('concierge_admin');
+      if (storedUser) {
+        setCurrentUser(JSON.parse(storedUser));
+        setIsAdmin(true);
+      }
+    };
+    
+    checkAuthStatus();
+  }, []);
+
+  const handleLoginSuccess = (user) => {
+    setCurrentUser(user);
+    setIsAdmin(true);
+    localStorage.setItem('concierge_admin', JSON.stringify(user));
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    setIsAdmin(false);
+    localStorage.removeItem('concierge_admin');
+  };
+
   return (
     <QueryClientProvider client={queryClientInstance}>
       <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
@@ -45,7 +77,23 @@ function App() {
               path={`/${path.toLowerCase()}`}
               element={
                 <LayoutWrapper currentPageName={path}>
-                  <Page />
+                  {path.toLowerCase() === 'admin' && !isAdmin ? (
+                    <div className="flex items-center justify-center min-h-screen">
+                      <div className="text-center">
+                        <h1 className="text-4xl font-bold mb-4" style={{ color: TEXT_PRIMARY }}>Admin Access Required</h1>
+                        <p className="mb-8" style={{ color: TEXT_PRIMARY_ALPHA_50 }}>Please sign in to access the admin dashboard.</p>
+                        <button
+                          onClick={() => setShowLoginModal(true)}
+                          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-colors"
+                          style={{ backgroundColor: COLORS.ACCENT_PRIMARY, color: COMPONENTS.BUTTON_PRIMARY_TEXT }}
+                        >
+                          Sign In as Admin
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <Page />
+                  )}
                 </LayoutWrapper>
               }
             />
@@ -65,6 +113,14 @@ function App() {
           } />
         </Routes>
       </Router>
+      
+      {/* Concierge Login Modal */}
+      <ConciergeLoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onLoginSuccess={handleLoginSuccess}
+      />
+      
       <Toaster />
     </QueryClientProvider>
   )
