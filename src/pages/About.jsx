@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Heart, Users, Globe, Shield, Compass } from "lucide-react";
+import { Heart, Users, Globe, Shield, Compass, Calendar, HeartHandshake } from "lucide-react";
 import CTASection from "../components/compass-connect/CTASection";
 import * as COLORS from "../constants/colors";
 
@@ -56,7 +56,7 @@ export default function About() {
               <div className="flex items-start gap-4">
                 <div className="w-8 h-8 rounded-full flex-shrink-0 mt-1" style={{ background: COLORS.ACCENT_PRIMARY }}></div>
                 <div>
-                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>A dedicated concierge team</h3>
+                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>End-to-end coordination</h3>
                   <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>From first enquiry through to your return home</p>
                 </div>
               </div>
@@ -65,13 +65,6 @@ export default function About() {
                 <div>
                   <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>Small group journeys with intimate support</h3>
                   <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>Supportive environment for sharing</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full flex-shrink-0 mt-1" style={{ background: COLORS.ACCENT_PRIMARY }}></div>
-                <div>
-                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>Pre-travel group sessions</h3>
-                  <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>So you feel prepared and connected</p>
                 </div>
               </div>
             </div>
@@ -86,15 +79,95 @@ export default function About() {
               <div className="flex items-start gap-4">
                 <div className="w-8 h-8 rounded-full flex-shrink-0 mt-1" style={{ background: COLORS.ACCENT_PRIMARY }}></div>
                 <div>
-                  <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>Structured, non-clinical group support after you return</h3>
-                  <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>Continued care and community connection</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full flex-shrink-0 mt-1" style={{ background: COLORS.ACCENT_PRIMARY }}></div>
-                <div>
                   <h3 className="font-semibold mb-2" style={{ color: COLORS.TEXT_PRIMARY }}>Clear separation between medical care, travel logistics, and concierge support</h3>
                   <p style={{ color: COLORS.TEXT_PRIMARY_ALPHA_70 }}>We do not provide medical advice or treatment</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Highlighted Bottom Row */}
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-12">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-rose-gold-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-20 transition-all duration-300"></div>
+              <div className="relative p-8 rounded-2xl border-2 backdrop-blur-sm transition-all duration-300 group-hover:shadow-xl group-hover:scale-[1.02]" style={{ 
+                borderColor: COLORS.ROSE_GOLD_PRIMARY, 
+                backgroundColor: COLORS.ROSE_GOLD_ALPHA_10,
+                background: 'linear-gradient(135deg, rgba(201, 142, 122, 0.05) 0%, rgba(138, 90, 75, 0.08) 100%)'
+              }}>
+                <div className="absolute top-4 right-4">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center opacity-20" style={{ backgroundColor: COLORS.ROSE_GOLD_PRIMARY }}>
+                    <Users className="w-6 h-6" style={{ color: 'white' }} />
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full flex-shrink-0 mt-1 flex items-center justify-center shadow-lg" style={{ background: 'linear-gradient(135deg, #C98E7A 0%, #8A5A4B 100%)' }}>
+                    <Calendar className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-lg mb-3" style={{ color: COLORS.TEXT_PRIMARY }}>Pre-travel Group Sessions</h3>
+                    <p className="text-base leading-relaxed" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_80 }}>
+                      Connect with fellow travelers before departure. Build community, share expectations, and feel prepared with guided sessions led by experienced coordinators.
+                    </p>
+                    <div className="mt-4 flex items-center gap-2">
+                      <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ 
+                        backgroundColor: COLORS.ROSE_GOLD_ALPHA_20, 
+                        color: COLORS.ROSE_GOLD_DEEP,
+                        border: `1px solid ${COLORS.ROSE_GOLD_ALPHA_30}`
+                      }}>
+                        Community Building
+                      </span>
+                      <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ 
+                        backgroundColor: COLORS.ROSE_GOLD_ALPHA_20, 
+                        color: COLORS.ROSE_GOLD_DEEP,
+                        border: `1px solid ${COLORS.ROSE_GOLD_ALPHA_30}`
+                      }}>
+                        Preparation
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-rose-gold-500 rounded-2xl opacity-0 group-hover:opacity-20 transition-all duration-300"></div>
+              <div className="relative p-8 rounded-2xl border-2 backdrop-blur-sm transition-all duration-300 group-hover:shadow-xl group-hover:scale-[1.02]" style={{ 
+                borderColor: COLORS.ROSE_GOLD_PRIMARY, 
+                backgroundColor: COLORS.ROSE_GOLD_ALPHA_10,
+                background: 'linear-gradient(135deg, rgba(201, 142, 122, 0.05) 0%, rgba(138, 90, 75, 0.08) 100%)'
+              }}>
+                <div className="absolute top-4 right-4">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center opacity-20" style={{ backgroundColor: COLORS.ROSE_GOLD_PRIMARY }}>
+                    <Heart className="w-6 h-6" style={{ color: 'white' }} />
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full flex-shrink-0 mt-1 flex items-center justify-center shadow-lg" style={{ background: 'linear-gradient(135deg, #C98E7A 0%, #8A5A4B 100%)' }}>
+                    <HeartHandshake className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-lg mb-3" style={{ color: COLORS.TEXT_PRIMARY }}>Structured Post-Travel Support</h3>
+                    <p className="text-base leading-relaxed" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_80 }}>
+                      Continue your journey with structured, non-clinical group support. Share experiences, receive guidance, and maintain connections that extend beyond your return.
+                    </p>
+                    <div className="mt-4 flex items-center gap-2">
+                      <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ 
+                        backgroundColor: COLORS.ROSE_GOLD_ALPHA_20, 
+                        color: COLORS.ROSE_GOLD_DEEP,
+                        border: `1px solid ${COLORS.ROSE_GOLD_ALPHA_30}`
+                      }}>
+                        Continued Care
+                      </span>
+                      <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ 
+                        backgroundColor: COLORS.ROSE_GOLD_ALPHA_20, 
+                        color: COLORS.ROSE_GOLD_DEEP,
+                        border: `1px solid ${COLORS.ROSE_GOLD_ALPHA_30}`
+                      }}>
+                        Community
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
