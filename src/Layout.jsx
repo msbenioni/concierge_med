@@ -74,7 +74,7 @@ export default function Layout({ children, currentPageName }) {
           <Link to={createPageUrl("Home")} className="flex items-center gap-3 group">
             <div className="w-16 h-16 rounded-xl flex items-center justify-center transition-shadow overflow-hidden">
               <img 
-                src="/compass_logo.png" 
+                src="/compass_logo.webp" 
                 alt="Compass Connect Logo" 
                 className="w-14 h-14 object-contain"
               />
@@ -245,7 +245,7 @@ export default function Layout({ children, currentPageName }) {
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden">
                   <img 
-                    src="/compass_logo.png" 
+                    src="/compass_logo.webp" 
                     alt="Compass Connect Logo" 
                     className="w-10 h-10 object-contain"
                   />

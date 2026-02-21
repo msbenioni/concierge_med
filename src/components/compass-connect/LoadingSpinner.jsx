@@ -13,7 +13,7 @@ const LoadingSpinner = ({ size = "w-8 h-8", className = "" }) => {
       }}
     >
       <img 
-        src="/scrolltotop.png"
+        src="/scrolltotop.webp"
         alt="Loading..."
         className="w-full h-full object-contain"
       />

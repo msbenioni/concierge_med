@@ -46,7 +46,7 @@ export default function WhyGroupTravel() {
       <div
         className="absolute inset-0 scale-[1.02] bg-center bg-cover
                    [filter:saturate(.72)_contrast(1.02)_brightness(.96)]"
-        style={{ backgroundImage: `url(/group_travel.png)` }}
+        style={{ backgroundImage: `url(/group_travel.webp)` }}
       />
 
       {/* Dark overlay gradient (guarantees readability) */}

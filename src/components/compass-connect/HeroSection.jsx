@@ -11,7 +11,7 @@ export default function HeroSection() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="/hospital_hero.png"
+          src="/hospital_hero.webp"
           alt="Modern medical facility"
           className="w-full h-full object-cover object-center scale-110"
         />

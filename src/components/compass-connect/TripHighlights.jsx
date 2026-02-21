@@ -104,7 +104,7 @@ export default function TripHighlights() {
             <div
               className="absolute inset-0 bg-center bg-cover scale-[1.03]
                          [filter:saturate(.75)_contrast(1.02)_brightness(.98)]"
-              style={{ backgroundImage: `url(/transfers.png)` }}
+              style={{ backgroundImage: `url(/transfers.webp)` }}
             />
             {/* overlay */}
             <div className="absolute inset-0

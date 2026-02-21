@@ -222,19 +222,41 @@ export default function About() {
               </p>
             </div>
             
-            <div className="flex justify-center gap-8">
+            <div className="flex justify-center gap-12">
               <div className="text-center space-y-4">
-                <div className="w-20 h-20 rounded-full mx-auto bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                  <span className="text-white text-2xl font-bold">J</span>
+                <div className="w-32 h-36 rounded-full mx-auto overflow-hidden border-2" style={{ borderColor: COLORS.ACCENT_PRIMARY_ALPHA_30 }}>
+                  <img 
+                    src="/jasmin.webp" 
+                    alt="Jasmin Benioni - Co-Founder" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextElementSibling.style.display = 'flex';
+                    }}
+                  />
+                  <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center" style={{ display: 'none' }}>
+                    <span className="text-white text-3xl font-bold">J</span>
+                  </div>
                 </div>
-                <h3 className="font-semibold text-lg" style={{ color: COLORS.TEXT_PRIMARY }}>Jasmin</h3>
+                <h3 className="font-semibold text-xl" style={{ color: COLORS.TEXT_PRIMARY }}>Jasmin Benioni</h3>
                 <p className="text-sm" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_60 }}>Co-Founder</p>
               </div>
               <div className="text-center space-y-4">
-                <div className="w-20 h-20 rounded-full mx-auto bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
-                  <span className="text-white text-2xl font-bold">A</span>
+                <div className="w-32 h-36 rounded-full mx-auto overflow-hidden border-2" style={{ borderColor: COLORS.ACCENT_PRIMARY_ALPHA_30 }}>
+                  <img 
+                    src="/angela.webp" 
+                    alt="Angela Malakai - Co-Founder" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextElementSibling.style.display = 'flex';
+                    }}
+                  />
+                  <div className="w-full h-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center" style={{ display: 'none' }}>
+                    <span className="text-white text-3xl font-bold">Angela Malakai</span>
+                  </div>
                 </div>
-                <h3 className="font-semibold text-lg" style={{ color: COLORS.TEXT_PRIMARY }}>Angela</h3>
+                <h3 className="font-semibold text-xl" style={{ color: COLORS.TEXT_PRIMARY }}>Angela Malakai</h3>
                 <p className="text-sm" style={{ color: COLORS.TEXT_PRIMARY_ALPHA_60 }}>Co-Founder</p>
               </div>
             </div>

@@ -249,7 +249,7 @@ export default function DocumentUpload({ interestId, onUploadSuccess, onClose })
                   ref={fileInputRef}
                   type="file"
                   onChange={handleFileInputChange}
-                  accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif"
+                  accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.webp,.gif"
                   className="hidden"
                 />
                 

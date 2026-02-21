@@ -46,7 +46,7 @@ export default function ScrollToTopButton() {
         >
           {/* Custom Scroll to Top Image - No Container */}
           <img 
-            src="/scrolltotop.png"
+            src="/scrolltotop.webp"
             alt="Scroll to top"
             className="w-12 h-12 object-contain"
           />
